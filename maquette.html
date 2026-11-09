@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voir mon site web, HOOD</title>
+<meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 € HT, puis 10 € HT par mois.">
+<meta name="theme-color" content="#f8f9fc">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Layout : questionnaire à gauche, la vraie maquette (template Notion rempli en direct) à droite ; à la fin, la maquette passe en grand avec l'offre et le paiement. Charte du site hood-web.com. */
+:root{
+  --bg:#ffffff; --bg-soft:#f8f9fc; --line:#e4e7ef; --ink:#101114; --muted:#5d6272;
+  --accent:#0047ff; --accent-soft:#e8eeff; --on-accent:#ffffff; --danger:#c62a2a;
+  --ok:#137a3b; --ok-soft:#e3f4e9; --warn:#8a5a00; --warn-soft:#fff3d6;
+  --card:#ffffff; --shadow:0 18px 50px -22px rgba(16,17,20,.28);
+  --f-ui:"Inter",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115; --bg-soft:#161922; --line:#262b37; --ink:#f1f2f6; --muted:#9aa0b2;
+  --accent:#4d7dff; --accent-soft:#18224a; --on-accent:#ffffff; --danger:#ff7676;
+  --ok:#5fd38d; --ok-soft:#12301f; --warn:#f2c35b; --warn-soft:#33270b;
+  --card:#161922; --shadow:0 18px 50px -22px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --bg-soft:#161922; --line:#262b37; --ink:#f1f2f6; --muted:#9aa0b2;
+  --accent:#4d7dff; --accent-soft:#18224a; --on-accent:#ffffff; --danger:#ff7676;
+  --ok:#5fd38d; --ok-soft:#12301f; --warn:#f2c35b; --warn-soft:#33270b;
+  --card:#161922; --shadow:0 18px 50px -22px rgba(0,0,0,.7); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}[hidden]{display:none!important}img{max-width:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.proto{max-width:1240px;margin:0 auto;padding-block:10px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.proto b{color:var(--ink)}
+.proto .dot{width:8px;height:8px;border-radius:50%;background:#f0a500;flex:none}
+.demo{font:inherit;font-size:13px;font-weight:600;color:var(--accent);background:none;border:1px dashed var(--accent);border-radius:999px;padding:6px 12px;cursor:pointer}
+header.top{max-width:1240px;margin:0 auto;padding-block:14px 8px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-weight:900;font-size:22px;letter-spacing:-1px}
+.logo span{color:var(--accent)}
+.free{font-size:13px;font-weight:600;color:var(--muted)}
+
+.wrap{max-width:1240px;margin:0 auto;padding-block:16px 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:44px;align-items:start}
+.wrap.final{grid-template-columns:minmax(0,400px) minmax(0,1fr)}
+@media (max-width:960px){.wrap,.wrap.final{grid-template-columns:minmax(0,1fr);gap:24px}}
+
+/* ---- Questionnaire ---- */
+.progress{display:flex;gap:6px;margin-bottom:14px}
+.progress i{flex:1;height:5px;border-radius:5px;background:var(--line);transition:background .3s}
+.progress i.on{background:var(--accent)}
+.meta{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-bottom:22px}
+.step h1{font-size:clamp(30px,4.2vw,44px);font-weight:900;letter-spacing:-.045em;line-height:1.04;margin:0 0 10px;text-wrap:balance}
+.final .step h1{font-size:clamp(30px,3.4vw,40px)}
+.step h1 em{font-style:normal;color:var(--accent)}
+.step .lead{color:var(--muted);margin:0 0 24px;max-width:58ch}
+.fields{display:grid;gap:18px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+label.f{display:grid;gap:6px;font-weight:700;font-size:14px}
+label.f small,.lbl small{font-weight:500;color:var(--muted)}
+.lbl{font-weight:700;font-size:14px}
+input[type=text],input[type=email],input[type=search],input[type=number],input[type=tel],textarea{width:100%;font:inherit;font-size:16px;padding:14px 15px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+input.bad{border-color:var(--danger)}
+.hint{font-size:13px;color:var(--muted);font-weight:500}
+.err{color:var(--danger);font-size:14px;font-weight:600;min-height:20px;margin-top:14px}
+
+.search{position:relative;display:block;margin-bottom:18px}
+.search input{padding-left:42px}
+.search::before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-52%);font-size:20px;color:var(--muted)}
+.fam{display:grid;gap:10px;margin-bottom:18px}
+.fam h3{margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:1.5px solid var(--line);border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;background:var(--card);transition:all .15s}
+.chip span:hover{border-color:var(--accent)}
+.chip input:checked+span{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip input:focus-visible+span{box-shadow:0 0 0 4px var(--accent-soft)}
+.chip.other span{border-style:dashed}
+.nomatch{font-size:14px;color:var(--muted);font-weight:600;margin:0 0 14px}
+
+.tpls{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:12px}
+.tpl{position:relative;cursor:pointer}
+.tpl input{position:absolute;opacity:0}
+.tpl .box{display:grid;border:1.5px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;height:100%;transition:all .15s}
+.tpl .thumb-w{display:block;height:150px;overflow:hidden;position:relative;background:#f3f4f7}.tpl .thumb{position:absolute;top:0;left:0;width:390px;height:700px;border:0;transform:scale(.42);transform-origin:0 0;pointer-events:none}
+.tpl .sw{height:150px;display:flex;align-items:flex-end;justify-content:space-between;padding:10px 12px;gap:8px}
+.tpl .sw .aa{font-size:30px;line-height:1}
+.tpl .sw i{display:block;width:34px;height:10px;border-radius:10px}
+.tpl .tx{padding:10px 12px 12px;display:grid;gap:2px}
+.tpl b{font-size:15px}
+.tpl small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.tpl input:checked+.box{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.tpl input:focus-visible+.box{box-shadow:0 0 0 4px var(--accent-soft)}
+
+.optgroup{display:grid;gap:10px;margin-bottom:22px}
+.optgroup h3{margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.02em;text-transform:none}
+.tag.inc{background:var(--ok-soft);color:var(--ok)}
+.tag.dev{background:var(--warn-soft);color:var(--warn)}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.ck{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;background:var(--card);font-weight:600;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--accent);margin:1px 0 0;flex:none}
+.ck:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.ck small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+.consent{font-weight:500;font-size:14px}
+
+.upl{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg-soft)}
+.upl.drag{border-color:var(--accent);background:var(--accent-soft)}
+.upl .thumb{width:64px;height:64px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;flex:none;color:var(--muted);font-size:12px;font-weight:700}
+.upl .thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.upl .t{display:grid;gap:4px;min-width:0;flex:1 1 180px}
+.upl .t b{font-size:15px;overflow-wrap:anywhere}
+.upl .acts{display:flex;gap:8px;flex-wrap:wrap}
+.filebtn{position:relative;overflow:hidden;font:inherit;font-weight:700;font-size:14px;padding:9px 14px;border-radius:8px;background:var(--ink);color:var(--bg);cursor:pointer;display:inline-block}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.linkbtn{font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:9px 4px}
+
+.nav{display:flex;gap:12px;align-items:center;margin-top:28px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;font-size:16px;border-radius:9px;padding:16px 24px;cursor:pointer;border:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-align:center}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);padding-inline:10px}
+.btn.ghost:hover{text-decoration:underline}
+.btn.wide{width:100%}
+.btn:focus-visible{outline:3px solid var(--accent-soft);outline-offset:2px}
+.skip{margin-left:auto;font-size:14px;color:var(--muted);background:none;border:none;font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
+.reassure{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted);font-weight:600}
+.reassure span::before{content:"✓ ";color:var(--accent)}
+
+/* Offre et paiement */
+.offer{border:1.5px solid var(--ink);border-radius:14px;padding:20px;display:grid;gap:14px;background:var(--card)}
+.offer .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.offer .name{font-weight:900;font-size:20px;letter-spacing:-.02em}
+.offer .price{font-weight:900;font-size:34px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.offer .price small{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0}
+.offer .then{font-size:14px;color:var(--muted)}
+.offer .then b{color:var(--ink)}
+.offer ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
+.offer li::before{content:"✓  ";color:var(--accent);font-weight:800}
+.doubt{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px}.doubt b{font-size:16px}.doubt-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}.btn.line{background:var(--card);color:var(--ink);border:1.5px solid var(--ink);padding:12px 16px;font-size:15px;flex:1 1 160px}.btn.line:hover{background:var(--bg-soft)}
+.alt{font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:6px 0;justify-self:center}
+.panel{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--bg-soft);display:grid;gap:12px}
+.sum{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.sum div{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-top:1px solid var(--line);font-size:14px;font-variant-numeric:tabular-nums}
+.sum div:first-child{border-top:none}
+.sum b{font-weight:700}
+.sum .tot{background:var(--bg-soft);font-weight:800;font-size:15px}
+.sum .dev{color:var(--warn)}
+.domain{display:flex;align-items:stretch;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;background:var(--card)}
+.domain input{border:none;border-radius:0;box-shadow:none!important;min-width:0}
+.domain span{display:grid;place-items:center;padding:0 14px;background:var(--bg-soft);font-weight:700;color:var(--muted);border-left:1px solid var(--line)}
+.domain:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.secure{font-size:13px;color:var(--muted);text-align:center}
+.stripe{border:1.5px dashed var(--warn);background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:14px;font-size:14px}
+.next{display:grid;gap:12px;margin:18px 0 8px;counter-reset:n;padding:0}
+.next li{list-style:none;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.next li::before{counter-increment:n;content:counter(n);width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:900;display:grid;place-items:center}
+.next b{display:block}
+.next span{color:var(--muted);font-size:14px}
+.okbox{background:var(--ok-soft);color:var(--ok);border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px}
+
+/* ---- Aperçu : la vraie maquette ---- */
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (max-width:960px){.side{position:static;order:-1}}
+.side-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.side-head b{font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.dev-toggle{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--card)}
+.dev-toggle button{font:inherit;font-size:13px;font-weight:700;border:none;background:none;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.dev-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.browser{border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow);border:1px solid var(--line);margin-inline:auto;transition:max-width .3s}
+.browser.phone{max-width:390px;border-radius:26px}
+.bar{display:flex;align-items:center;gap:6px;padding:10px 12px;background:#eef0f4;border-bottom:1px solid #e1e4ea}
+.bar i{width:9px;height:9px;border-radius:50%;background:#cfd3db}
+.url{flex:1;margin-left:8px;background:#fff;border-radius:6px;padding:4px 10px;font-size:12px;color:#5d6272;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewport{position:relative;height:600px;overflow:hidden;background:#fff}
+.final .viewport{height:min(760px,calc(100vh - 170px))}
+.viewport iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:#fff}
+.tplname{font-size:12px;color:var(--muted);margin-top:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tplname b{color:var(--ink)}
+.note{font-size:12px;color:var(--muted);margin-top:6px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.step:not([hidden]){animation:in .35s ease both}
+@keyframes in{from{transform:translateY(6px)}to{transform:none}}
+.viewport iframe{transition:filter 1.1s ease,transform 1.1s ease}
+.viewport.veil iframe{filter:blur(var(--blur,16px)) saturate(.85);transform:scale(1.06)}
+.veil-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;pointer-events:none;transition:opacity .7s ease}
+.veil-msg b{background:#fff;color:#0b0b0f;font-size:15px;padding:10px 18px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.veil-msg small{background:rgba(255,255,255,.88);color:#3a3a44;font-size:12.5px;padding:5px 12px;border-radius:999px}
+.viewport:not(.veil) .veil-msg{opacity:0}
+@media (prefers-reduced-motion:reduce){.viewport iframe,.veil-msg{transition:none}}
+.viewport.veil{pointer-events:none}
+.paybar{display:none}
+@media (max-width:960px){
+  body.veiled .viewport{height:170px}
+  body.veiled .dev-toggle,body.veiled .tplname,body.veiled .note{display:none}
+  body.veiled .side-head{margin-bottom:8px}
+  body.veiled .veil-msg{gap:6px;padding:12px}
+  body.veiled .veil-msg b{font-size:14px;padding:8px 14px}
+  body.veiled .wrap{gap:16px}
+  body.revealed .viewport{height:min(58vh,560px)}
+  body.after .side{order:1}
+  body.s6 .paybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px -18px rgba(0,0,0,.35)}
+  body.s6{padding-bottom:110px}
+  .paybar .btn{width:100%;padding:14px 18px}
+  .paybar .alt{display:block;margin:6px auto 0;font-size:13.5px}
+}
+</style>
+</head><body>
+
+<header class="top">
+  <a class="logo" href="index.html" style="color:inherit;text-decoration:none">HOOD<span>.</span></a>
+  <div class="free">Maquette gratuite · Sans engagement</div>
+</header>
+
+<main class="wrap" id="wrap">
+  <section aria-live="polite">
+    <div class="progress" id="progress"></div>
+    <div class="meta" id="meta"></div>
+
+    <form id="form" novalidate>
+      <!-- 1. Métier -->
+      <div class="step" data-step="1">
+        <h1>Quel est votre <em>métier</em> ?</h1>
+        <p class="lead">Chaque métier a ses modèles de site. Deux minutes de questions, et votre site s'affiche aussitôt. Gratuitement.</p>
+        <label class="search"><input type="search" id="q" placeholder="Cherchez votre métier : fleuriste, garage…" autocomplete="off" aria-label="Chercher un métier"></label>
+        <p class="nomatch" id="nomatch" hidden>Pas dans la liste ? Choisissez « Autre métier » et dites-nous lequel.</p>
+        <div id="metiers"></div>
+        <label class="f" id="autre-wrap" hidden>Votre métier, en quelques mots
+          <input type="text" id="metierAutre" placeholder="Ex. : photographe, toiletteur, serrurier…" autocomplete="off">
+          <span class="hint">On part d'un modèle polyvalent, qu'on adapte à votre activité.</span>
+        </label>
+      </div>
+
+      <!-- 2. Entreprise -->
+      <div class="step" data-step="2" hidden>
+        <h1>Parlez-nous de <em>votre entreprise</em>.</h1>
+        <p class="lead">Ces informations s'affichent sur votre site. Le nom et la ville suffisent pour commencer.</p>
+        <div class="fields">
+          <label class="f">Nom de votre entreprise
+            <input type="text" id="nom" placeholder="Ex. : Plomberie Martin" autocomplete="organization">
+          </label>
+          <div class="row2">
+            <label class="f">Ville
+              <input type="text" id="ville" placeholder="Ex. : Vienne" autocomplete="address-level2">
+            </label>
+            <label class="f">Adresse <small>facultatif</small>
+              <input type="text" id="adresse" placeholder="Ex. : 12 rue de la Gare" autocomplete="street-address">
+            </label>
+          </div>
+          <div class="row2">
+            <label class="f">Téléphone de l'entreprise <small>facultatif</small>
+              <input type="tel" id="tel" placeholder="Ex. : 04 74 00 00 00" autocomplete="tel" inputmode="tel">
+              <span class="hint">Celui que vos clients appellent depuis le site.</span>
+            </label>
+            <label class="f">Année de création <small>facultatif</small>
+              <input type="number" id="annee" placeholder="Ex. : 2012" min="1900" max="2026" inputmode="numeric">
+            </label>
+          </div>
+          <label class="f">Votre fiche Google, Facebook ou Instagram <small>facultatif</small>
+            <input type="text" id="lien" placeholder="Collez le lien ici" autocomplete="url">
+            <span class="hint">On y reprend vos horaires et vos informations publiques : vous n'avez rien à ressaisir.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 3. Services -->
+      <div class="step" data-step="3" hidden>
+        <h1>Que proposez-vous <em>à vos clients</em> ?</h1>
+        <p class="lead">Vos quatre services principaux, avec vos mots. Laissez vide pour garder nos exemples du métier.</p>
+        <div class="fields">
+          <div class="row2">
+            <label class="f">Service 1 <input type="text" id="s1" autocomplete="off"></label>
+            <label class="f">Service 2 <input type="text" id="s2" autocomplete="off"></label>
+            <label class="f">Service 3 <input type="text" id="s3" autocomplete="off"></label>
+            <label class="f">Service 4 <input type="text" id="s4" autocomplete="off"></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Modèle -->
+      <div class="step" data-step="4" hidden>
+        <h1>Choisissez <em>votre modèle</em>.</h1>
+        <p class="lead" id="tpl-lead">Les modèles de votre métier. Votre site change à droite à chaque clic.</p>
+        <div class="tpls" id="tpls" role="radiogroup" aria-label="Modèle de site"></div>
+      </div>
+
+      <!-- 5. Options + logo -->
+      <div class="step" data-step="5" hidden>
+        <h1>Que voulez-vous <em>sur votre site</em> ?</h1>
+        <p class="lead">Ce que propose votre modèle. Chaque élément coché apparaît dans votre site.</p>
+        <div class="optgroup">
+          <h3>Compris dans L'Essentiel <span class="tag inc">inclus</span></h3>
+          <div class="checks" id="opts-inc"></div>
+        </div>
+        <div class="optgroup">
+          <h3>En plus, si vous le souhaitez <span class="tag dev">sur devis</span></h3>
+          <div class="checks" id="opts-dev"></div>
+          <p class="hint">Le prix vous est annoncé avant, et rien n'est fait sans votre accord.</p>
+        </div>
+        <div class="lbl" style="margin-bottom:10px">Votre logo <small>facultatif</small></div>
+        <div class="upl" id="upl">
+          <div class="thumb" id="thumb">Aucun</div>
+          <div class="t"><b id="upl-t">Ajoutez votre logo, il s'affiche tout de suite</b><span class="hint" id="upl-h">PNG, JPG, SVG ou WebP, 5 Mo maximum. Pas de logo ? Votre nom s'écrit dans la typographie du modèle.</span></div>
+          <div class="acts">
+            <label class="filebtn">Choisir un fichier<input type="file" id="logo" accept="image/png,image/jpeg,image/svg+xml,image/webp"></label>
+            <button type="button" class="linkbtn" id="logo-rm" hidden>Retirer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Le site est prêt -->
+      <div class="step" data-step="6" hidden>
+        <h1 id="ready-title">Voici votre site.</h1>
+        <p class="lead" id="ready-lead">Voici une première version de votre site.</p>
+        <div class="offer">
+          <div class="top"><span class="name">L'Essentiel</span><span class="price">290 € <small>HT, une fois</small></span></div>
+          <div class="then">Puis <b>10 € HT par mois</b>, à partir de la validation de votre site : hébergement, nom de domaine, sécurité. Sans engagement, résiliable chaque mois.</div>
+          <ul>
+            <li>Ce site, finalisé avec vos photos et vos textes</li>
+            <li>Votre nom de domaine, à votre nom</li>
+            <li>2 allers-retours avec notre équipe avant la mise en ligne</li>
+            <li>Mise en ligne en 48 heures environ, après réception de vos contenus</li>
+          </ul>
+          <button type="button" class="btn primary wide" id="go-pay">Commander mon site ↗</button>
+          <div class="doubt"><b>Pas sûr ? Des questions ?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
+            <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
+        </div>
+        <button type="button" class="alt" id="back-q" style="margin-top:14px">← Modifier mes réponses</button>
+      </div>
+
+      <!-- 7. Commande -->
+      <div class="step" data-step="7" hidden>
+        <h1>Commander <em>votre site</em>.</h1>
+        <p class="lead">Choisissez l'adresse de votre site, puis envoyez-nous votre commande. On vous répond avec le lien de paiement sécurisé.</p>
+        <div class="fields">
+          <label class="f">L'adresse de votre site
+            <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine"><span>.fr</span></div>
+            <span class="hint">On vérifie qu'elle est libre, puis on la réserve à votre nom après le paiement.</span>
+          </label>
+          <div class="sum" id="sum"></div>
+          <button type="button" class="btn primary wide" id="pay">Envoyer ma commande ↗</button>
+          <p class="secure">Aucun paiement sur cette page. Prix hors taxes.</p>
+          <button type="button" class="alt" id="rdv2">Une question avant de payer ? Prendre un rendez-vous</button>
+          <button type="button" class="alt" id="back-ready">← Revoir mon site</button>
+        </div>
+      </div>
+
+      <!-- 8. Message prêt -->
+      <div class="step" data-step="8" hidden>
+        <h1 id="sent-title">Votre message est prêt.</h1>
+        <p class="lead" id="sent-lead">Votre messagerie s'est ouverte avec votre demande déjà rédigée : il ne vous reste qu'à l'envoyer.</p>
+        <div class="panel">
+          <b style="font-size:15px">Votre messagerie ne s'est pas ouverte ?</b>
+          <span class="hint">Copiez ce récapitulatif et envoyez-le à <b class="sel" style="color:var(--ink);user-select:all">contact@hood-web.com</b>.</span>
+          <textarea id="recap" readonly style="min-height:170px;font-size:14px"></textarea>
+          <button type="button" class="btn primary" id="copy">Copier le récapitulatif</button>
+          <span class="hint" id="logo-note" hidden>Pensez à joindre votre logo à votre message.</span>
+        </div>
+        <button type="button" class="alt" id="back-site" style="margin-top:14px">← Revoir mon site</button>
+      </div>
+
+      <div class="err" id="err" role="alert"></div>
+      <div class="nav" id="nav">
+        <button type="button" class="btn ghost" id="back">← Retour</button>
+        <button type="submit" class="btn primary" id="next">Continuer ↗</button>
+        <button type="button" class="skip" id="skip">Passer cette question</button>
+      </div>
+      <div class="reassure" id="reassure"><span>Gratuit</span><span>Sans engagement</span><span>Aucune carte bancaire</span></div>
+    </form>
+  </section>
+
+  <aside class="side">
+    <div class="side-head"><b id="side-title">Votre futur site</b>
+      <div class="dev-toggle" role="group" aria-label="Taille d'écran"><button type="button" id="d-phone" aria-pressed="true">Téléphone</button><button type="button" id="d-desk" aria-pressed="false">Ordinateur</button></div>
+    </div>
+    <div class="browser phone" id="browser">
+      <div class="bar"><i></i><i></i><i></i><div class="url" id="p-url">votrecommerce.fr</div></div>
+      <div class="viewport veil" id="vp"><iframe id="frame" title="Votre maquette" tabindex="-1"></iframe><div class="veil-msg" aria-hidden="true"><b id="veil-t">Votre site prend forme…</b><small>Révélation à la fin du questionnaire</small></div></div>
+    </div>
+    <div class="tplname"><span>Modèle : <b id="p-tpl">à choisir</b></span><span id="p-fam"></span></div>
+    <p class="note">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez. <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
+  </aside>
+</main>
+<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Commander mon site · 290 € HT ↗</button><button type="button" class="alt" id="doubt-sticky">Pas sûr ? Des questions ?</button></div>
+
+<script>
+const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fffdf9;--encre:#1f2a24;--doux:#6b746e;--rose:#c8566b;--vert:#e4efe7}\n*{box-sizing:border-box;margin:0}body{font-family:\"Palatino Linotype\",Palatino,\"Book Antiqua\",\"URW Palladio L\",serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--encre);color:#fff;font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eadfd3}\n.nom{font-size:1.2rem;letter-spacing:.04em}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--rose);color:#fff;text-decoration:none;padding:11px 20px;border-radius:2px;border:0}\n.btn.l{background:none;color:var(--rose);border:1px solid var(--rose)}\n.s2{background:var(--vert);padding:48px 16px 96px;text-align:center}\n.s2 h1{font-size:2.3rem;font-weight:normal;line-height:1.15;max-width:760px;margin:auto}.s2 h1 em{color:var(--rose)}\n.sous{display:block;margin:12px 0 22px;color:var(--doux);font-style:italic}.sous::first-letter{text-transform:uppercase}\n.wrap{max-width:1040px;margin:-64px auto 0;padding:0 16px}\n.sv{background:#fff;border:1px solid #eadfd3;box-shadow:0 10px 30px rgba(0,0,0,.08);min-height:240px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:40px 0}h2{font-weight:normal;font-size:1.7rem;margin-bottom:4px}\n.note{color:var(--doux);font-style:italic;margin-bottom:18px}\n.cartes{display:grid;gap:18px}.carte-s3{border-top:2px solid var(--rose);padding-top:10px}.carte-s3 h3{font-size:1.15rem;font-weight:normal}.carte-s3 p{color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:6px 0;border-bottom:1px solid #eadfd3}\n.duo>div+div{margin-top:36px}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:1px solid #eadfd3}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.4rem}.cartes{grid-template-columns:repeat(4,1fr)}.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px}.duo>div+div{margin-top:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<div class=\"s2\"><h1>Votre <em>[métier]<\/em> à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div>\n<main class=\"wrap\"><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<section><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"cartes\"><div class=\"carte-s3\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<section class=\"duo\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"duo\"><div><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div><h2>Avis<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "ardoise2": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--ardoise:#24362f;--craie:#f4f1e8;--doux:#b9c4bc;--jaune:#f2d06b;--bois:#8a6a4a}\n*{box-sizing:border-box;margin:0}body{font-family:Georgia,\"DejaVu Serif\",serif;background:var(--ardoise);color:var(--craie);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--jaune);color:var(--ardoise);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:22px 16px;border-bottom:8px solid var(--bois)}\n.nom{font-size:1.6rem;font-style:italic;display:block;margin-bottom:10px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--jaune);color:var(--ardoise);text-decoration:none;padding:11px 20px;border-radius:24px;border:0}\n.btn.l{background:none;color:var(--jaune);border:2px dashed var(--jaune)}\n.wrap{max-width:900px;margin:auto;padding:0 16px}\n.s2{text-align:center;padding:40px 0}.s2 h1{font-size:2.1rem;font-style:italic;font-weight:normal;line-height:1.2}\n.sous{display:block;color:var(--doux);margin:10px 0 22px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:28px;border:2px dashed rgba(244,241,232,.5);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:32px 0;border-top:2px dashed rgba(244,241,232,.25)}\nh2{font-size:1.5rem;font-style:italic;font-weight:normal;color:var(--jaune);text-align:center;margin-bottom:6px}\n.note{color:var(--doux);text-align:center;font-size:.9rem;margin-bottom:18px}\n.menu{list-style:none;padding:0;max-width:620px;margin:auto}.menu li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px dotted rgba(244,241,232,.35)}\n.menu b{font-weight:normal;font-size:1.1rem}.menu span{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0;text-align:center}.horaires li{padding:4px 0}\n.centre{text-align:center}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:8px solid var(--bois)}footer a{color:var(--craie)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.2rem}.paire{display:grid;grid-template-columns:1fr 1fr;gap:40px}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><h1>[nom_commerce], [métier] près de chez vous.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><h2>Ce que nous proposons<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><ul class=\"menu\"><li><b>Exemple de prestation 1<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 2<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 3<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 4<\/b><span>À fournir (David), selon le métier.<\/span><\/li><\/ul><\/section>\n<section class=\"paire\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div class=\"centre\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"centre\"><h2>Nous trouver<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section class=\"centre\"><h2>Ils en parlent<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<section class=\"centre\"><h2>Nous appeler<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "etiquette": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fff6f2;--encre:#3a2b33;--doux:#7d6b74;--corail:#ef7b62;--menthe:#bfe6d8;--lilas:#e6dcf5}\n*{box-sizing:border-box;margin:0}body{font-family:\"Century Gothic\",\"Avenir Next\",Avenir,\"URW Gothic\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{background:var(--lilas);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}\n.nom{font-weight:bold;background:var(--menthe);padding:6px 14px;border-radius:999px}\n.btn{display:inline-block;font-weight:bold;background:var(--corail);color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;border:0}\n.btn.l{background:#fff;color:var(--corail);border:2px solid var(--corail)}\n.wrap{max-width:1000px;margin:auto;padding:0 16px}\n.s2{padding:32px 0 24px}.s2 h1{font-size:2.2rem;line-height:1.15}.s2 h1::first-letter{text-transform:uppercase}\n.sous{display:inline-block;margin:12px 0 20px;color:var(--doux)}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:24px;background:var(--menthe);border-radius:28px;min-height:220px;display:grid;place-items:center;color:var(--encre);font-size:.9rem;text-align:center;padding:16px}\nsection{margin:28px 0;background:#fff;border-radius:24px;padding:28px 20px;box-shadow:0 2px 0 rgba(58,43,51,.08)}\n.tag{display:inline-block;background:var(--corail);color:#fff;font-size:.8rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;transform:rotate(-3deg);margin-bottom:10px}\nh2{font-size:1.4rem;margin-bottom:6px}.note{color:var(--doux);font-size:.85rem;margin-bottom:16px}\n.pilules{display:grid;gap:12px}.pilule{background:var(--lilas);border-radius:20px;padding:14px 18px}.pilule h3{font-size:1rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:5px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:24px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:56px 0 24px}.s2 h1{font-size:3rem}.sv{margin:0;min-height:320px}.pilules{grid-template-columns:1fr 1fr}.bas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.bas section{margin:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><div><h1>[métier] à [ville] : appelez [nom_commerce].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><br><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><span class=\"tag\">Prestations<\/span><h2>Au comptoir<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"pilules\"><div class=\"pilule\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<div class=\"bas\">\n<section><span class=\"tag\">Horaires<\/span><h2>Quand venir<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/section>\n<section id=\"s6\"><span class=\"tag\">Adresse<\/span><h2>Venir nous voir<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section><span class=\"tag\">Contact<\/span><h2>Nous joindre<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/p><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<\/div>\n<section><span class=\"tag\">À propos<\/span><h2>Le commerce<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "registre": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--papier:#fbfaf7;--encre:#111;--doux:#555;--rouge:#b3261e;--filet:#cfcac0}\n*{box-sizing:border-box;margin:0}body{font-family:\"Times New Roman\",Times,\"Liberation Serif\",serif;background:var(--papier);color:var(--encre);line-height:1.55;font-size:17px}\n.s0{font-family:Arial,sans-serif;background:var(--rouge);color:#fff;font-size:.78rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:20px 16px 12px;border-bottom:4px double var(--encre);max-width:1100px;margin:0 16px}\n.nom{font-size:2rem;font-weight:bold;letter-spacing:.02em;display:block}\n.date{font-family:Arial,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--doux);margin-top:6px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;font-size:.9rem;background:var(--encre);color:#fff;text-decoration:none;padding:10px 18px;border:0}\n.btn.l{background:none;color:var(--encre);border:1px solid var(--encre)}.btn.r{background:var(--rouge)}\n.wrap{max-width:1100px;margin:auto;padding:0 16px}\n.une{padding:24px 0;border-bottom:1px solid var(--encre)}\n.une h1{font-size:2.3rem;line-height:1.1}\n.sous{display:block;font-style:italic;color:var(--doux);margin:8px 0 16px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:20px;border:1px solid var(--encre);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:16px;background:#efede8}\n.cols>div{padding:20px 0;border-bottom:1px solid var(--filet)}\nh2{font-family:Arial,sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;color:var(--rouge);margin-bottom:8px}\n.note{font-style:italic;color:var(--doux);font-size:.9rem;margin-bottom:8px}\ndl dt{font-weight:bold;margin-top:8px}dl dd{margin:0;color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:2px 0}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.78rem;color:var(--doux);padding:20px 16px;border-top:4px double var(--encre);margin-top:24px}footer a{color:var(--encre)}\nbutton.btn{font-size:.9rem;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:860px){header{margin:0 auto}.une{display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:end}.une h1{font-size:3.6rem}.sv{margin:0}.cols{display:grid;grid-template-columns:repeat(3,1fr)}.cols>div{padding:20px;border-bottom:0;border-left:1px solid var(--filet)}.cols>div:first-child{border-left:0;padding-left:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><div class=\"date\">[métier] · [ville]<\/div><p style=\"margin-top:12px\"><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a><\/p><\/header>\n<main class=\"wrap\">\n<div class=\"une\"><div><h1>[nom_commerce], près de chez vous, à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<div class=\"cols\">\n<div><h2>Nos services<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><dl><dt>Exemple de prestation 1<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 2<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 3<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 4<\/dt><dd>À fournir (David), selon le métier.<\/dd><\/dl><\/div>\n<div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><h2 style=\"margin-top:20px\">À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin:10px 0 20px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><h2>Avis<\/h2><p style=\"margin-bottom:20px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "mosaique": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#f4f6f5;--encre:#18322f;--doux:#5d706d;--sarcelle:#1f7a72;--moutarde:#e7b53c;--blanc:#fff}\n*{box-sizing:border-box;margin:0}body{font-family:Tahoma,\"Segoe UI\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.55}\n.s0{background:var(--moutarde);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{position:sticky;top:0;z-index:2;background:var(--sarcelle);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}\n.nom{font-weight:bold}nav{display:none}nav a{color:#fff;text-decoration:none;margin-right:16px;font-size:.9rem}\n.btn{display:inline-block;font-weight:bold;background:var(--moutarde);color:var(--encre);text-decoration:none;padding:10px 18px;border-radius:10px;border:0}\n.btn.l{background:var(--blanc);color:var(--sarcelle);border:2px solid var(--sarcelle)}\n.grille{max-width:1160px;margin:auto;padding:16px;display:grid;gap:14px}\n.tuile{background:var(--blanc);border-radius:16px;padding:22px}\n.t-hero{background:var(--sarcelle);color:#fff}.t-hero h1{font-size:2rem;line-height:1.15}\n.sous{display:block;margin:10px 0 18px;opacity:.85}.sous::first-letter{text-transform:uppercase}\n.sv{min-height:220px;display:grid;place-items:center;color:var(--doux);font-size:.9rem;text-align:center;background:repeating-linear-gradient(-45deg,#e9eeec 0 14px,#f4f6f5 14px 28px)}\n.t-mout{background:var(--moutarde)}\nh2{font-size:1.15rem;margin-bottom:8px}.note{color:var(--doux);font-size:.82rem;margin-bottom:12px}\n.svc{display:grid;gap:10px}.svc div{border-left:4px solid var(--moutarde);padding-left:12px}.svc h3{font-size:1rem}.svc p{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:3px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:20px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:900px){nav{display:block}.grille{grid-template-columns:repeat(4,1fr)}.t-hero{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:center}.t-hero h1{font-size:3rem}.sv{grid-column:span 2;grid-row:span 2}.t-svc{grid-column:span 2}.svc{grid-template-columns:1fr 1fr}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><nav><a href=\"#svc\">Prestations<\/a><a href=\"#hor\">Horaires<\/a><a href=\"#s6\">Adresse<\/a><\/nav><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"grille\">\n<div class=\"tuile t-hero\"><h1>Tout sur [nom_commerce], en une page.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><div><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><\/div>\n<div class=\"tuile sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<div class=\"tuile t-svc\" id=\"svc\"><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"svc\"><div><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/div>\n<div class=\"tuile t-mout\" id=\"hor\"><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div>\n<div class=\"tuile\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div class=\"tuile\" id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:10px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div class=\"tuile t-svc\"><h2>Avis<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/div>\n<div class=\"tuile t-mout\" style=\"grid-column:1/-1;text-align:center\"><h2>Contact<\/h2><a class=\"btn l\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n"};
+(function(){
+  const TOTAL=5;const MAIL="contact@hood-web.com";const CALENDLY="";/* adresse de la page Calendly de HOOD, à remplir */
+  const $=id=>document.getElementById(id);
+  const form=$("form");let step=1;let logoURL="";let device="phone";
+
+  /* Les modèles d'Aymeric (base « Template » du Notion HOOD et dossier « HOOD-templates-toutes-verticales », 9 Nov. 2026), servis depuis le dossier modeles/ */
+  const CAT=[{"f": "D2-trattoria-photos.html", "v": "Restauration", "n": "Trattoria photos", "st": "D2", "c": "Chez Lucia", "l": "Paris 11e", "t": "01 00 00 00 00", "a": "14 rue de la Roquette", "cp": "75011 Paris", "lg": "Chez", "ex": ["Cacio e pepe", "Pizza du four", "Burrata", "Tiramisu maison"]}, {"f": "D3-bistrot.html", "v": "Restauration", "n": "Bistrot", "st": "D3", "c": "Le Comptoir des Halles", "l": "Paris 2e", "t": "01 00 00 00 00", "a": "8 rue Montorgueil", "cp": "75002 Paris", "lg": "Le Comptoir", "ex": ["Entrecôte, frites maison", "Pièce du boucher", "Poisson du marché", "Assiette de douceurs"]}, {"f": "D4-asiatique.html", "v": "Restauration", "n": "Asiatique", "st": "D4", "c": "Maison Kumo", "l": "Lyon 7e", "t": "04 00 00 00 00", "a": "21 rue de Marseille", "cp": "69007 Lyon", "lg": "KUMO", "ex": ["Tonkotsu ramen", "Miso ramen", "Gyoza grillés", "Dim sum vapeur"]}, {"f": "D5-burger.html", "v": "Restauration", "n": "Burger", "st": "D5", "c": "Smash Club", "l": "Bordeaux", "t": "05 00 00 00 00", "a": "3 cours Victor-Hugo", "cp": "33000 Bordeaux", "lg": "SMASH", "ex": ["Le Classic", "Le Double Trouble", "Le Veggie", "Frites maison"]}, {"f": "D6-brunch.html", "v": "Restauration", "n": "Brunch", "st": "D6", "c": "Matin Clair", "l": "Nantes", "t": "02 00 00 00 00", "a": "12 rue Fénelon", "cp": "44000 Nantes", "lg": "matin", "ex": ["Œuf mollet & levain", "Bol de fruits frais", "Latte de spécialité", "Tartine du jour"]}, {"f": "D7-boulangerie.html", "v": "Restauration", "n": "Boulangerie", "st": "D7", "c": "Fournil Saint-Pierre", "l": "Toulouse", "t": "05 00 00 00 00", "a": "5 place Saint-Pierre", "cp": "31000 Toulouse", "lg": "Fournil", "ex": ["Croissant pur beurre", "Tartes de saison", "Roulés à la cannelle", "Pain au levain"]}, {"f": "C6-salon-prestige.html", "v": "Coiffure", "n": "Salon prestige", "st": "C6", "c": "Maison Céleste", "l": "Paris 16e", "t": "01 00 00 00 00", "a": "24 rue de Passy", "cp": "75016 Paris", "lg": "Maison", "ex": ["Coupe & brushing", "Couleur & balayage", "Chignon & mariée", "Rituel soin profond"]}, {"f": "C7-salon-coloriste.html", "v": "Coiffure", "n": "Salon coloriste", "st": "C7", "c": "Atelier Ocre", "l": "Lyon 1er", "t": "04 00 00 00 00", "a": "9 rue d'Algérie", "cp": "69001 Lyon", "lg": "atelier", "ex": ["Balayage lumière", "Couleur végétale", "Coupe sur mesure", "Soin réparateur"]}, {"f": "C8-barbier.html", "v": "Coiffure", "n": "Barbier", "st": "C8", "c": "Le Barbier du Canal", "l": "Paris 10e", "t": "01 00 00 00 00", "a": "41 quai de Valmy", "cp": "75010 Paris", "lg": "BARBIER", "ex": ["Coupe homme", "Taille de barbe", "Coupe + barbe", "Rasage traditionnel"]}, {"f": "C9-salon-urbain.html", "v": "Coiffure", "n": "Salon urbain", "st": "C9", "c": "Studio Boucle", "l": "Marseille 6e", "t": "04 00 00 00 00", "a": "18 rue de la Palud", "cp": "13006 Marseille", "lg": "STUDIO", "ex": ["Coupe femme ou homme", "Couleur & balayage", "Réparation", "Spécial boucles"]}, {"f": "C10-salon-quartier.html", "v": "Coiffure", "n": "Salon quartier", "st": "C10", "c": "Salon Margaux", "l": "Rennes", "t": "02 00 00 00 00", "a": "6 rue Saint-Hélier", "cp": "35000 Rennes", "lg": "Salon", "ex": ["Coupe femme", "Coupe homme", "Coupe enfant", "Couleur"]}, {"f": "B11-plombier-urgence.html", "v": "Plombier", "n": "Plombier urgence", "st": "B11", "c": "Duval Plomberie", "l": "Nantes et agglomération", "t": "02 00 00 00 00", "a": null, "cp": null, "lg": "DUVAL", "ex": ["Recherche de fuite", "Débouchage", "Chauffe-eau", "Robinetterie"]}, {"f": "B12-plombier-salle-de-bain.html", "v": "Plombier", "n": "Plombier salle de bain", "st": "B12", "c": "Aqua Rénov", "l": "Lyon", "t": "04 00 00 00 00", "a": null, "cp": null, "lg": "aqua", "ex": ["Salle de bain clé en main", "Douche à l'italienne", "Meuble & vasque", "Dépannage plomberie"]}, {"f": "B13-plombier-artisan.html", "v": "Plombier", "n": "Plombier artisan", "st": "B13", "c": "Martin & Fils", "l": "Toulouse", "t": "05 00 00 00 00", "a": null, "cp": null, "lg": "Martin", "ex": ["Fuite & dégât des eaux", "WC & sanitaires", "Ballon d'eau chaude", "Raccordements"]}, {"f": "B14-plombier-sos.html", "v": "Plombier", "n": "Plombier sos", "st": "B14", "c": "SOS Fuite 13", "l": "Marseille", "t": "04 00 00 00 00", "a": null, "cp": null, "lg": "SOS", "ex": ["Fuite d'eau", "WC bouché", "Canalisation", "Dégât des eaux"]}, {"f": "E15-electricien-urgence.html", "v": "Électricien", "n": "Electricien urgence", "st": "E15", "c": "Volta Électricité", "l": "Bordeaux", "t": "05 00 00 00 00", "a": null, "cp": null, "lg": "VOLTA", "ex": ["Dépannage électrique", "Tableau électrique", "Prises & éclairage", "Borne de recharge"]}, {"f": "E16-electricien-renovation.html", "v": "Électricien", "n": "Electricien renovation", "st": "E16", "c": "Lumen", "l": "Lille", "t": "03 00 00 00 00", "a": null, "cp": null, "lg": "lumen", "ex": ["Rénovation complète", "Éclairage intérieur", "Maison connectée", "Diagnostic sécurité"]}, {"f": "E17-electricien-artisan.html", "v": "Électricien", "n": "Electricien artisan", "st": "E17", "c": "Ohm Artisan", "l": "Rennes", "t": "02 00 00 00 00", "a": null, "cp": null, "lg": "Ohm", "ex": ["Dépannage", "Mise aux normes", "Prises & interrupteurs", "Luminaires"]}, {"f": "H18-chauffagiste-pac.html", "v": "Chauffagiste", "n": "Chauffagiste pac", "st": "H18", "c": "Thermia", "l": "Strasbourg", "t": "03 00 00 00 00", "a": null, "cp": null, "lg": "THERMIA", "ex": ["Pompe à chaleur air-eau", "Climatisation réversible", "Entretien annuel", "Dépannage PAC"]}, {"f": "H19-chauffagiste-confort.html", "v": "Chauffagiste", "n": "Chauffagiste confort", "st": "H19", "c": "Chaleur & Confort", "l": "Grenoble", "t": "04 00 00 00 00", "a": null, "cp": null, "lg": "Chaleur", "ex": ["Chaudière gaz à condensation", "Radiateurs", "Plancher chauffant", "Sèche-serviettes"]}, {"f": "H20-chauffagiste-entretien.html", "v": "Chauffagiste", "n": "Chauffagiste entretien", "st": "H20", "c": "Lebrun Chauffage", "l": "Reims", "t": "03 00 00 00 00", "a": null, "cp": null, "lg": "LEBRUN", "ex": ["Entretien chaudière gaz", "Contrat sérénité", "Dépannage toutes marques", "Remplacement chaudière"]}, {"f": "V01A-fleuriste.html", "v": "Fleuriste", "n": "Atelier Pivoine", "st": "Style Éditorial", "c": "Atelier Pivoine", "l": "75011 Paris", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "75011 Paris", "lg": "Atelier", "ex": ["Bouquet du moment", "Bouquet signature", "Mariage", "Deuil"]}, {"f": "V01B-fleuriste.html", "v": "Fleuriste", "n": "Fleurs Sauvages", "st": "Style Impact", "c": "Fleurs Sauvages", "l": "69004 Lyon", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "69004 Lyon", "lg": "FLEURS", "ex": ["Bouquet du moment", "Bouquet signature", "Mariage", "Deuil"]}, {"f": "V01C-fleuriste.html", "v": "Fleuriste", "n": "Bouquet Nord", "st": "Style Moderne", "c": "Bouquet Nord", "l": "59000 Lille", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "59000 Lille", "lg": "bouquet", "ex": ["Bouquet du moment", "Bouquet signature", "Mariage", "Deuil"]}, {"f": "V02A-boucherie.html", "v": "Boucherie-charcuterie", "n": "Maison Garnier", "st": "Style Éditorial", "c": "Maison Garnier", "l": "33000 Bordeaux", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "33000 Bordeaux", "lg": "Maison", "ex": ["Côte de bœuf maturée", "Volailles fermières", "Charcuterie maison", "Plateaux barbecue"]}, {"f": "V02B-boucherie.html", "v": "Boucherie-charcuterie", "n": "Boucherie du Marché", "st": "Style Impact", "c": "Boucherie du Marché", "l": "44000 Nantes", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "44000 Nantes", "lg": "BOUCHERIE", "ex": ["Côte de bœuf maturée", "Volailles fermières", "Charcuterie maison", "Plateaux barbecue"]}, {"f": "V02C-boucherie.html", "v": "Boucherie-charcuterie", "n": "Le Billot", "st": "Style Moderne", "c": "Le Billot", "l": "35000 Rennes", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "35000 Rennes", "lg": "le billot", "ex": ["Côte de bœuf maturée", "Volailles fermières", "Charcuterie maison", "Plateaux barbecue"]}, {"f": "V03A-fromagerie.html", "v": "Fromagerie & épicerie fine", "n": "La Cloche à Fromage", "st": "Style Éditorial", "c": "La Cloche à Fromage", "l": "67000 Strasbourg", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "67000 Strasbourg", "lg": "La Cloche", "ex": ["Plateau de fromages", "Fromages affinés", "Planche apéritif", "Épicerie fine"]}, {"f": "V03B-fromagerie.html", "v": "Fromagerie & épicerie fine", "n": "Comptoir Affiné", "st": "Style Impact", "c": "Comptoir Affiné", "l": "21000 Dijon", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "21000 Dijon", "lg": "COMPTOIR", "ex": ["Plateau de fromages", "Fromages affinés", "Planche apéritif", "Épicerie fine"]}, {"f": "V03C-fromagerie.html", "v": "Fromagerie & épicerie fine", "n": "Petit Lait", "st": "Style Moderne", "c": "Petit Lait", "l": "31000 Toulouse", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "31000 Toulouse", "lg": "petit lait", "ex": ["Plateau de fromages", "Fromages affinés", "Planche apéritif", "Épicerie fine"]}, {"f": "V04A-caviste.html", "v": "Caviste", "n": "Le Cellier Saint-Jean", "st": "Style Éditorial", "c": "Le Cellier Saint-Jean", "l": "69005 Lyon", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "69005 Lyon", "lg": "Le Cellier", "ex": ["Sélection du mois", "Grands vins", "Coffrets cadeaux", "Dégustations"]}, {"f": "V04B-caviste.html", "v": "Caviste", "n": "Cave Rouge", "st": "Style Impact", "c": "Cave Rouge", "l": "13001 Marseille", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "13001 Marseille", "lg": "CAVE", "ex": ["Sélection du mois", "Grands vins", "Coffrets cadeaux", "Dégustations"]}, {"f": "V04C-caviste.html", "v": "Caviste", "n": "Bouteille", "st": "Style Moderne", "c": "Bouteille", "l": "75018 Paris", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "75018 Paris", "lg": "bouteille", "ex": ["Sélection du mois", "Grands vins", "Coffrets cadeaux", "Dégustations"]}, {"f": "V05A-traiteur.html", "v": "Traiteur", "n": "Saveurs & Partage", "st": "Style Éditorial", "c": "Saveurs & Partage", "l": "06000 Nice", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "06000 Nice", "lg": "Saveurs", "ex": ["Cocktail dînatoire", "Buffet froid & chaud", "Plateaux repas", "Repas de fête"]}, {"f": "V05B-traiteur.html", "v": "Traiteur", "n": "Grand Buffet", "st": "Style Impact", "c": "Grand Buffet", "l": "59000 Lille", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "59000 Lille", "lg": "GRAND", "ex": ["Cocktail dînatoire", "Buffet froid & chaud", "Plateaux repas", "Repas de fête"]}, {"f": "V05C-traiteur.html", "v": "Traiteur", "n": "Table Ronde", "st": "Style Moderne", "c": "Table Ronde", "l": "34000 Montpellier", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "34000 Montpellier", "lg": "table ronde", "ex": ["Cocktail dînatoire", "Buffet froid & chaud", "Plateaux repas", "Repas de fête"]}, {"f": "V06A-institut-beaute.html", "v": "Institut de beauté", "n": "Institut Rose Thé", "st": "Style Éditorial", "c": "Institut Rose Thé", "l": "13100 Aix-en-Provence", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "13100 Aix-en-Provence", "lg": "Institut", "ex": ["Soin du visage", "Semi-permanent", "Pose gel & nail art", "Épilations"]}, {"f": "V06B-institut-beaute.html", "v": "Institut de beauté", "n": "Nail Studio Léa", "st": "Style Impact", "c": "Nail Studio Léa", "l": "76000 Rouen", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "76000 Rouen", "lg": "NAIL", "ex": ["Soin du visage", "Semi-permanent", "Pose gel & nail art", "Épilations"]}, {"f": "V06C-institut-beaute.html", "v": "Institut de beauté", "n": "Belle Heure", "st": "Style Moderne", "c": "Belle Heure", "l": "37000 Tours", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "37000 Tours", "lg": "belle heure", "ex": ["Soin du visage", "Semi-permanent", "Pose gel & nail art", "Épilations"]}, {"f": "V07A-garage.html", "v": "Garage automobile", "n": "Garage Central", "st": "Style Éditorial", "c": "Garage Central", "l": "45000 Orléans", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "45000 Orléans", "lg": "GARAGE", "ex": ["Vidange & révision", "Freinage", "Pneumatiques", "Diagnostic électronique"]}, {"f": "V07B-garage.html", "v": "Garage automobile", "n": "Atelier Mécanique Durand", "st": "Style Impact", "c": "Atelier Mécanique Durand", "l": "63000 Clermont-Ferrand", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "63000 Clermont-Ferrand", "lg": "Atelier", "ex": ["Vidange & révision", "Freinage", "Pneumatiques", "Diagnostic électronique"]}, {"f": "V07C-garage.html", "v": "Garage automobile", "n": "Auto Express 72", "st": "Style Moderne", "c": "Auto Express 72", "l": "72000 Le Mans", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "72000 Le Mans", "lg": "auto express", "ex": ["Vidange & révision", "Freinage", "Pneumatiques", "Diagnostic électronique"]}, {"f": "V08A-cordonnerie.html", "v": "Cordonnerie & clés", "n": "Cordonnerie Saint-Paul", "st": "Style Éditorial", "c": "Cordonnerie Saint-Paul", "l": "75004 Paris", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "75004 Paris", "lg": "Cordonnerie", "ex": ["Ressemelage", "Talons", "Doubles de clés", "Maroquinerie"]}, {"f": "V08B-cordonnerie.html", "v": "Cordonnerie & clés", "n": "Talon Minute", "st": "Style Impact", "c": "Talon Minute", "l": "38000 Grenoble", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "38000 Grenoble", "lg": "TALON", "ex": ["Ressemelage", "Talons", "Doubles de clés", "Maroquinerie"]}, {"f": "V08C-cordonnerie.html", "v": "Cordonnerie & clés", "n": "L'Atelier du Cuir", "st": "Style Moderne", "c": "L'Atelier du Cuir", "l": "17000 La Rochelle", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "17000 La Rochelle", "lg": "atelier du cuir", "ex": ["Ressemelage", "Talons", "Doubles de clés", "Maroquinerie"]}, {"f": "V09A-retouche-pressing.html", "v": "Retouches & pressing", "n": "Fil d'Or Retouches", "st": "Style Éditorial", "c": "Fil d'Or Retouches", "l": "57000 Metz", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "57000 Metz", "lg": "Fil", "ex": ["Ourlet pantalon", "Ajustement", "Chemise lavée-repassée", "Couette & linge de maison"]}, {"f": "V09B-retouche-pressing.html", "v": "Retouches & pressing", "n": "Pressing Net", "st": "Style Impact", "c": "Pressing Net", "l": "49000 Angers", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "49000 Angers", "lg": "PRESSING", "ex": ["Ourlet pantalon", "Ajustement", "Chemise lavée-repassée", "Couette & linge de maison"]}, {"f": "V09C-retouche-pressing.html", "v": "Retouches & pressing", "n": "L'Atelier Couture", "st": "Style Moderne", "c": "L'Atelier Couture", "l": "80000 Amiens", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "80000 Amiens", "lg": "atelier couture", "ex": ["Ourlet pantalon", "Ajustement", "Chemise lavée-repassée", "Couette & linge de maison"]}, {"f": "V10A-serrurier.html", "v": "Serrurier", "n": "Clé d'Argent Serrurerie", "st": "Style Éditorial", "c": "Clé d'Argent Serrurerie", "l": "75015 Paris", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "75015 Paris", "lg": "Clé", "ex": ["Ouverture de porte", "Changement de serrure", "Serrure 3 points", "Porte blindée"]}, {"f": "V10B-serrurier.html", "v": "Serrurier", "n": "Serrurier 24 Lyon", "st": "Style Impact", "c": "Serrurier 24 Lyon", "l": "69003 Lyon", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "69003 Lyon", "lg": "SERRURIER", "ex": ["Ouverture de porte", "Changement de serrure", "Serrure 3 points", "Porte blindée"]}, {"f": "V10C-serrurier.html", "v": "Serrurier", "n": "Verrou & Co", "st": "Style Moderne", "c": "Verrou & Co", "l": "31000 Toulouse", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "31000 Toulouse", "lg": "verrou", "ex": ["Ouverture de porte", "Changement de serrure", "Serrure 3 points", "Porte blindée"]}, {"f": "V11A-peintre.html", "v": "Peintre en bâtiment", "n": "Couleurs & Finitions", "st": "Style Éditorial", "c": "Couleurs & Finitions", "l": "92100 Boulogne", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "92100 Boulogne", "lg": "Couleurs", "ex": ["Peinture intérieure", "Enduits & lissage", "Papier peint", "Façades & boiseries"]}, {"f": "V11B-peintre.html", "v": "Peintre en bâtiment", "n": "Pinceau Pro", "st": "Style Impact", "c": "Pinceau Pro", "l": "59800 Lille", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "59800 Lille", "lg": "PINCEAU", "ex": ["Peinture intérieure", "Enduits & lissage", "Papier peint", "Façades & boiseries"]}, {"f": "V11C-peintre.html", "v": "Peintre en bâtiment", "n": "Atelier Teinte", "st": "Style Moderne", "c": "Atelier Teinte", "l": "35000 Rennes", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "35000 Rennes", "lg": "atelier teinte", "ex": ["Peinture intérieure", "Enduits & lissage", "Papier peint", "Façades & boiseries"]}, {"f": "V12A-menuisier.html", "v": "Menuisier-ébéniste", "n": "Atelier Chêne", "st": "Style Éditorial", "c": "Atelier Chêne", "l": "87000 Limoges", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "87000 Limoges", "lg": "Atelier", "ex": ["Dressing sur mesure", "Cuisine en bois massif", "Bibliothèque", "Portes & fenêtres"]}, {"f": "V12B-menuisier.html", "v": "Menuisier-ébéniste", "n": "Menuiserie Bois Franc", "st": "Style Impact", "c": "Menuiserie Bois Franc", "l": "74000 Annecy", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "74000 Annecy", "lg": "BOIS", "ex": ["Dressing sur mesure", "Cuisine en bois massif", "Bibliothèque", "Portes & fenêtres"]}, {"f": "V12C-menuisier.html", "v": "Menuisier-ébéniste", "n": "Copeau", "st": "Style Moderne", "c": "Copeau", "l": "44000 Nantes", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "44000 Nantes", "lg": "copeau", "ex": ["Dressing sur mesure", "Cuisine en bois massif", "Bibliothèque", "Portes & fenêtres"]}, {"f": "V13A-paysagiste.html", "v": "Paysagiste", "n": "Jardins du Lez", "st": "Style Éditorial", "c": "Jardins du Lez", "l": "34000 Montpellier", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "34000 Montpellier", "lg": "Jardins", "ex": ["Entretien annuel", "Création de jardin", "Taille & élagage", "Allées & terrasses"]}, {"f": "V13B-paysagiste.html", "v": "Paysagiste", "n": "Vert Net", "st": "Style Impact", "c": "Vert Net", "l": "33700 Mérignac", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "33700 Mérignac", "lg": "VERT", "ex": ["Entretien annuel", "Création de jardin", "Taille & élagage", "Allées & terrasses"]}, {"f": "V13C-paysagiste.html", "v": "Paysagiste", "n": "Feuillage", "st": "Style Moderne", "c": "Feuillage", "l": "06400 Cannes", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "06400 Cannes", "lg": "feuillage", "ex": ["Entretien annuel", "Création de jardin", "Taille & élagage", "Allées & terrasses"]}, {"f": "V14A-couvreur.html", "v": "Couvreur", "n": "Toitures Martel", "st": "Style Éditorial", "c": "Toitures Martel", "l": "29000 Quimper", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "29000 Quimper", "lg": "Toitures", "ex": ["Recherche de fuite", "Démoussage & traitement", "Réfection de toiture", "Gouttières & zinguerie"]}, {"f": "V14B-couvreur.html", "v": "Couvreur", "n": "Couverture Pro 69", "st": "Style Impact", "c": "Couverture Pro 69", "l": "69100 Villeurbanne", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "69100 Villeurbanne", "lg": "COUVERTURE", "ex": ["Recherche de fuite", "Démoussage & traitement", "Réfection de toiture", "Gouttières & zinguerie"]}, {"f": "V14C-couvreur.html", "v": "Couvreur", "n": "Au-dessus", "st": "Style Moderne", "c": "Au-dessus", "l": "64100 Bayonne", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "64100 Bayonne", "lg": "au-dessus", "ex": ["Recherche de fuite", "Démoussage & traitement", "Réfection de toiture", "Gouttières & zinguerie"]}, {"f": "V15A-toiletteur.html", "v": "Toilettage", "n": "Poils & Moustaches", "st": "Style Éditorial", "c": "Poils & Moustaches", "l": "67000 Strasbourg", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "67000 Strasbourg", "lg": "Poils", "ex": ["Bain & brushing", "Toilettage complet", "Grands chiens", "Coupe des griffes"]}, {"f": "V15B-toiletteur.html", "v": "Toilettage", "n": "Dog Spa", "st": "Style Impact", "c": "Dog Spa", "l": "13008 Marseille", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "13008 Marseille", "lg": "DOG", "ex": ["Bain & brushing", "Toilettage complet", "Grands chiens", "Coupe des griffes"]}, {"f": "V15C-toiletteur.html", "v": "Toilettage", "n": "Câlin Canin", "st": "Style Moderne", "c": "Câlin Canin", "l": "86000 Poitiers", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "86000 Poitiers", "lg": "câlin canin", "ex": ["Bain & brushing", "Toilettage complet", "Grands chiens", "Coupe des griffes"]}, {"f": "V16A-coach-sport.html", "v": "Salle & coaching", "n": "Studio Forme", "st": "Style Éditorial", "c": "Studio Forme", "l": "75010 Paris", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "75010 Paris", "lg": "STUDIO", "ex": ["Séance d'essai", "Small group", "Coaching individuel", "Accès libre"]}, {"f": "V16B-coach-sport.html", "v": "Salle & coaching", "n": "Iron Club", "st": "Style Impact", "c": "Iron Club", "l": "69007 Lyon", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "69007 Lyon", "lg": "IRON", "ex": ["Séance d'essai", "Small group", "Coaching individuel", "Accès libre"]}, {"f": "V16C-coach-sport.html", "v": "Salle & coaching", "n": "Mouv", "st": "Style Moderne", "c": "Mouv", "l": "33000 Bordeaux", "t": "01 00 00 00 00", "a": "12 rue du Marché", "cp": "33000 Bordeaux", "lg": "mouv", "ex": ["Séance d'essai", "Small group", "Coaching individuel", "Accès libre"]}];
+  const CATI={};CAT.forEach(e=>CATI[e.f]=e);
+  /* Les 5 modèles polyvalents de l'équipe (Backlog N° 135), gardés pour « Autre métier » (décision de Steve, 9 Nov. 2026) */
+  const SERIF="Georgia,serif";
+  const T={
+    vitrine:["Vitrine","Vert d'eau et rose, chaleureux","#e4efe7","#1f2a24","#c8566b","'Palatino Linotype',Palatino,serif",700],
+    ardoise2:["Ardoise","Ardoise et bois, colonne centrée","#2f3437","#f0ede4","#e9c46a",SERIF,700],
+    etiquette:["Étiquette","Pastels et étiquettes corail","#fff6f2","#3a2b33","#ef7b62","'Century Gothic','Avenir Next',sans-serif",700],
+    registre:["Registre","Mise en page de journal","#faf8f3","#111","#b3261e","'Times New Roman',serif",700],
+    mosaique:["Mosaïque","Tuiles arrondies, sarcelle et moutarde","#eef1f3","#1f2d33","#0f8b8d","Tahoma,sans-serif",700]
+  };
+
+  const COMMON_INC=[["apropos","Page À propos","Votre histoire, votre équipe",0],["tarifs","Vos tarifs affichés","Sans vente en ligne",0],["contact","Formulaire de contact","Vos clients vous écrivent depuis le site",0]];
+  const COMMON_DEV=[["avissite","Vos avis Google affichés sur le site","Par l'outil officiel de Google"],["insta","Votre Instagram sur le site","Un encart avec vos publications"]];
+  const FAM={
+    bouche:{lab:"Restauration et commerces de bouche",
+      inc:[["commandes","Commandes par téléphone","",1],["occasions","Vos occasions","Fêtes, anniversaires, événements",0],["galerie","Photos de vos produits","",0]],
+      dev:[["carte","La carte complète","Tous vos plats ou produits, détaillés"],["resa","Réservation ou commande en ligne","Avec un outil extérieur"]]},
+    beaute:{lab:"Beauté et bien-être",
+      inc:[["galerie","Galerie de vos réalisations","",0]],dev:[["rdv","Prise de rendez-vous en ligne","Avec un outil de réservation extérieur"]]},
+    batiment:{lab:"Artisans du bâtiment",
+      inc:[["zone","Votre zone d'intervention","Les communes où vous intervenez",1],["assurance","Assurance et qualifications","Fournies par vous",0],["photos","Photos de vos chantiers","",0]],dev:[]},
+    proximite:{lab:"Commerces et services de proximité",
+      inc:[["marques","Les marques que vous proposez","Ou que vous entretenez",0],["galerie","Photos de la boutique","",0]],dev:[]},
+    autre:{lab:"Modèles polyvalents",
+      inc:[["marques","Les marques que vous proposez","Ou que vous entretenez",0],["galerie","Photos de vos réalisations","",0]],dev:[]}
+  };
+  /* Métier affiché : verticale d'Aymeric, nom pour les textes, famille, fichiers */
+  const MDEF=[
+    ["restaurant","Restaurant","restaurant","bouche",e=>e.v==="Restauration"&&!/boulangerie/.test(e.f)],
+    ["boulangerie","Boulangerie","boulangerie","bouche",e=>/boulangerie/.test(e.f)],
+    ["boucherie","Boucherie-charcuterie","boucherie","bouche",e=>e.v==="Boucherie-charcuterie"],
+    ["fromagerie","Fromagerie et épicerie fine","fromagerie","bouche",e=>/fromagerie/.test(e.f)],
+    ["caviste","Caviste","caviste","bouche",e=>e.v==="Caviste"],
+    ["traiteur","Traiteur","traiteur","bouche",e=>e.v==="Traiteur"],
+    ["coiffure","Coiffeur ou barbier","salon de coiffure","beaute",e=>e.v==="Coiffure"],
+    ["institut","Institut de beauté","institut de beauté","beaute",e=>e.v==="Institut de beauté"],
+    ["toilettage","Toilettage","toiletteur","beaute",e=>e.v==="Toilettage"],
+    ["coaching","Salle de sport et coaching","salle de sport","beaute",e=>/coach/.test(e.f)],
+    ["plombier","Plombier","plombier","batiment",e=>e.v==="Plombier"],
+    ["electricien","Électricien","électricien","batiment",e=>e.v==="Électricien"],
+    ["chauffagiste","Chauffagiste","chauffagiste","batiment",e=>e.v==="Chauffagiste"],
+    ["serrurier","Serrurier","serrurier","batiment",e=>e.v==="Serrurier"],
+    ["peintre","Peintre en bâtiment","peintre en bâtiment","batiment",e=>/peintre/.test(e.f)],
+    ["menuisier","Menuisier-ébéniste","menuisier","batiment",e=>/menuisier/.test(e.f)],
+    ["paysagiste","Paysagiste","paysagiste","batiment",e=>e.v==="Paysagiste"],
+    ["couvreur","Couvreur","couvreur","batiment",e=>e.v==="Couvreur"],
+    ["fleuriste","Fleuriste","fleuriste","proximite",e=>e.v==="Fleuriste"],
+    ["garage","Garage automobile","garage","proximite",e=>/garage/.test(e.f)],
+    ["cordonnerie","Cordonnerie et clés","cordonnier","proximite",e=>/cordonnerie/.test(e.f)],
+    ["pressing","Retouches et pressing","pressing","proximite",e=>/pressing/.test(e.f)]
+  ];
+  const METIERS=MDEF.map(([id,lab,m,f,flt])=>{const tpl=CAT.filter(flt).map(e=>e.f);return {id,lab,m,f,tpl,s:(CATI[tpl[0]]||{ex:[]}).ex.slice(0,4)}}).filter(m=>m.tpl.length);
+  const isEquipe=k=>!!T[k];
+  const tplName=k=>{if(isEquipe(k))return T[k][0];const e=CATI[k];if(!e)return "";if(/^Style /.test(e.st))return e.st.replace(/^Style /,"");return cap(e.n.replace(/^(Plombier|Electricien|Électricien|Chauffagiste) /i,""))};
+
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  const val=n=>{const el=form.querySelector(`input[name="${n}"]:checked`);return el?el.value:""};
+  const txt=id=>$(id).value.trim();
+  const slug=s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
+
+  /* ---- Étape 1 : métiers rangés par famille ---- */
+  let h="";
+  ["bouche","beaute","batiment","proximite"].forEach(fk=>{const f=FAM[fk];
+    h+=`<div class="fam" data-fam="${fk}"><h3>${f.lab}</h3><div class="chips">`;
+    METIERS.filter(m=>m.f===fk).forEach(m=>{h+=`<label class="chip" data-q="${esc(norm(m.lab+" "+m.m))}"><input type="radio" name="metier" id="m-${m.id}" value="${m.id}"><span>${m.lab}</span></label>`});
+    h+=`</div></div>`;
+  });
+  h+=`<div class="fam" data-fam="autre"><div class="chips"><label class="chip other" data-q="autre"><input type="radio" name="metier" id="m-autre" value="autre"><span>Autre métier…</span></label></div></div>`;
+  $("metiers").innerHTML=h;
+  $("q").addEventListener("input",()=>{
+    const q=norm($("q").value.trim());let any=0;
+    document.querySelectorAll("#metiers .chip").forEach(c=>{const show=!q||c.dataset.q.includes(q)||c.dataset.q==="autre";c.hidden=!show;if(show&&c.dataset.q!=="autre")any++});
+    document.querySelectorAll("#metiers .fam").forEach(f=>{f.hidden=f.dataset.fam!=="autre"&&![...f.querySelectorAll(".chip")].some(c=>!c.hidden)});
+    $("nomatch").hidden=!(q&&!any);
+    if(q&&!any){$("m-autre").checked=true;$("metierAutre").value=$("q").value.trim();onChange()}
+  });
+  $("q").addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()});
+  $("progress").innerHTML=Array.from({length:TOTAL},()=>"<i></i>").join("");
+
+  function metier(){const v=val("metier");if(!v)return null;
+    if(v==="autre"){const a=txt("metierAutre");return {id:"autre",lab:a?cap(a):"Votre métier",m:a||"commerce",f:"autre",tpl:Object.keys(T),s:["Service 1","Service 2","Service 3","Service 4"]}}
+    return METIERS.find(m=>m.id===v)}
+  const fam=()=>{const m=metier();return FAM[m?m.f:"autre"]};
+  const tplList=()=>{const m=metier();return m?m.tpl:Object.keys(T)};
+  const tplKey=()=>{const l=tplList();const v=val("tpl");return l.includes(v)?v:l[0]};
+
+  /* ---- Étapes 4 et 5 : selon le métier ---- */
+  let builtFor="";
+  function buildFamilySteps(){
+    const m=metier();const key=m?m.id:"autre";if(builtFor===key)return;builtFor=key;const f=fam();const l=tplList();
+    $("tpl-lead").textContent=`${l.length} modèle${l.length>1?"s":""} pour ${m&&m.id!=="autre"?"« "+m.lab+" »":"votre activité"}. Votre site change à droite à chaque clic.`;
+    $("tpls").innerHTML=l.map((k,i)=>{const chk=i===0?" checked":"";
+      if(isEquipe(k)){const t=T[k];return `<label class="tpl"><input type="radio" name="tpl" id="t-${k}" value="${k}"${chk}><span class="box">
+        <span class="sw" style="background:${t[2]};color:${t[3]}"><span class="aa" style="font-family:${t[5]};font-weight:${t[6]}">Aa</span><i style="background:${t[4]}"></i></span>
+        <span class="tx"><b>${t[0]}</b><small>${t[1]}</small></span></span></label>`}
+      const e=CATI[k];return `<label class="tpl"><input type="radio" name="tpl" id="t-${slug(k)}" value="${esc(k)}"${chk}><span class="box">
+        <span class="thumb-w"><iframe class="thumb" src="modeles/${encodeURIComponent(k)}" loading="lazy" tabindex="-1" aria-hidden="true" title=""></iframe></span>
+        <span class="tx"><b>${esc(tplName(k))}</b><small>Exemple : ${esc(e.c)}</small></span></span></label>`}).join("");
+    const ck=(o,dev)=>`<label class="ck"><input type="checkbox" name="opt" id="o-${o[0]}" value="${o[0]}" data-lab="${esc(o[1])}"${!dev&&o[3]?" checked":""}><span>${o[1]}${o[2]?`<small>${o[2]}</small>`:""}</span></label>`;
+    $("opts-inc").innerHTML=[...f.inc,...COMMON_INC].map(o=>ck(o,false)).join("");
+    $("opts-dev").innerHTML=[...f.dev,...COMMON_DEV].map(o=>ck(o,true)).join("");
+  }
+
+  /* ---- Remplissage du modèle choisi ---- */
+  const fin=new Date(Date.now()+30*864e5).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+  function services(){const m=metier();const ex=m&&m.s.length?m.s:["Service 1","Service 2","Service 3","Service 4"];
+    return ["s1","s2","s3","s4"].map((id,i)=>{$(id).placeholder="Ex. : "+(ex[i]||"");return txt(id)||ex[i]||""})}
+  const userSv=()=>["s1","s2","s3","s4"].map(id=>txt(id));
+  const cache={};
+  function getRaw(k){if(isEquipe(k))return Promise.resolve(TPL[k]);if(!cache[k])cache[k]=fetch("modeles/"+encodeURIComponent(k)).then(r=>{if(!r.ok)throw new Error(r.status);return r.text()});return cache[k]}
+  function htmlEquipe(html){
+    const m=metier();
+    const nom=txt("nom")||"Votre commerce",ville=txt("ville")||"votre ville",adr=txt("adresse")||"Votre adresse",tel=txt("tel")||"Votre numéro";
+    const sv=services();
+    const R={nom_commerce:nom,ville,adresse:adr,"téléphone":tel,horaires_jour:"Vos horaires",date_fin:fin,lien_fiche_google:txt("lien")||"#","métier":m?m.m:"commerce",email_affiché:"Votre e-mail"};
+    sv.forEach((s,i)=>{R["service_"+(i+1)]=s;R["description_service_"+(i+1)]=""});
+    html=html.replace(/, visible jusqu'au \[date_fin\]\./g,".");html=html.replace(/\[([a-zé_0-9]+)\]/g,(a,v)=>v in R?esc(R[v]):a);
+    html=html.replace(/Exemple de prestation ([1-4])/g,(a,d)=>esc(sv[+d-1]));
+    return html.replace(/À fournir \(David\)(, selon le métier)?\./g,"");
+  }
+  const variants=s=>{const a=[s,s.replace(/&/g,"&amp;"),s.replace(/'/g,"’"),s.replace(/'/g,"&#39;"),s.replace(/&/g,"&amp;").replace(/'/g,"’")];return [...new Set(a)]};
+  function htmlAymeric(html,e){
+    const nom=txt("nom"),ville=txt("ville"),adr=txt("adresse"),tel=txt("tel");
+    const T0=[],tok=v=>{T0.push(v);return "\u0001"+(T0.length-1)+"\u0001"};
+    const swap=(from,to)=>{if(!from||to==null)return;const t=tok(to);variants(from).forEach(f=>{html=html.split(f).join(t)})};
+    const cityOf=s=>s?s.replace(/^\d{5}\s+/,"").replace(/\s+(\d+(e|er)|et agglomération)$/,"").trim():"";
+    if(nom){swap(e.c,esc(nom));swap(e.c.toUpperCase(),esc(nom.toUpperCase()))}
+    if(ville){swap(e.l,esc(ville));if(e.cp)swap(e.cp,esc(ville));const cv=cityOf(e.cp||e.l);if(cv&&cv.length>2)swap(cv,esc(ville))}
+    if(e.a)swap(e.a,esc(adr||"Votre adresse"));
+    if(e.t&&tel){swap(e.t,esc(tel));swap(e.t.replace(/ /g,""),esc(tel.replace(/\s/g,"")))}
+    html=html.replace(/(★\s*)?\d[,.]\d\s*(\/\s*5\s*)?sur Google\s*·\s*\d[\d\s]*avis/g,"★ Vos avis Google");
+    html=html.replace(/«[^»<]{3,400}»/g,"« Vos avis clients s'afficheront ici. »");
+    html=html.replace(/commerce fictif/g,"aperçu de votre futur site");
+    return html.replace(/\u0001(\d+)\u0001/g,(a,i)=>T0[+i]);
+  }
+  async function buildHTML(){const k=tplKey();const raw=await getRaw(k);return isEquipe(k)?htmlEquipe(raw):htmlAymeric(raw,CATI[k])}
+  function servicesGroup(doc){
+    const groups=new Map();
+    doc.querySelectorAll("h3").forEach(h=>{let card=h;while(card.parentElement&&card.parentElement!==doc.body&&card.parentElement.querySelectorAll("h3").length<2)card=card.parentElement;const g=card.parentElement;if(!g||g===doc.body)return;if(!groups.has(g))groups.set(g,[]);groups.get(g).push(card)});
+    let best=null;groups.forEach((cards,g)=>{if(cards.length>=3&&(!best||cards.length>best.cards.length))best={g,cards}});
+    return best;
+  }
+  function applyServices(doc){
+    const k=tplKey();if(isEquipe(k))return null;const u=userSv();const b=servicesGroup(doc);if(!b)return null;
+    b.cards.slice(0,4).forEach((card,i)=>{const s=u[i];if(!s)return;const h=card.querySelector("h3");if(h)h.textContent=s;
+      card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&x!==h){const t=x.textContent.trim();if(/^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t))x.textContent="Votre prix";else if(t.length>20&&x.tagName!=="H3")x.textContent=""}})});
+    return b;
+  }
+  function brandEl(doc){
+    const k=tplKey(),hd=doc.querySelector("header")||doc.querySelector("nav");if(!hd)return null;
+    if(isEquipe(k))return doc.querySelector("header .nom, .nom, header span, header div");
+    const e=CATI[k];const want=txt("nom")||e.c;const tok=(e.lg||"").trim();
+    let c=[...hd.querySelectorAll("*")].filter(x=>tok&&x.textContent.includes(tok)&&x.textContent.trim().length<=Math.max(40,want.length+6)).sort((a,b)=>a.textContent.length-b.textContent.length)[0];
+    if(!c)return null;while(c.parentElement&&c.parentElement!==hd&&c.parentElement.textContent.trim().length<=Math.max(40,want.length+6))c=c.parentElement;return c;
+  }
+  function optionSections(doc,svc){
+    const opts=[...form.querySelectorAll('input[name="opt"]:checked')].map(i=>i.value);if(!opts.length)return;
+    const f=fam(),sv=services(),nom=txt("nom")||"Votre commerce",ville=txt("ville")||"votre ville";
+    const chip=s=>`<span style="display:inline-block;padding:.35em .8em;margin:0 .4em .4em 0;border:1px solid currentColor;border-radius:999px;opacity:.85">${esc(s)}</span>`;
+    const ph=s=>`<div style="border:1px dashed currentColor;opacity:.7;border-radius:8px;padding:1.2em;text-align:center">${esc(s)}</div>`;
+    const gal=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${[1,2,3].map(()=>`<div style="aspect-ratio:4/3;border-radius:8px;background:rgba(127,127,127,.16);display:grid;place-items:center;font-size:.8em;opacity:.8">Votre photo</div>`).join("")}</div>`;
+    const rows=a=>a.map(([x,y])=>`<div style="display:flex;justify-content:space-between;gap:1em;padding:.5em 0;border-bottom:1px dotted currentColor">${esc(x)}<span style="opacity:.7">${esc(y)}</span></div>`).join("");
+    const btn=t=>`<span style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700">${esc(t)}</span>`;
+    const S={
+      zone:["Zone d'intervention",chip(ville)+chip("Et alentours")],
+      assurance:["Assurance et qualifications",ph("Vos attestations, fournies par vous")],
+      commandes:["Commandez par téléphone",btn("Passer commande")],
+      occasions:["Pour vos occasions",chip("Anniversaires")+chip("Fêtes")+chip("Événements")],
+      carte:["La carte",rows([["Entrées","…"],["Plats","…"],["Desserts","…"]])],
+      marques:["Nos marques",chip("Vos marques ici")],
+      photos:["Nos chantiers",gal],galerie:[f===FAM.bouche?"Nos produits":f===FAM.beaute?"Nos réalisations":"En images",gal],
+      tarifs:["Tarifs",rows([[sv[0],"Votre prix"],[sv[1],"Votre prix"]])],
+      apropos:["À propos",`<p>${esc(nom)}, ${esc(metier()?metier().m:"commerce")} à ${esc(ville)}${txt("annee")?" depuis "+esc(txt("annee")):""}. Votre histoire ici.</p>`],
+      avissite:["Vos avis",ph("Vos avis Google, affichés par Google")],
+      insta:["Sur Instagram",gal],
+      rdv:["Prendre rendez-vous",btn("Réserver un créneau")],
+      resa:["Réserver en ligne",btn("Réserver")],
+      contact:[f===FAM.batiment?"Demander un devis":"Nous écrire",`<div style="display:grid;gap:8px;max-width:520px">${["Votre nom","Votre e-mail"].map(p=>`<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em">${p}</div>`).join("")}<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em;min-height:5em">Votre message</div><div>${btn("Envoyer")}</div></div>`]
+    };
+    let anchor=null;
+    if(isEquipe(tplKey())){const note=[...doc.querySelectorAll(".note")].find(n=>/Exemples/.test(n.textContent));anchor=note?note.closest("section,.tuile,.cols>div,.bande"):null;if(anchor&&anchor.parentElement&&anchor.parentElement.classList.contains("cols"))anchor=anchor.parentElement}
+    else{const b=svc||servicesGroup(doc);anchor=b?(b.g.closest("section")||b.g):null}
+    if(!anchor)anchor=doc.querySelector("main")?doc.querySelector("main").lastElementChild:doc.body.lastElementChild;
+    const parent=anchor.parentElement;const ref=anchor.nextSibling;
+    opts.filter(o=>S[o]).forEach(o=>{
+      const sec=doc.createElement("section");sec.className="hood-opt";
+      sec.innerHTML=`<div style="max-width:1100px;margin:0 auto"><h2>${S[o][0]}</h2>${S[o][1]}</div>`;parent.insertBefore(sec,ref);
+      const cs=doc.defaultView.getComputedStyle(sec);
+      if(parseFloat(cs.paddingLeft)<8){sec.style.paddingLeft="20px";sec.style.paddingRight="20px"}
+      if(parseFloat(cs.paddingTop)<8){sec.style.paddingTop="36px";sec.style.paddingBottom="36px"}
+      if(anchor.classList.contains("tuile")){sec.className="tuile hood-opt"}
+    });
+  }
+  function decorate(doc){
+    doc.addEventListener("click",e=>{if(e.target.closest("a,button"))e.preventDefault()},true);
+    const svc=applyServices(doc);
+    const b=brandEl(doc);
+    if(b&&!isEquipe(tplKey())&&txt("nom")&&!b.querySelector("img")){b.textContent=txt("nom")}
+    if(logoURL&&b){const img=doc.createElement("img");img.src=logoURL;img.alt="Logo";img.style.cssText="height:1.9em;width:auto;max-width:150px;object-fit:contain;vertical-align:middle;margin-right:.5em;display:inline-block";b.prepend(img)}
+    if(!isEquipe(tplKey())&&txt("nom"))renameH1(doc,txt("nom"));
+    optionSections(doc,svc);
+  }
+  function renameH1(doc,nom){
+    const h=doc.querySelector("h1");if(!h)return;const old=h.textContent.replace(/\s+/g," ").replace(/- /g,"-").trim();
+    h.textContent=nom;
+    if(old.length<4||old===nom)return;const re=new RegExp(old.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi");
+    const w=doc.createTreeWalker(doc.body,4);let n;while((n=w.nextNode())){if(re.test(n.nodeValue)){re.lastIndex=0;n.nodeValue=n.nodeValue.replace(re,nom)}re.lastIndex=0}
+    if(doc.title)doc.title=doc.title.replace(re,nom);
+  }
+
+  /* ---- Rendu dans l'iframe, mis à l'échelle ---- */
+  const frame=$("frame"),vp=$("vp");let timer=0,lastScroll=0,renderId=0;
+  function size(){
+    const W=device==="phone"?390:1280,w=vp.clientWidth,hgt=vp.clientHeight,s=Math.min(1,w/W);
+    frame.style.width=W+"px";frame.style.height=(hgt/s)+"px";frame.style.transform=`scale(${s})`;
+  }
+  new ResizeObserver(size).observe(vp);
+  frame.addEventListener("load",()=>{try{const d=frame.contentDocument;decorate(d);frame.contentWindow.scrollTo(0,lastScroll)}catch(e){}});
+  async function render(){
+    buildFamilySteps();const id=++renderId;
+    try{lastScroll=frame.contentWindow?frame.contentWindow.scrollY:0}catch(e){lastScroll=0}
+    const k=tplKey();$("p-tpl").textContent=tplName(k);$("p-fam").textContent=fam().lab;
+    $("p-url").textContent=(txt("nom")?slug(txt("nom")):"votrecommerce")+".fr";
+    $("autre-wrap").hidden=val("metier")!=="autre";
+    let html;try{html=await buildHTML()}catch(e){html='<!doctype html><meta charset="utf-8"><body style="font:16px system-ui;padding:40px;color:#555">Le modèle n\'a pas pu se charger. Rechargez la page.</body>'}
+    if(id===renderId)frame.srcdoc=html;
+  }
+  function onChange(){clearTimeout(timer);timer=setTimeout(render,180)}
+  function setDevice(d){device=d;$("d-phone").setAttribute("aria-pressed",d==="phone");$("d-desk").setAttribute("aria-pressed",d==="desk");$("browser").classList.toggle("phone",d==="phone");requestAnimationFrame(size)}
+  $("d-phone").addEventListener("click",()=>setDevice("phone"));$("d-desk").addEventListener("click",()=>setDevice("desk"));
+
+  /* ---- Logo ---- */
+  function setLogo(file){
+    if(!file)return;
+    if(!/^image\/(png|jpeg|svg\+xml|webp)$/.test(file.type)){$("err").textContent="Ce format n'est pas pris en charge : choisissez un fichier PNG, JPG, SVG ou WebP.";return}
+    if(file.size>5*1024*1024){$("err").textContent="Ce fichier dépasse 5 Mo : choisissez une version plus légère.";return}
+    const r=new FileReader();r.onload=()=>{logoURL=r.result;$("thumb").innerHTML=`<img src="${logoURL}" alt="Votre logo">`;$("upl-t").textContent=file.name;
+      $("upl-h").textContent="Votre logo est sur votre site. Vous pourrez en envoyer une meilleure version plus tard.";$("logo-rm").hidden=false;$("err").textContent="";render()};
+    r.readAsDataURL(file);
+  }
+  $("logo").addEventListener("change",e=>setLogo(e.target.files[0]));
+  $("logo-rm").addEventListener("click",()=>{logoURL="";$("logo").value="";$("thumb").textContent="Aucun";$("upl-t").textContent="Ajoutez votre logo, il s'affiche tout de suite";
+    $("upl-h").textContent="PNG, JPG, SVG ou WebP, 5 Mo maximum. Pas de logo ? Votre nom s'écrit dans la typographie du modèle.";$("logo-rm").hidden=true;render()});
+  const upl=$("upl");
+  ["dragenter","dragover"].forEach(ev=>upl.addEventListener(ev,e=>{e.preventDefault();upl.classList.add("drag")}));
+  ["dragleave","drop"].forEach(ev=>upl.addEventListener(ev,e=>{e.preventDefault();upl.classList.remove("drag")}));
+  upl.addEventListener("drop",e=>setLogo(e.dataTransfer.files[0]));
+
+  /* ---- Navigation ---- */
+  function check(){
+    let msg="";const bad=[];
+    if(step===1){if(!val("metier"))msg="Choisissez votre métier, ou « Autre métier », pour continuer.";else if(val("metier")==="autre"&&!txt("metierAutre")){msg="Dites-nous votre métier en quelques mots.";bad.push("metierAutre")}}
+    if(step===2){if(!txt("nom"))bad.push("nom");if(!txt("ville"))bad.push("ville");if(bad.length)msg="Il nous faut au moins le nom de votre entreprise et votre ville.";}
+    form.querySelectorAll("input.bad").forEach(i=>i.classList.remove("bad"));bad.forEach(id=>$(id).classList.add("bad"));
+    $("err").textContent=msg;if(bad[0])$(bad[0]).focus();return !msg;
+  }
+  const devChecked=()=>[...form.querySelectorAll('#opts-dev input:checked')].map(i=>i.dataset.lab);
+  const incChecked=()=>[...form.querySelectorAll('#opts-inc input:checked')].map(i=>i.dataset.lab);
+  function recap(kind){
+    const m=metier(),k=tplKey(),L=[];
+    L.push(kind==="commande"?"Bonjour, je veux commander ce site avec l'offre L'Essentiel (290 € HT à la commande, puis 10 € HT par mois à partir de la validation du site).":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
+    L.push("");
+    if(kind==="remarques"&&txt("remarques")){L.push("Ce que j'aimerais changer : "+txt("remarques"));L.push("")}
+    L.push("Entreprise : "+txt("nom"));L.push("Métier : "+(m?m.lab:""));L.push("Ville : "+txt("ville"));
+    if(txt("adresse"))L.push("Adresse : "+txt("adresse"));if(txt("tel"))L.push("Téléphone : "+txt("tel"));
+    if(txt("annee"))L.push("Création : "+txt("annee"));if(txt("lien"))L.push("Fiche Google ou réseaux : "+txt("lien"));
+    L.push("Services : "+services().join(", "));
+    L.push("Modèle : "+tplName(k)+" ("+fam().lab+")");
+    const inc=incChecked();if(inc.length)L.push("Sur le site : "+inc.join(", "));
+    const dev=devChecked();if(dev.length)L.push("Demandé en plus, sur devis : "+dev.join(", "));
+    if(kind==="commande")L.push("Adresse du site souhaitée : "+txt("domaine")+".fr");
+    L.push("Logo : "+(logoURL?"je le joins à ce message":"pas de logo"));
+    return L.join("\n");
+  }
+  function openMail(kind){
+    const subject=(kind==="commande"?"Je veux mon site HOOD : ":kind==="rdv"?"Rendez-vous HOOD : ":kind==="question"?"Question sur mon site HOOD : ":"Ma maquette HOOD : ")+txt("nom");
+    const body=recap(kind);$("recap").value="À : "+MAIL+"\nObjet : "+subject+"\n\n"+body;$("logo-note").hidden=!logoURL;
+    $("sent-title").textContent=kind==="commande"?"Votre commande est prête.":kind==="rdv"?"Votre demande de rendez-vous est prête.":"Votre message est prêt.";
+    $("sent-lead").textContent=kind==="commande"?"Votre messagerie s'est ouverte avec votre commande déjà rédigée : il ne vous reste qu'à l'envoyer. On vous répond avec le lien de paiement sécurisé.":kind==="rdv"?"Votre messagerie s'est ouverte : indiquez vos disponibilités et votre numéro, puis envoyez. On vous propose un créneau, par téléphone ou en visio.":kind==="question"?"Votre messagerie s'est ouverte avec votre site en récapitulatif : écrivez votre question, puis envoyez.":"Votre messagerie s'est ouverte avec vos remarques déjà rédigées : il ne vous reste qu'à les envoyer. On ajuste votre site et on vous le renvoie.";
+    show(8);
+    const a=document.createElement("a");a.href="mailto:"+MAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);document.body.appendChild(a);a.click();a.remove();
+  }
+  let revealed=false;
+  const VEIL=["","Votre site prend forme…","Votre site prend forme…","Vos services s'installent…","Votre style se dessine…","Encore une étape…"];
+  function veil(n){if(n>TOTAL)revealed=true;const v=$("vp");v.classList.toggle("veil",!revealed);const B=document.body.classList;B.toggle("veiled",!revealed);B.toggle("revealed",revealed);B.toggle("s6",n===6);B.toggle("after",n>6);if(!revealed){v.style.setProperty("--blur",([0,18,15,12,9,7][n]||7)+"px");$("veil-t").textContent=VEIL[n]||VEIL[1]}}
+  function show(n){
+    step=n;veil(n);form.querySelectorAll(".step").forEach(s=>s.hidden=+s.dataset.step!==n);
+    [...$("progress").children].forEach((b,i)=>b.classList.toggle("on",i<Math.min(n,TOTAL)));
+    $("meta").textContent=n<=TOTAL?`Étape ${n} sur ${TOTAL}${n<=2?" · environ 2 minutes":""}`:n===6?"Votre site":n===7?"Commande":"Dernière étape";
+    const end=n>TOTAL;$("wrap").classList.toggle("final",end);$("nav").hidden=end;$("reassure").hidden=end;
+    $("back").hidden=n===1;$("skip").hidden=!(n===3||n===5);
+    $("next").innerHTML=n===TOTAL?"Voir mon site ↗":"Continuer ↗";
+    $("err").textContent="";$("side-title").textContent=end?"Votre site":"Votre futur site";
+    const nom=txt("nom");
+    if(n===6){$("ready-title").textContent=`Voici le site de ${nom}.`;
+      $("ready-lead").textContent="C'est une première version. Après votre commande, on la finalise avec vous : vos photos, vos textes, vos horaires. Puis on la met en ligne.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
+    if(n===7){if(!txt("domaine"))$("domaine").value=slug(nom)||"votrecommerce";
+      const dev=devChecked();
+      $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
+        (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
+    window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  }
+  form.addEventListener("submit",e=>{e.preventDefault();if(step<=TOTAL&&check())show(step+1)});
+  $("back").addEventListener("click",()=>show(Math.max(1,step-1)));
+  $("skip").addEventListener("click",()=>show(step+1));
+  $("go-pay").addEventListener("click",()=>show(7));
+  $("back-ready").addEventListener("click",()=>show(6));
+  $("back-site").addEventListener("click",()=>show(6));
+  $("back-q").addEventListener("click",()=>show(1));
+  const prendreRdv=()=>{if(CALENDLY){window.open(CALENDLY,"_blank","noopener")}else{openMail("rdv")}};
+  $("rdv").addEventListener("click",prendreRdv);$("rdv2").addEventListener("click",prendreRdv);$("ask").addEventListener("click",()=>openMail("question"));
+  $("pay-sticky").addEventListener("click",()=>$("go-pay").click());
+  $("doubt-sticky").addEventListener("click",()=>{const d=document.querySelector(".doubt");d.scrollIntoView({behavior:"smooth",block:"center"})});
+  $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr"});
+  $("pay").addEventListener("click",()=>{
+    if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
+    $("domaine").classList.remove("bad");openMail("commande")});
+  $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
+  form.addEventListener("input",e=>{if(!["q","domaine","remarques"].includes(e.target.id))onChange()});
+  form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if(e.target.type==="radio"||e.target.type==="checkbox")render()});
+
+  render();show(1);setDevice("phone");
+})();
+</script>
+</body></html>
