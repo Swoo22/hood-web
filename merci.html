@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Merci pour votre commande, HOOD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#101114;--muted:#5d6272;--line:#e4e7ef;--accent:#0047ff;--soft:#f8f9fc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--ink:#f1f2f6;--muted:#9aa0b2;--line:#262b37;--accent:#4d7dff;--soft:#161922}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding:32px 16px 64px}
+.logo{font-weight:900;font-size:24px;letter-spacing:-.5px;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+h1{font-size:clamp(32px,6vw,48px);line-height:1.05;letter-spacing:-1.5px;font-weight:900;margin:48px 0 16px}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+ol{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px 20px 20px 40px;margin:0 0 28px}
+ol li{margin:8px 0}
+.small{font-size:14px;color:var(--muted)}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="logo" href="index.html">HOOD<span>.</span></a>
+  <h1>Merci, votre commande <em>est enregistrée</em>.</h1>
+  <p class="lead">Votre paiement a bien été reçu. Stripe vous envoie un reçu par e-mail.</p>
+  <ol>
+    <li>On vous écrit à l'adresse e-mail donnée lors du paiement.</li>
+    <li>Vous nous envoyez vos photos, vos textes, vos horaires et votre logo si vous en avez un.</li>
+    <li>On vous montre la version complète de votre site. Deux allers-retours sont inclus pour l'ajuster.</li>
+    <li>Vous cliquez sur « Je valide » : votre site est mis en ligne, et l'abonnement de 10 € HT par mois commence.</li>
+  </ol>
+  <p class="small">Une question ? Écrivez-nous à <a href="mailto:contact@hood-web.com">contact@hood-web.com</a>.</p>
+</div>
+</body>
+</html>
