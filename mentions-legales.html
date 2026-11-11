@@ -8,7 +8,11 @@
 <h2>Hébergeur</h2>
 <p>Agence des Médias Numériques (Amen), 200 rue de la Croix Nivert, 75015 Paris.<br>Téléphone : 01 70 99 53 41.</p>
 <h2>Vos données</h2>
-<p>Ce site ne dépose aucun cookie de suivi. Le questionnaire « Voir mon site web » fonctionne entièrement dans votre navigateur : vos réponses et votre logo ne sont ni enregistrés ni envoyés par le site. Ils ne nous parviennent que si vous choisissez de nous écrire, depuis votre propre messagerie. Le site ne recueille donc vos données que si vous nous écrivez : nous utilisons alors votre message pour vous répondre, et nous ne le transmettons à personne pour de la publicité. Les polices du site sont chargées depuis Google Fonts, ce qui transmet votre adresse IP à Google.</p>
+<p data-compte="off">Ce site ne dépose aucun cookie de suivi. Le questionnaire « Voir mon site web » fonctionne entièrement dans votre navigateur : vos réponses et votre logo ne sont ni enregistrés ni envoyés par le site. Ils ne nous parviennent que si vous choisissez de nous écrire, depuis votre propre messagerie. Le site ne recueille donc vos données que si vous nous écrivez : nous utilisons alors votre message pour vous répondre, et nous ne le transmettons à personne pour de la publicité. Les polices du site sont chargées depuis Google Fonts, ce qui transmet votre adresse IP à Google.</p>
+<!-- Texte à valider par Simone avant d'allumer les comptes clients -->
+<p data-compte="on" hidden>Ce site ne dépose aucun cookie de suivi. Quand vous donnez votre email dans le questionnaire « Voir mon site web », vos réponses sont enregistrées par HOOD pour que vous puissiez reprendre votre site, et un compte sans mot de passe est créé à cette adresse. Votre logo reste dans votre navigateur. Vos réponses sont effacées 180 jours après votre dernière visite. Pour toute demande sur vos données : contact@hood-web.com.</p>
+<script src="compte.js"></script>
+<script>if(window.HOOD_COMPTE&&HOOD_COMPTE.actif){document.querySelectorAll('[data-compte="off"]').forEach(e=>e.hidden=true);document.querySelectorAll('[data-compte="on"]').forEach(e=>e.hidden=false)}</script>
 <p>Vous pouvez demander l'accès à vos données, leur correction ou leur effacement à la même adresse e-mail. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
 <p><a href="index.html">Retour au site</a></p>
 </main></body></html>

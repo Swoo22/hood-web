@@ -244,6 +244,7 @@ input.bad{border-color:var(--danger)}
           <label class="f" id="email-wrap" hidden>Votre email
             <input type="email" id="email" placeholder="Ex. : contact@plomberie-martin.fr" autocomplete="email" inputmode="email">
             <span class="hint">Pour garder votre site et le reprendre quand vous voulez. On vous envoie un lien, sans mot de passe.</span>
+            <div id="captcha"></div>
           </label>
           <label class="f">Nom de votre entreprise
             <input type="text" id="nom" placeholder="Ex. : Plomberie Martin" autocomplete="organization">
@@ -387,7 +388,7 @@ input.bad{border-color:var(--danger)}
       <div class="viewport veil" id="vp"><iframe id="frame" title="Votre maquette" tabindex="-1"></iframe><div class="veil-msg" aria-hidden="true"><b id="veil-t">Votre site prend forme…</b><small>Révélation à la fin du questionnaire</small></div></div>
     </div>
     <div class="tplname"><span>Modèle : <b id="p-tpl">à choisir</b></span><span id="p-fam"></span></div>
-    <p class="note">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez. <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
+    <p class="note"><span data-compte="off">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez.</span><!-- Texte « on » à valider par Simone avant d'allumer les comptes --><span data-compte="on" hidden>Dès que vous donnez votre email, vos réponses sont enregistrées chez HOOD pour que vous puissiez reprendre votre site. Votre logo reste dans votre navigateur.</span> <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
   </aside>
 </main>
 <div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Commander mon site · 290 € HT ↗</button><button type="button" class="alt" id="doubt-sticky">Pas sûr ? Des questions ?</button></div>
@@ -722,7 +723,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("pay").addEventListener("click",()=>{
     if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     $("domaine").classList.remove("bad");
-    if(STRIPE_LINK){location.href=STRIPE_LINK+(STRIPE_LINK.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef());return}
+    if(STRIPE_LINK){const go=()=>{location.href=STRIPE_LINK+(STRIPE_LINK.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
+      Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,800))]).then(go,go);return}
     openMail("commande")});
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
   if(STRIPE_LINK){$("pay").innerHTML="Payer 290 € et commander ↗";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
@@ -730,25 +732,34 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   form.addEventListener("input",e=>{if(!["q","domaine","remarques"].includes(e.target.id))onChange()});
   form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if(e.target.type==="radio"||e.target.type==="checkbox")render()});
 
-  /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ---- */
+  /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ----
+     Corrigé après le contrôle de Justine (11 Nov. 2026) : rien n'est enregistré tant
+     que le visiteur n'a rien changé ni pendant une reprise ; reprise dans le même
+     navigateur par le jeton ; nouveau projet si l'adresse change. */
   function etat(){const c={};form.querySelectorAll("input,textarea,select").forEach(el=>{
       if(!el.id||el.type==="file"||["q","email","recap"].includes(el.id))return;
       if(el.type==="radio"||el.type==="checkbox"){if(el.checked)c[el.id]=true}else if(el.value)c[el.id]=String(el.value).slice(0,2000)});
     return {v:1,etape:step,champs:c}}
-  let saveTimer;
-  function sauver(){if(!COMPTE.actif)return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{COMPTE.enregistrer(etat(),Math.min(step,8)).catch(()=>{})},400)}
-  function note(t){const el=$("compte-note");el.textContent=t||"";el.hidden=!t}
-  let compteDemande=false;
+  let modifie=false,repriseEnCours=false,relie=false,compteDemande=false,saveTimer;
+  ["input","change"].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.id!=="q")modifie=true},true));
+  function enregistrerMaintenant(){clearTimeout(saveTimer);
+    if(!COMPTE.actif||!modifie||repriseEnCours)return Promise.resolve();
+    return COMPTE.enregistrer(etat(),Math.min(step,8)).then(r=>{
+      if(r==="relier")note("Votre site est maintenant dans votre espace : ouvrez le lien reçu par mail pour continuer à l'enregistrer.")}).catch(()=>{})}
+  function sauver(){if(!COMPTE.actif||!modifie||repriseEnCours)return;clearTimeout(saveTimer);saveTimer=setTimeout(enregistrerMaintenant,400)}
+  function note(t,recommencer){const el=$("compte-note");el.textContent=t||"";
+    if(t&&recommencer){const b=document.createElement("button");b.type="button";b.className="alt";b.textContent="Recommencer à zéro";
+      b.addEventListener("click",()=>{COMPTE.oublierJeton();location.href="maquette.html"});el.append(" ",b)}
+    el.hidden=!t}
   function commencerCompte(){
-    if(!COMPTE.actif||compteDemande||COMPTE.jeton())return;compteDemande=true;
-    COMPTE.commencer(txt("email"),etat(),2).then(r=>{
-      if(r.ok&&r.mail)note("Votre site est enregistré. Un lien pour le reprendre vous attend dans votre boîte mail.");
-      else if(r.ok)note("Votre site est enregistré.");
-      else compteDemande=false;
+    const em=txt("email");
+    if(!COMPTE.actif||relie||compteDemande||COMPTE.jeton(em))return;
+    compteDemande=true;
+    COMPTE.commencer(em,etat(),2).then(r=>{compteDemande=false;
+      if(r.ok){modifie=true;note(r.mail?"Votre site est enregistré. Un lien pour le reprendre vous attend dans votre boîte mail.":"Votre site est enregistré.")}
     }).catch(()=>{compteDemande=false});
   }
-  function restaurer(p){
-    compteDemande=true;
+  function restaurer(p,email){
     const c=(p&&p.reponses&&p.reponses.champs)||{};
     const m=Object.keys(c).find(id=>/^m-/.test(id));
     if(m&&$(m)){$(m).checked=true;$(m).dispatchEvent(new Event("change",{bubbles:true}))}
@@ -756,13 +767,22 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     form.querySelectorAll("input,textarea,select").forEach(el=>{
       if(!el.id||el.type==="file"||["q","email","recap"].includes(el.id))return;
       if(el.type==="radio"||el.type==="checkbox"){if(el.name!=="metier")el.checked=!!c[el.id]}else if(c[el.id]!==undefined)el.value=c[el.id]});
+    if(email&&!$("email").value)$("email").value=email;
     $("autre-wrap").hidden=val("metier")!=="autre";
     render();show(Math.min(Math.max(p.etape||1,1),6));
-    note("Bon retour : votre site est là où vous l'aviez laissé.");
+    modifie=false;
+    note("Bon retour : votre site est là où vous l'aviez laissé.",!relie);
   }
   if(COMPTE.actif){
     $("email-wrap").hidden=false;
-    if(/[?&]reprendre=1\b/.test(location.search))COMPTE.monEspace().then(d=>{if(d&&d.projet&&d.projet.statut==="en_cours"){if(d.email&&!$("email").value)$("email").value=d.email;restaurer(d.projet)}}).catch(()=>{});
+    document.querySelectorAll('[data-compte="off"]').forEach(e=>e.hidden=true);
+    document.querySelectorAll('[data-compte="on"]').forEach(e=>e.hidden=false);
+    repriseEnCours=true;
+    const parLeJeton=()=>COMPTE.lireLocal().then(p=>{if(p&&p.statut==="en_cours"&&!modifie)restaurer(p,p.email)});
+    const reprise=/[?&]reprendre=1\b/.test(location.search)
+      ?COMPTE.monEspace().then(d=>{if(d&&d.projet&&d.projet.statut==="en_cours"){relie=true;if(!modifie)restaurer(d.projet,d.email)}else return parLeJeton()})
+      :parLeJeton();
+    reprise.catch(()=>{}).then(()=>{repriseEnCours=false;if(modifie)sauver()});
   }
 
   render();show(1);setDevice("phone");
