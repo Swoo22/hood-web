@@ -777,12 +777,15 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("email-wrap").hidden=false;
     document.querySelectorAll('[data-compte="off"]').forEach(e=>e.hidden=true);
     document.querySelectorAll('[data-compte="on"]').forEach(e=>e.hidden=false);
-    repriseEnCours=true;
-    const parLeJeton=()=>COMPTE.lireLocal().then(p=>{if(p&&p.statut==="en_cours"&&!modifie)restaurer(p,p.email)});
+    /* Pendant la reprise (quelques instants), le formulaire est figé : un clic ne peut
+       pas écraser le projet enregistré (réserve 1 de Justine, second tour). */
+    repriseEnCours=true;form.inert=true;form.setAttribute("aria-busy","true");
+    const parLeJeton=()=>COMPTE.lireLocal().then(p=>{if(p&&p.statut==="en_cours")restaurer(p,p.email)});
     const reprise=/[?&]reprendre=1\b/.test(location.search)
-      ?COMPTE.monEspace().then(d=>{if(d&&d.projet&&d.projet.statut==="en_cours"){relie=true;if(!modifie)restaurer(d.projet,d.email)}else return parLeJeton()})
+      ?COMPTE.monEspace().then(d=>{if(d&&d.projet&&d.projet.statut==="en_cours"){relie=true;restaurer(d.projet,d.email)}else return parLeJeton()})
       :parLeJeton();
-    reprise.catch(()=>{}).then(()=>{repriseEnCours=false;if(modifie)sauver()});
+    Promise.race([reprise.catch(()=>{}),new Promise(r=>setTimeout(r,6000))])
+      .then(()=>{repriseEnCours=false;form.inert=false;form.removeAttribute("aria-busy");modifie=false});
   }
 
   render();show(1);setDevice("phone");
