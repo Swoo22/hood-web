@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Affiner mon site, HOOD</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Serif+Display&display=swap">
+<style>
+/* Charte hood-web.com. Phase 1 : une question fermée par écran. Phase 2 (facultative) : le site en grand, on touche un élément, un panneau à règles fixes s'ouvre. */
+:root{
+  --bg:#ffffff; --bg-soft:#f8f9fc; --line:#e4e7ef; --ink:#101114; --muted:#5d6272;
+  --accent:#0047ff; --accent-soft:#e8eeff; --on-accent:#ffffff; --danger:#c62a2a; --danger-soft:#fdecec;
+  --ok:#137a3b; --ok-soft:#e3f4e9; --warn:#8a5a00; --warn-soft:#fff3d6; --dot:#f0a500;
+  --card:#ffffff; --shadow:0 18px 50px -22px rgba(16,17,20,.28);
+  --f-ui:"Inter",Arial,Helvetica,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115; --bg-soft:#161922; --line:#262b37; --ink:#f1f2f6; --muted:#9aa0b2;
+  --accent:#4d7dff; --accent-soft:#18224a; --on-accent:#ffffff; --danger:#ff7676; --danger-soft:#3a1616;
+  --ok:#5fd38d; --ok-soft:#12301f; --warn:#f2c35b; --warn-soft:#33270b; --dot:#f2c35b;
+  --card:#161922; --shadow:0 18px 50px -22px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --bg-soft:#161922; --line:#262b37; --ink:#f1f2f6; --muted:#9aa0b2;
+  --accent:#4d7dff; --accent-soft:#18224a; --on-accent:#ffffff; --danger:#ff7676; --danger-soft:#3a1616;
+  --ok:#5fd38d; --ok-soft:#12301f; --warn:#f2c35b; --warn-soft:#33270b; --dot:#f2c35b;
+  --card:#161922; --shadow:0 18px 50px -22px rgba(0,0,0,.7); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit}
+
+/* Bandeau prototype */
+.proto{max-width:1240px;margin:0 auto;padding-block:10px;font-size:13px;color:var(--muted);display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap;border-bottom:1px dashed var(--line)}
+.proto .dot{width:8px;height:8px;border-radius:50%;background:var(--dot);flex:none}
+.proto b{color:var(--ink)}
+.proto select{font-size:13px;font-weight:700;padding:5px 8px;border-radius:7px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.ptog{display:inline-flex;gap:6px;flex-wrap:wrap}
+.ptog label{display:inline-flex;align-items:center;gap:5px;font-weight:600;font-size:12.5px;padding:4px 9px;border:1px dashed var(--line);border-radius:999px;cursor:pointer;color:var(--ink)}
+.ptog input{accent-color:var(--accent);margin:0}
+
+header.top{max-width:1240px;margin:0 auto;padding-block:16px 6px;display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:22px;letter-spacing:-1px}
+.logo span{color:var(--accent)}
+.phases{list-style:none;margin:0;padding:0;display:flex;gap:6px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--muted)}
+.phases li{display:flex;align-items:center;gap:7px;padding:6px 11px 6px 6px;border-radius:999px;border:1.5px solid var(--line)}
+.phases li i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--muted);font-size:12px}
+.phases li small{font-weight:500}
+.phases li.on{border-color:var(--accent);color:var(--ink)}
+.phases li.on i{background:var(--accent);color:var(--on-accent)}
+.phases li.done i{background:var(--ok-soft);color:var(--ok)}
+
+.wrap{max-width:1240px;margin:0 auto;padding-block:18px 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);gap:56px;align-items:start}
+.wrap.wide{grid-template-columns:minmax(0,1fr) minmax(0,390px);gap:36px}
+@media (max-width:960px){.wrap,.wrap.wide{grid-template-columns:minmax(0,1fr);gap:24px}.wrap:not(.wide) .side{display:none}}
+
+/* Progression */
+.progress{display:flex;gap:6px;margin-bottom:12px}
+.progress i{flex:1;height:5px;border-radius:5px;background:var(--line);transition:background .3s}
+.progress i.on{background:var(--accent)}
+.meta{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:20px;min-height:20px}
+
+/* Étape */
+.step{max-width:660px;animation:in .3s ease both}
+@keyframes in{from{transform:translateY(6px)}to{transform:none}}
+h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:-.045em;line-height:1.05;margin:0 0 10px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+.panel h1{font-size:clamp(28px,3vw,34px)}
+.lead{color:var(--muted);margin:0 0 24px;max-width:56ch;font-size:17px}
+.panel .lead{font-size:15.5px;margin-bottom:18px}
+
+/* Grandes cartes de choix */
+.choices{display:grid;gap:12px;margin-bottom:18px}
+.choices.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.choices.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.choices.c3,.choices.c2{grid-template-columns:minmax(0,1fr)}}
+.choice{position:relative;display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:18px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+.choice:hover{border-color:var(--accent)}
+.choice:focus-visible{outline:none;box-shadow:0 0 0 4px var(--accent-soft);border-color:var(--accent)}
+.choice .rad{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;margin-top:1px;display:grid;place-items:center;transition:all .15s}
+.choice[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.choice[aria-checked="true"] .rad{border-color:var(--accent);background:var(--accent)}
+.choice[aria-checked="true"] .rad::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--on-accent)}
+.choice .tx{display:grid;gap:3px;min-width:0}
+.choice b{font-size:17px;line-height:1.25}
+.choice small{font-size:14px;color:var(--muted);line-height:1.4}
+.badge{position:absolute;top:-10px;right:12px;background:var(--ink);color:var(--bg);font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
+
+/* Pastilles */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;padding:11px 15px;border:1.5px solid var(--line);border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;background:var(--card);color:var(--ink)}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"],.chip[aria-checked="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible{outline:none;box-shadow:0 0 0 4px var(--accent-soft)}
+.qgroup{display:grid;gap:10px}
+.qgroup .t small{font-weight:500;color:var(--muted)}
+
+/* Suite d'un choix */
+.more{display:grid;gap:16px;padding:18px;border-radius:12px;background:var(--bg-soft);border:1px solid var(--line);margin-bottom:18px;animation:in .25s ease both}
+.t{font-weight:800;font-size:16px}
+.hint{font-size:14px;color:var(--muted);font-weight:500}
+label.f{display:grid;gap:6px;font-weight:700;font-size:15px}
+label.f small{font-weight:500;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],input[type=time],textarea{width:100%;font-size:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+textarea{min-height:96px;resize:vertical;line-height:1.5}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+input.bad,textarea.bad{border-color:var(--danger)}
+.say{border-left:3px solid var(--accent);padding:4px 0 4px 12px;font-size:15px;color:var(--ink)}
+.say small{display:block;color:var(--muted);font-weight:600;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+
+/* Envoi de fichiers */
+.drop{display:grid;gap:6px;justify-items:center;text-align:center;padding:24px 16px;border:2px dashed var(--line);border-radius:12px;background:var(--card);cursor:pointer;position:relative;transition:all .15s}
+.drop:hover{border-color:var(--accent);background:var(--accent-soft)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop b{font-size:17px}
+.drop .plus{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:26px;line-height:1}
+.drop:focus-within{box-shadow:0 0 0 4px var(--accent-soft);border-color:var(--accent)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
+.th{position:relative;aspect-ratio:1;max-width:100%;border-radius:10px;overflow:hidden;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted);padding:6px;text-align:center;overflow-wrap:anywhere}
+.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.th button{position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;border:none;background:var(--ink);color:var(--bg);font-size:15px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.count{font-size:14px;font-weight:700;color:var(--ok)}
+
+/* Lignes de prix */
+.rows{display:grid;gap:8px}
+.prow,.rowhead{display:grid;grid-template-columns:minmax(0,1fr) 140px 36px;gap:8px;align-items:center}
+.rowhead{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.prow input{padding:11px 12px}
+.rm{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;font-size:18px}
+@media (max-width:480px){.prow,.rowhead{grid-template-columns:minmax(0,1fr) 104px 36px}}
+.addrow,.mini{justify-self:start;font-weight:700;font-size:14.5px;color:var(--accent);background:none;border:none;cursor:pointer;padding:6px 0}
+
+/* Horaires */
+.hours{display:grid;gap:6px}
+.hrow{display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.hrow:first-child{border-top:none}
+.hday{display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px;cursor:pointer}
+.hday input{width:20px;height:20px;accent-color:var(--accent);margin:0}
+.hr{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:14px;color:var(--muted)}
+.rng{display:inline-flex;gap:6px;align-items:center}
+.rng input{width:104px;padding:8px 8px;font-size:15px}
+.closed{font-size:14px;color:var(--muted);font-weight:600}
+@media (max-width:420px){.hrow{grid-template-columns:1fr}}
+
+/* Navigation */
+.err{color:var(--danger);font-size:15px;font-weight:600;min-height:22px;margin-top:12px;white-space:pre-line}
+.nav{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.btn{font-weight:800;font-size:16px;border-radius:9px;padding:16px 24px;cursor:pointer;border:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-align:center}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.primary:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.btn.ghost{background:transparent;color:var(--ink);padding-inline:10px}
+.btn.ghost:hover{text-decoration:underline}
+.btn.line{background:var(--card);color:var(--ink);border:1.5px solid var(--ink)}
+.btn.line:hover{background:var(--bg-soft)}
+.btn.wide{width:100%}
+.btn:focus-visible{outline:3px solid var(--accent-soft);outline-offset:2px}
+.skip{margin-left:auto;font-size:15px;color:var(--muted);background:none;border:none;font-weight:600;cursor:pointer;text-decoration:underline}
+@media (max-width:480px){.nav .btn.primary{flex:1}.skip{margin-left:0;width:100%;text-align:center}}
+.alt{font-size:14px;font-weight:600;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:6px 0;justify-self:center}
+.reassure{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted);font-weight:600}
+.reassure span::before{content:"✓ ";color:var(--accent)}
+
+.intro-list{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:12px}
+.intro-list li{display:flex;gap:12px;align-items:flex-start;font-size:16px}
+.intro-list li i{font-style:normal;flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:900;display:grid;place-items:center;font-size:14px}
+
+/* Panneau de droite, phase 1 */
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);display:grid;gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);padding:18px;display:grid;gap:12px}
+.card h2{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.plan{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.plan li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:14px;font-weight:600}
+.plan li.cur{background:var(--card);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.pill{font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;background:var(--line);color:var(--muted)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.auto{background:var(--accent-soft);color:var(--accent)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+
+/* Aperçu du site */
+.pv{min-width:0}
+.pv-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.pv-head b{font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.dev-toggle{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--card)}
+.dev-toggle button{font-size:13px;font-weight:700;border:none;background:none;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.dev-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+@media (max-width:960px){.dev-toggle{display:none}}
+.tapnote{display:flex;gap:10px;align-items:center;background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:11px 14px;font-size:15px;font-weight:600;margin-bottom:12px}
+.tapnote i{font-style:normal;background:var(--accent);color:var(--on-accent);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800;flex:none}
+.browser{border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);margin-inline:auto;transition:max-width .3s;max-width:100%}
+.browser.phone{max-width:390px;border-radius:26px}
+.bar{display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--bg-soft);border-bottom:1px solid var(--line)}
+.bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.url{flex:1;margin-left:8px;background:var(--card);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sitebox{container-type:inline-size}
+
+/* Le site du commerçant : sa propre palette, fixe dans les deux thèmes */
+.site{background:var(--s-bg);color:var(--s-ink);font-family:Inter,Arial,sans-serif;font-size:15px;line-height:1.55}
+.s-h{font-family:var(--s-font);font-weight:var(--s-w);letter-spacing:var(--s-ls)}
+.s-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 24px}
+.s-logo{font-size:22px;line-height:1.1}
+.s-call{background:var(--s-acc);color:var(--s-on);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap}
+.s-hero{display:grid;grid-template-columns:1.05fr 1fr}
+.s-img{position:relative;min-height:300px;overflow:hidden}
+.s-img img,.s-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.s-ph{background:linear-gradient(140deg,var(--s-soft),var(--s-tint));display:grid;place-items:center}
+.s-ph span{position:relative;background:var(--s-bg);color:var(--s-mut);font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em}
+.s-hero-tx{padding:34px 28px;display:grid;align-content:center;gap:14px;background:var(--s-soft)}
+.s-hero h2{font-size:36px;line-height:1.08;margin:0}
+.s-hero p{margin:0;color:var(--s-mut);font-size:15px}
+.s-btn{justify-self:start;background:var(--s-ink);color:var(--s-bg);padding:11px 16px;border-radius:8px;font-size:13.5px;font-weight:700}
+.s-sec{padding:30px 24px;border-top:1px solid var(--s-line)}
+.s-sec>h3{font-size:26px;margin:0 0 16px;line-height:1.15}
+.s-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.s-card{background:var(--s-soft);border-radius:10px;padding:16px}
+.s-card b{display:block;font-size:16px;margin-bottom:4px}
+.s-card span{font-size:14px;color:var(--s-mut)}
+.s-gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.s-gal>div{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;max-width:100%}
+.s-prix{display:grid;gap:0;max-width:560px}
+.s-prix div{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dotted var(--s-line);font-size:15px}
+.s-prix div span:first-child{flex:1;min-width:0}
+.s-prix div span:last-child{font-weight:700;white-space:nowrap}
+.s-about{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:start}
+.s-about .s-port{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;max-width:100%}
+.s-about p{margin:0;font-size:15.5px}
+.s-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.s-info h4{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.s-hours{display:grid;gap:3px;font-size:14.5px}
+.s-hours div{display:flex;justify-content:space-between;gap:12px}
+.s-hours div span:last-child{color:var(--s-mut);text-align:right}
+.s-contact{display:grid;gap:4px;font-size:14.5px}
+.s-contact b{font-size:17px}
+.s-small{font-size:13.5px;color:var(--s-mut)}
+.s-foot{padding:18px 24px;font-size:12px;color:var(--s-mut);border-top:1px solid var(--s-line)}
+@container (max-width:620px){
+  .s-hero{grid-template-columns:1fr}
+  .s-img{min-height:220px}
+  .s-hero h2{font-size:29px}
+  .s-hero-tx{padding:24px 20px}
+  .s-head,.s-sec,.s-foot{padding-inline:18px}
+  .s-grid,.s-info{grid-template-columns:1fr}
+  .s-about{grid-template-columns:minmax(0,1fr)}
+  .s-about .s-port{max-width:240px}
+}
+/* Mode retouche : chaque élément modifiable porte une étiquette */
+.site.editing [data-edit]{position:relative;cursor:pointer;outline:2px dashed var(--s-mark-soft);outline-offset:3px;border-radius:4px}
+.site.editing [data-edit]:hover{outline-color:var(--s-mark)}
+.site.editing [data-edit]::after{content:"✎ Modifier";position:absolute;top:-9px;right:-4px;z-index:2;background:var(--s-mark);color:#ffffff;font:800 11px/1 Inter,Arial,sans-serif;padding:4px 8px;border-radius:999px;letter-spacing:0;text-transform:none;white-space:nowrap;pointer-events:none}
+.site.editing [data-edit].sel{outline:3px solid var(--s-mark)}
+.site.editing [data-edit].sel::after{content:"En cours"}
+.site.editing [data-edit].done::after{content:"✓ Modifié";background:#137a3b}
+.site.editing .s-ph[data-edit],.site.editing .s-sec[data-edit]{outline-offset:-4px}
+.site.editing .s-ph[data-edit]::after,.site.editing .s-sec[data-edit]::after{top:10px;right:10px}
+
+/* Panneau (phase finale et retouches) */
+.panel{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);max-height:calc(100vh - 36px);overflow:auto;padding-bottom:6px}
+.offer{border:1.5px solid var(--ink);border-radius:14px;padding:20px;display:grid;gap:14px;background:var(--card)}
+.offer .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.offer .name{font-weight:900;font-size:20px;letter-spacing:-.02em}
+.offer .price{font-weight:900;font-size:34px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.offer .price small{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0}
+.offer .then{font-size:14px;color:var(--muted)}
+.offer .then b{color:var(--ink)}
+.offer ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
+.offer li::before{content:"✓  ";color:var(--accent);font-weight:800}
+.retouch{border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);padding:18px;display:grid;gap:10px}
+.retouch b{font-size:17px}
+.stripe{border:1.5px dashed var(--warn);background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:14px;font-size:14px}
+.rules{border-radius:12px;background:var(--accent-soft);padding:14px 16px;display:grid;gap:6px}
+.rules b{font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.rules ul{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:14.5px}
+.rules li::before{content:"• ";color:var(--accent);font-weight:900}
+.wc{font-size:13px;color:var(--muted);font-weight:600;text-align:right;font-variant-numeric:tabular-nums;margin-top:-2px}
+.wc.over{color:var(--danger)}
+.edmsg{font-size:14.5px;font-weight:600;border-radius:10px;padding:11px 13px}
+.edmsg:empty{display:none}
+.edmsg.bad{background:var(--danger-soft);color:var(--danger)}
+.edmsg.good{background:var(--ok-soft);color:var(--ok)}
+.edbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.edbtns .btn.primary{flex:1}
+.backlink{justify-self:start;font-size:14px;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;padding:0}
+.svc{display:grid;gap:6px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.phcur{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--line);max-width:100%}
+.phcur.port{aspect-ratio:4/5;max-width:200px}
+.phcur img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phcur .s-ph{position:absolute;inset:0}
+.rlist{list-style:none;margin:0;padding:0;display:grid;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.rlist li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--line);font-size:15px;font-weight:600}
+.rlist li:first-child{border-top:none}
+.rlist li::before{content:"✓";color:var(--ok);font-weight:900;margin-right:2px}
+.rlist li span{flex:1;min-width:0}
+.rlist button{font-size:14px;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline}
+.empty{font-size:15px;color:var(--muted);border:1.5px dashed var(--line);border-radius:12px;padding:16px;text-align:center}
+.sheet-close{display:none}
+
+@media (max-width:960px){
+  .panel{position:static;max-height:none;overflow:visible}
+  .panel.sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;max-height:68vh;overflow:auto;background:var(--bg);border-top:1px solid var(--line);border-radius:18px 18px 0 0;box-shadow:0 -18px 40px -20px rgba(0,0,0,.45);
+    padding:18px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  body.sheet-open{padding-bottom:68vh}
+  .sheet-close{display:block}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head><body>
+
+
+<div class="proto">
+  <span class="dot" aria-hidden="true"></span><b>Prototype</b><span>Simulez les réponses du début du questionnaire :</span>
+  <label for="p-metier" style="display:inline-flex;gap:6px;align-items:center">Métier
+    <select id="p-metier">
+      <option value="restaurant">Restaurant</option>
+      <option value="coiffure">Coiffure</option>
+      <option value="plombier">Plombier</option>
+      <option value="cordonnerie">Cordonnerie</option>
+    </select>
+  </label>
+  <span class="ptog" id="p-opts"></span>
+</div>
+
+<header class="top">
+  <div class="logo">HOOD<span>.</span></div>
+  <ol class="phases" id="phases"></ol>
+</header>
+
+<main id="app"></main>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const words = s => (String(s||"").trim().match(/\S+/g) || []).length;
+  const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
+  const MAXMB = 10;
+  const DAYS = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+  const H = spec => spec.map(s => s ? {open:true, r:s.split(",").map(x => x.split("-"))} : {open:false, r:[]});
+
+  /* ---------- Métiers de démonstration ---------- */
+  const METIERS = {
+    restaurant:{lab:"Restaurant", nom:"Le Comptoir des Halles", ville:"Vienne", adresse:"8 rue des Halles, 38200 Vienne", tel:"04 74 00 00 00",
+      font:"'DM Serif Display',Georgia,serif", w:400, ls:"0", pal:{bg:"#FFFBF4",ink:"#1D1A16",mut:"#6F665B",acc:"#2F4A3A",soft:"#F3EADB",tint:"#C9B79A",line:"#E6DCCB",on:"#FFFFFF"},
+      photos:"vos plats, votre salle, votre équipe", sous:"Bistrot de quartier à Vienne. Réservation par téléphone.",
+      titres:{chaleureux:"Une cuisine maison, servie avec le sourire", serieux:"Cuisine de saison et produits frais, midi et soir", chic:"Une table de caractère au cœur de Vienne"},
+      services:[["Le midi","Une formule rapide, avec le plat du jour"],["Le soir","Une carte courte, qui suit les saisons"],["À emporter","Vos plats préférés, à récupérer sur place"],["Les groupes","Anniversaires et repas d'équipe, sur réservation"]],
+      prixT:"La carte", galT:"La maison en images", prix:[["Plat du jour","14,50 €"],["Menu du midi","19 €"],["Dessert maison","6,50 €"]],
+      valeurs:["Le fait maison","Les produits locaux","L'accueil","Des prix justes","La rapidité","La tradition"],
+      hours:H(["","12:00-14:00,19:00-22:00","12:00-14:00,19:00-22:00","12:00-14:00,19:00-22:00","12:00-14:00,19:00-22:30","12:00-14:00,19:00-22:30","12:00-14:30"]),
+      opts:["tarifs","apropos","contact"]},
+    coiffure:{lab:"Coiffure", nom:"Atelier Lina", ville:"Bourgoin-Jallieu", adresse:"3 place du Marché, 38300 Bourgoin-Jallieu", tel:"04 74 11 22 33",
+      font:"'DM Serif Display',Georgia,serif", w:400, ls:"0", pal:{bg:"#FBF8F6",ink:"#221C1F",mut:"#6E6468",acc:"#7D4E5E",soft:"#F3EAED",tint:"#CDB1BB",line:"#E8DCE0",on:"#FFFFFF"},
+      photos:"vos coupes, votre salon, votre équipe", sous:"Salon de coiffure femme, homme et enfant, à Bourgoin-Jallieu.",
+      titres:{chaleureux:"Un salon où l'on prend le temps", serieux:"Coupe, couleur et soins, avec ou sans rendez-vous", chic:"La coiffure sur mesure, à Bourgoin-Jallieu"},
+      services:[["Coupe","Femme, homme et enfant"],["Couleur","Couleur, mèches et balayage"],["Soins","Pour les cheveux secs ou abîmés"],["Cérémonie","Chignons et coiffures de mariage"]],
+      prixT:"Nos tarifs", galT:"Nos réalisations", prix:[["Coupe femme","38 €"],["Coupe homme","22 €"],["Couleur","à partir de 55 €"]],
+      valeurs:["L'écoute","Le travail soigné","Les produits naturels","Des prix justes","La ponctualité","Les tendances du moment"],
+      hours:H(["","09:00-19:00","09:00-19:00","09:00-19:00","09:00-19:00","09:00-17:00",""]),
+      opts:["tarifs","apropos","contact"]},
+    plombier:{lab:"Plombier", nom:"Martin Plomberie", ville:"Voiron", adresse:"15 avenue Jules Ravat, 38500 Voiron", tel:"04 76 05 06 07",
+      font:"Inter,Arial,sans-serif", w:800, ls:"-.03em", pal:{bg:"#FFFFFF",ink:"#0F1B2D",mut:"#5A6576",acc:"#0B5CB8",soft:"#EEF3FA",tint:"#9DB7D8",line:"#E1E7EF",on:"#FFFFFF"},
+      photos:"vos chantiers, avant et après", sous:"Dépannage, salle de bain, chauffe-eau : on intervient autour de Voiron.",
+      titres:{chaleureux:"Votre plombier de quartier, toujours joignable", serieux:"Dépannage et travaux de plomberie à Voiron", chic:"Des salles de bain pensées et posées avec soin"},
+      services:[["Dépannage","Fuite, robinet, WC bouché"],["Salle de bain","Création et rénovation complète"],["Chauffe-eau","Remplacement et entretien"],["Chauffage","Radiateurs et chaudières"]],
+      prixT:"Nos tarifs", galT:"Nos chantiers", prix:[["Déplacement","45 €"],["Recherche de fuite","90 €"],["Chauffe-eau posé","à partir de 690 €"]],
+      valeurs:["La réactivité","Le travail propre","Des devis clairs","La ponctualité","Le conseil","Le respect des délais"],
+      hours:H(["08:00-12:00,14:00-18:00","08:00-12:00,14:00-18:00","08:00-12:00,14:00-18:00","08:00-12:00,14:00-18:00","08:00-12:00,14:00-17:00","09:00-12:00",""]),
+      opts:["tarifs","apropos","contact","zone"]},
+    cordonnerie:{lab:"Cordonnerie", nom:"Cordonnerie du Marché", ville:"Romans-sur-Isère", adresse:"22 rue Jacquemart, 26100 Romans-sur-Isère", tel:"04 75 02 03 04",
+      font:"'DM Serif Display',Georgia,serif", w:400, ls:"0", pal:{bg:"#FBF7F0",ink:"#241B12",mut:"#6E6253",acc:"#7A4A1E",soft:"#F2E8D8",tint:"#C7A985",line:"#E7DAC6",on:"#FFFFFF"},
+      photos:"votre boutique, votre atelier, vos réparations", sous:"Cordonnier et clés minute, au cœur de Romans-sur-Isère.",
+      titres:{chaleureux:"Vos chaussures entre de bonnes mains", serieux:"Réparation de chaussures, clés et maroquinerie", chic:"Le savoir-faire d'un artisan cordonnier"},
+      services:[["Réparations","Talons, semelles et coutures"],["Clés","Doubles de clés et badges"],["Maroquinerie","Sacs et ceintures réparés"],["Entretien","Cirage et imperméabilisation"]],
+      prixT:"Nos tarifs", galT:"L'atelier en images", prix:[["Talons femme","18 €"],["Ressemelage","à partir de 45 €"],["Double de clé","à partir de 4 €"]],
+      valeurs:["Le travail à la main","La rapidité","Le conseil","Des prix justes","Les produits de qualité","La tradition"], marques:"Saphir, Famaco",
+      hours:H(["","09:00-12:00,14:00-19:00","09:00-12:00,14:00-19:00","09:00-12:00,14:00-19:00","09:00-12:00,14:00-19:00","09:00-12:00,14:00-18:00",""]),
+      opts:["apropos","contact","marques"]}
+  };
+  const OPTLAB = {tarifs:"Tarifs affichés", apropos:"Page À propos", contact:"Formulaire de contact", zone:"Zone d'intervention", marques:"Marques"};
+  const ZONES = [["ville","Dans ma ville"],["15","Jusqu'à 15 km"],["30","Jusqu'à 30 km"],["dept","Tout le département"]];
+  const DEPUIS = [["2","Moins de 2 ans"],["10","2 à 10 ans"],["plus","Plus de 10 ans"],["30","Plus de 30 ans"]];
+  const EQUIPE = [["seul","Seul ou seule"],["petit","2 ou 3 personnes"],["grand","4 ou plus"]];
+
+  /* ---------- État ---------- */
+  let metier = "restaurant", opts = new Set(METIERS.restaurant.opts);
+  const M = () => METIERS[metier];
+  let A = {};
+  const ans = k => (A[k] ??= {choice:null, files:[], text:"", rows:null, skipped:false});
+  const st = {view:"q", cur:0, err:"", sel:null, draft:null, pay:false, device:"desk"};
+  let steps = [], S0 = null, S2 = null, edits = {};
+
+  /* ---------- Phase 1 : étapes fermées ---------- */
+  const DEF = {
+    photos:{name:"Les photos", title:"Quelles <em>photos</em> sur votre site ?", lead:() => `Pour montrer ${M().photos}.`, cols:3,
+      choices:[["mine","Mes propres photos","Je vous les envoie maintenant"],["ours","Celles que vous proposez","Choisies pour votre métier"],["mix","Un peu des deux","Mes photos, complétées par les vôtres"]],
+      more:c => (c==="mine"||c==="mix") ? upload() : ""},
+    ton:{name:"Le ton", title:"Comment parler à <em>vos clients</em> ?", lead:() => "On écrit tous les textes de votre site dans ce ton. Vous pourrez retoucher un titre à la fin si vous le voulez.", cols:3,
+      choices:() => [["chaleureux","Chaleureux et simple",`« ${M().titres.chaleureux} »`,"Le plus choisi"],["serieux","Sérieux et rassurant",`« ${M().titres.serieux} »`],["chic","Élégant",`« ${M().titres.chic} »`]]},
+    prix:{name:"Les prix", title:"Vos <em>prix</em>.", lead:() => "Vous avez choisi d'afficher vos tarifs. Comment préférez-vous nous les donner ?", cols:3,
+      choices:[["type","Je les écris ici","Quelques lignes suffisent"],["photo","J'envoie une photo","De ma carte ou de ma grille de tarifs, même écrite à la main"],["none","Finalement, pas de prix","Mon site ne les affiche pas"]],
+      more:c => c==="type" ? rowsHtml("q") : c==="photo" ? `<label class="drop" for="up-prix"><span class="plus" aria-hidden="true">+</span><b>Ajoutez la photo de vos tarifs</b><span class="hint">On recopie tout pour vous.</span><input type="file" id="up-prix" data-up="prix" accept="image/jpeg,image/png,image/webp,application/pdf"></label>${ans("prix").files.length ? `<span class="count">✓ ${esc(ans("prix").files[0].name)}</span>` : ""}` : ""},
+    horaires:{name:"Les horaires", title:"Vos <em>horaires</em>.", lead:() => "Les jours et les heures où vos clients peuvent venir ou vous appeler.", cols:3,
+      choices:[["google","Comme sur ma fiche Google","On les reprend tels quels"],["write","Je les indique","Jour par jour, en quelques clics"],["none","Pas d'horaires sur le site","Sur rendez-vous, par exemple"]],
+      more:c => c==="write" ? `<div class="t">Cochez les jours d'ouverture</div>${hoursHtml("q", ans("horaires").rows)}` : ""},
+    zone:{name:"La zone", title:"Où <em>intervenez-vous</em> ?", lead:() => "Pour que vos clients sachent tout de suite si vous venez chez eux.", cols:2,
+      choices:ZONES.map(z => [z[0], z[1], ""]),
+      more:c => c ? `<label class="f" for="q-zone">Des communes à citer ? <small>facultatif, 10 au maximum</small><input type="text" id="q-zone" data-bind="zone" maxlength="140" value="${esc(ans("zone").text)}" placeholder="Ex. : Voiron, Coublevie, Saint-Jean-de-Moirans"></label>` : ""},
+    marques:{name:"Les marques", title:"Les <em>marques</em> que vous proposez.", lead:() => "Celles que vous vendez ou que vous utilisez, si vous voulez les afficher.", cols:2,
+      choices:[["write","Je les indique",""],["none","Pas de marques sur le site",""]],
+      more:c => c==="write" ? `<label class="f" for="q-marques">Vos marques <small>10 au maximum, séparées par des virgules</small><input type="text" id="q-marques" data-bind="marques" maxlength="150" value="${esc(ans("marques").text)}" placeholder="Ex. : Saphir, Famaco"></label>` : ""},
+    apropos:{name:"Votre histoire", title:"Votre <em>histoire</em>.", lead:() => "Trois petites questions, et on écrit le texte pour vous.", cols:2,
+      choices:[["write","Écrivez-la pour moi","Je réponds à 3 questions"],["none","Pas de page À propos","Mon site s'en passe"]],
+      more:c => c==="write" ? aboutQs() : ""},
+    contact:{name:"Les messages", title:"Où recevoir les <em>messages</em> ?", lead:() => "Quand un client remplit le formulaire de votre site, son message arrive à cette adresse.",
+      choices:null, more:() => `<label class="f" for="q-contact">Votre adresse e-mail<input type="email" id="q-contact" data-bind="contact" value="${esc(ans("contact").text)}" placeholder="Ex. : contact@moncommerce.fr" autocomplete="email" inputmode="email"></label><span class="hint">Elle n'est pas affichée sur le site.</span>`}
+  };
+  function buildSteps(){
+    steps = ["intro","photos","ton"];
+    if(opts.has("tarifs")) steps.push("prix");
+    steps.push("horaires");
+    ["zone","marques","apropos","contact"].forEach(o => opts.has(o) && steps.push(o));
+  }
+  const qSteps = () => steps.filter(k => k!=="intro");
+
+  function upload(){
+    const a = ans("photos");
+    return `<div class="rules"><b>Vos photos</b><ul><li>JPG, PNG ou WebP, ${MAXMB} Mo maximum par photo</li><li>Au moins 1 000 pixels : les photos de votre téléphone conviennent</li><li>Les photos en largeur rendent mieux</li></ul></div>
+      <label class="drop" for="up-photos"><span class="plus" aria-hidden="true">+</span><b>Ajoutez vos photos</b><span class="hint">Autant que vous voulez : on place les plus belles.</span>
+      <input type="file" id="up-photos" data-up="photos" accept="image/jpeg,image/png,image/webp" multiple></label>
+      ${a.files.length ? `<span class="count">✓ ${a.files.length} photo${a.files.length>1?"s":""} ajoutée${a.files.length>1?"s":""}</span><div class="thumbs">${a.files.map((f,i) => `<div class="th"><img src="${f.url}" alt=""><button type="button" data-rm="${i}" aria-label="Retirer ${esc(f.name)}">×</button></div>`).join("")}</div>` : ""}`;
+  }
+  function aboutQs(){
+    const a = ans("apropos");
+    const radio = (g, list) => `<div class="chips" role="radiogroup">${list.map(o => `<button type="button" class="chip" role="radio" aria-checked="${a[g]===o[0]}" data-ab="${g}:${o[0]}">${o[1]}</button>`).join("")}</div>`;
+    const vals = a.vals || [];
+    return `<div class="qgroup"><div class="t">Depuis quand êtes-vous là ?</div>${radio("depuis", DEPUIS)}</div>
+      <div class="qgroup"><div class="t">Vous êtes combien ?</div>${radio("eq", EQUIPE)}</div>
+      <div class="qgroup"><div class="t">Ce qui compte pour vous <small>3 au maximum</small></div><div class="chips">${M().valeurs.map(v => `<button type="button" class="chip" aria-pressed="${vals.includes(v)}" data-val="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>
+      <div class="say"><small>Ce qu'on écrira</small>${esc(aboutText(M().nom))}</div>`;
+  }
+  function aboutText(nom){
+    const a = ans("apropos");
+    const dep = {"2":"depuis peu","10":"depuis quelques années","plus":"depuis plus de dix ans","30":"depuis plus de trente ans"}[a.depuis || "10"];
+    const eq = a.eq || "petit";
+    const first = eq==="seul" ? `Chez ${nom}, je vous accueille ${dep}.` : eq==="petit" ? `Chez ${nom}, notre petite équipe vous accueille ${dep}.` : `Chez ${nom}, toute notre équipe vous accueille ${dep}.`;
+    const v = (a.vals && a.vals.length ? a.vals : M().valeurs.slice(0,2)).map(x => x.charAt(0).toLowerCase() + x.slice(1));
+    const list = v.length > 1 ? v.slice(0,-1).join(", ") + " et " + v[v.length-1] : v[0];
+    return `${first} Ce qui compte ${eq==="seul" ? "pour moi" : "pour nous"} : ${list}.`;
+  }
+
+  /* Lignes de prix (q = phase 1, e = retouche) */
+  const PR_NAME = 6, PR_PRICE = 18, PR_MAX = 12;
+  function prRows(id){ if(id==="q"){ const a = ans("prix"); if(!a.rows) a.rows = M().prix.map(r => [r[0],""]); return a.rows; } return st.draft.prix; }
+  function rowsHtml(id){
+    const rows = prRows(id);
+    return `<div class="t">Vos prix</div><div class="rowhead"><span>Prestation ou produit</span><span>Prix</span><span></span></div>
+      <div class="rows">${rows.map((r,i) => `<div class="prow">
+        <input type="text" id="pr-${id}-n-${i}" data-pr="${id}:${i}:0" value="${esc(r[0])}" maxlength="48" placeholder="Ex. : ${esc(M().prix[i%3][0])}" aria-label="Prestation ou produit ${i+1}">
+        <input type="text" id="pr-${id}-p-${i}" data-pr="${id}:${i}:1" value="${esc(r[1])}" maxlength="${PR_PRICE}" placeholder="${esc(M().prix[i%3][1])}" aria-label="Prix ${i+1}">
+        <button type="button" class="rm" data-prm="${id}:${i}" aria-label="Supprimer la ligne ${i+1}">×</button></div>`).join("")}</div>
+      ${rows.length < PR_MAX ? `<button type="button" class="addrow" data-padd="${id}">+ Ajouter une ligne</button>` : `<span class="hint">${PR_MAX} lignes au maximum.</span>`}
+      <span class="hint">Si le prix varie, écrivez « à partir de ».</span>`;
+  }
+
+  /* Horaires */
+  function hRows(id){ if(id==="q"){ const a = ans("horaires"); if(!a.rows) a.rows = clone(M().hours); return a.rows; } return st.draft.horaires; }
+  function hoursHtml(id, rows){
+    return `<div class="hours">${rows.map((d,i) => `<div class="hrow">
+      <label class="hday" for="h-${id}-${i}"><input type="checkbox" id="h-${id}-${i}" data-hopen="${id}:${i}"${d.open?" checked":""}>${DAYS[i]}</label>
+      ${d.open ? `<div class="hr">${d.r.map((r,j) => `<span class="rng"><input type="time" id="h-${id}-${i}-${j}-0" data-ht="${id}:${i}:${j}:0" value="${r[0]}" aria-label="${DAYS[i]}, ouverture"> à <input type="time" id="h-${id}-${i}-${j}-1" data-ht="${id}:${i}:${j}:1" value="${r[1]}" aria-label="${DAYS[i]}, fermeture"></span>`).join(`<span>et</span>`)}
+        ${d.r.length < 2 ? `<button type="button" class="mini" data-hadd="${id}:${i}">+ 2ᵉ horaire</button>` : `<button type="button" class="mini" data-hdel="${id}:${i}">Retirer</button>`}</div>` : `<span class="closed">Fermé</span>`}
+    </div>`).join("")}</div>`;
+  }
+  const fmtT = t => { const [h,m] = String(t||"").split(":"); return h ? `${+h} h${m && m!=="00" ? " "+m : ""}` : ""; };
+  function hoursLines(rows){
+    const key = d => d.open && d.r.length ? d.r.map(r => `${fmtT(r[0])} – ${fmtT(r[1])}`).join(", ") : "Fermé";
+    const out = []; let i = 0;
+    while(i < 7){ let j = i; while(j+1 < 7 && key(rows[j+1]) === key(rows[i])) j++;
+      out.push([i===j ? DAYS[i] : `${DAYS[i]} – ${DAYS[j]}`, key(rows[i])]); i = j+1; }
+    return out;
+  }
+
+  /* Résumé (panneau de la phase 1) */
+  function summary(k){
+    const a = ans(k);
+    if(a.skipped) return "auto";
+    if(k==="contact") return a.text.trim() ? "ok" : "";
+    if(k==="photos" && (a.choice==="mine"||a.choice==="mix")) return a.files.length ? "ok" : "";
+    return a.choice ? "ok" : "";
+  }
+
+  /* ---------- Le site, construit à partir des réponses ---------- */
+  function buildSite(){
+    const m = M(), ph = ans("photos");
+    const imgs = (ph.choice==="mine"||ph.choice==="mix") ? ph.files.slice() : [];
+    const land = imgs.filter(f => f.w >= f.h);
+    const hero = land[0] || null;
+    const rest = imgs.filter(f => f !== hero);
+    const gal = rest.filter(f => f.w >= f.h*0.95);
+    const port = rest.find(f => f.h > f.w*1.05) || null;
+    const pr = ans("prix"), ho = ans("horaires"), ap = ans("apropos"), mq = ans("marques");
+    let prix = null;
+    if(opts.has("tarifs") && pr.choice!=="none"){
+      const filled = pr.choice==="type" && pr.rows ? pr.rows.filter(r => r[0].trim() && r[1].trim()) : [];
+      prix = filled.length ? clone(filled) : clone(m.prix);
+    }
+    return {
+      nom:m.nom, titre:m.titres[ans("ton").choice || "chaleureux"], soustitre:m.sous,
+      hero, gal0:gal[0]||null, gal1:gal[1]||null, gal2:gal[2]||null,
+      services:m.services.map(s => ({t:s[0], d:s[1]})), prix,
+      apropos: opts.has("apropos") && ap.choice!=="none" ? aboutText(m.nom) : null, aproposImg:port,
+      horaires: ho.choice==="none" ? null : ho.choice==="write" && ho.rows ? clone(ho.rows) : clone(m.hours),
+      adresse:m.adresse, tel:m.tel,
+      zone: opts.has("zone") ? {c: ans("zone").choice || "15", communes: ans("zone").text || ""} : null,
+      marques: opts.has("marques") && mq.choice!=="none" ? (mq.text.trim() || m.marques || "") : null
+    };
+  }
+  const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/^(le|la|les|l')\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  function photo(img, label){ return img ? `<img src="${img.url}" alt="">` : `<span>${label}</span>`; }
+
+  function siteHtml(S, editing){
+    const m = M(), p = m.pal;
+    const vars = `--s-bg:${p.bg};--s-ink:${p.ink};--s-mut:${p.mut};--s-acc:${p.acc};--s-soft:${p.soft};--s-tint:${p.tint};--s-line:${p.line};--s-on:${p.on};--s-font:${m.font};--s-w:${m.w};--s-ls:${m.ls};--s-mark:#0047ff;--s-mark-soft:rgba(0,71,255,.38)`;
+    const e = k => editing ? ` data-edit="${k}"${st.sel===k?" sel":""}` : "";
+    const cls = (k, base) => `class="${base}${editing && st.sel===k ? " sel" : ""}${editing && edits[k] && st.sel!==k ? " done" : ""}"`;
+    const at = (k, base) => editing ? `data-edit="${k}" ${cls(k, base)}` : `class="${base}"`;
+    const zl = S.zone ? (ZONES.find(z => z[0]===S.zone.c) || ZONES[1])[1] : "";
+    return `<div class="site${editing?" editing":""}" style="${vars}">
+      <header class="s-head"><div ${at("nom","s-logo s-h")}>${esc(S.nom)}</div><span class="s-call">Appeler</span></header>
+      <section class="s-hero">
+        <div ${at("hero","s-img s-ph")}>${photo(S.hero,"Photo proposée")}</div>
+        <div class="s-hero-tx">
+          <h2 ${at("titre","s-h")}>${esc(S.titre)}</h2>
+          <p ${at("soustitre","")}>${esc(S.soustitre)}</p>
+          <span class="s-btn">${esc(S.tel)}</span>
+        </div>
+      </section>
+      <section ${at("services","s-sec")}><h3 class="s-h">Ce que nous proposons</h3>
+        <div class="s-grid">${S.services.map(s => `<div class="s-card"><b>${esc(s.t)}</b><span>${esc(s.d)}</span></div>`).join("")}</div></section>
+      <section class="s-sec"><h3 class="s-h">${esc(m.galT)}</h3>
+        <div class="s-gal">${["gal0","gal1","gal2"].map(k => `<div ${at(k,"s-ph")}>${photo(S[k],"Photo proposée")}</div>`).join("")}</div></section>
+      ${S.prix ? `<section ${at("prix","s-sec")}><h3 class="s-h">${esc(m.prixT)}</h3><div class="s-prix">${S.prix.map(r => `<div><span>${esc(r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}</div></section>` : ""}
+      ${S.apropos ? `<section class="s-sec"><h3 class="s-h">Notre histoire</h3><div class="s-about">
+        <div ${at("aproposImg","s-port s-ph")}>${photo(S.aproposImg,"Votre photo")}</div>
+        <p ${at("apropos","")}>${esc(S.apropos)}</p></div></section>` : ""}
+      ${S.marques ? `<section class="s-sec"><h3 class="s-h">Nos marques</h3><p ${at("marques","s-small")} style="font-size:15.5px;color:inherit">${esc(S.marques)}</p></section>` : ""}
+      <section class="s-sec"><div class="s-info">
+        ${S.horaires ? `<div ${at("horaires","")}><h4>Horaires</h4><div class="s-hours">${hoursLines(S.horaires).map(l => `<div><span>${l[0]}</span><span>${l[1]}</span></div>`).join("")}</div></div>` : ""}
+        <div ${at("contact","s-contact")}><h4>Nous trouver</h4><b>${esc(S.tel)}</b><span>${esc(S.adresse)}</span>
+          ${S.zone ? `<span class="s-small" ${editing?`data-edit="zone" ${cls("zone","")}`:""}>Nous intervenons : ${esc(zl.charAt(0).toLowerCase()+zl.slice(1))}${S.zone.communes.trim() ? ` (${esc(S.zone.communes.trim())})` : ""}.</span>` : ""}</div>
+      </div></section>
+      <footer class="s-foot">${esc(S.nom)} · ${esc(m.ville)}</footer>
+    </div>`;
+  }
+
+  /* ---------- Phase 2 : règles de chaque endroit ---------- */
+  const EDT = {
+    nom:{label:"Le nom de votre commerce", kind:"text", max:5, ml:40, req:true, rules:["5 mots maximum","Il s'affiche en haut de chaque page"]},
+    titre:{label:"Le grand titre", kind:"text", max:10, ml:80, req:true, rules:["10 mots maximum","Une phrase courte, qui se lit d'un coup d'œil"]},
+    soustitre:{label:"La phrase sous le titre", kind:"area", max:25, ml:200, req:true, rules:["25 mots maximum","Ce que vous faites, et où"]},
+    apropos:{label:"Votre histoire", kind:"area", max:120, ml:900, req:true, rules:["120 mots maximum, soit 5 ou 6 lignes","Pas besoin de bien écrire : on relit tout"]},
+    services:{label:"Vos services", kind:"services", rules:["4 services, pas plus","Le nom : 3 mots maximum","La description : 12 mots maximum"]},
+    prix:{label:"Vos prix", kind:"prix", rules:[`${PR_MAX} lignes maximum`,`Le nom : ${PR_NAME} mots maximum`,"Le prix : un montant, ou « à partir de … »"]},
+    horaires:{label:"Vos horaires", kind:"hours", rules:["Cochez les jours d'ouverture","Deux horaires par jour au maximum"]},
+    contact:{label:"Téléphone et adresse", kind:"contact", rules:["Le téléphone : 10 chiffres","L'adresse : comme sur une enveloppe"]},
+    zone:{label:"Votre zone d'intervention", kind:"zone", rules:["Une distance à choisir","10 communes maximum, séparées par des virgules"]},
+    marques:{label:"Vos marques", kind:"marques", rules:["10 marques maximum, séparées par des virgules"]},
+    hero:{label:"La grande photo", kind:"photo", orient:"land", minW:1600, minH:900},
+    gal0:{label:"Photo 1 de la galerie", kind:"photo", orient:"notport", minW:1000, minH:750},
+    gal1:{label:"Photo 2 de la galerie", kind:"photo", orient:"notport", minW:1000, minH:750},
+    gal2:{label:"Photo 3 de la galerie", kind:"photo", orient:"notport", minW:1000, minH:750},
+    aproposImg:{label:"Votre photo", kind:"photo", orient:"port", minW:800, minH:1000}
+  };
+  const fieldsOf = k => k==="contact" ? ["adresse","tel"] : [k];
+  const ORIENT = {land:"Une photo en largeur (plus large que haute)", port:"Une photo en hauteur (plus haute que large)", notport:"Une photo en largeur ou carrée"};
+  function photoRules(d){ return [ORIENT[d.orient], `Au moins ${d.minW.toLocaleString("fr-FR")} × ${d.minH.toLocaleString("fr-FR")} pixels : l'original de votre téléphone convient`, `JPG, PNG ou WebP, ${MAXMB} Mo maximum`]; }
+
+  function checkImage(file, d){
+    return new Promise(res => {
+      if(!/^image\/(jpeg|png|webp)$/.test(file.type)) return res({err:"Ce fichier n'est pas une photo JPG, PNG ou WebP. Choisissez une autre photo."});
+      if(file.size > MAXMB*1024*1024) return res({err:`Cette photo pèse ${(file.size/1048576).toFixed(1).replace(".",",")} Mo. Le maximum est ${MAXMB} Mo.`});
+      const url = URL.createObjectURL(file), im = new Image();
+      im.onload = () => {
+        const w = im.naturalWidth, h = im.naturalHeight, img = {url, w, h, name:file.name};
+        if(!d) return res({img});
+        const big = Math.max(w,h), small = Math.min(w,h), needBig = Math.max(d.minW,d.minH), needSmall = Math.min(d.minW,d.minH);
+        let err = "";
+        if(d.orient==="land" && h >= w) err = "Cette photo est en hauteur. Ici, il faut une photo en largeur : tenez votre téléphone à l'horizontale.";
+        else if(d.orient==="notport" && h > w*1.05) err = "Cette photo est en hauteur. Ici, il faut une photo en largeur ou carrée.";
+        else if(d.orient==="port" && w >= h) err = "Cette photo est en largeur. Ici, il faut une photo en hauteur : tenez votre téléphone droit.";
+        else if(big < needBig || small < needSmall) err = `Cette photo est trop petite (${w} × ${h} pixels) : elle serait floue à cet endroit. Prenez l'original, pas une capture d'écran ni une photo reçue par message.`;
+        if(err){ URL.revokeObjectURL(url); return res({err}); }
+        res({img});
+      };
+      im.onerror = () => { URL.revokeObjectURL(url); res({err:"Cette photo ne s'ouvre pas. Essayez-en une autre."}); };
+      im.src = url;
+    });
+  }
+
+  function edValid(){
+    const k = st.sel, d = EDT[k], D = st.draft; if(!d) return {ok:true};
+    if(d.kind==="text"||d.kind==="area"){ const n = words(D[k]); if(d.req && !n) return {ok:false, msg:"Ce texte ne peut pas être vide."}; if(n > d.max) return {ok:false, msg:`Trop long pour cet endroit : ${d.max} mots maximum.`}; }
+    if(d.kind==="services"){ for(const s of D.services){ if(!words(s.t)) return {ok:false, msg:"Chaque service doit avoir un nom."}; if(words(s.t)>3 || words(s.d)>12) return {ok:false, msg:"Un service dépasse la longueur prévue."}; } }
+    if(d.kind==="prix"){ const r = D.prix.filter(x => x[0].trim()||x[1].trim()); if(!r.length) return {ok:false, msg:"Gardez au moins une ligne de prix."};
+      for(const x of r){ if(!x[0].trim()||!x[1].trim()) return {ok:false, msg:"Chaque ligne a besoin d'un nom et d'un prix."}; if(words(x[0])>PR_NAME) return {ok:false, msg:`Un nom de prestation dépasse ${PR_NAME} mots.`}; } }
+    if(d.kind==="contact"){ const dg = D.tel.replace(/\D/g,""); if(dg.length!==10) return {ok:false, msg:"Le numéro de téléphone doit avoir 10 chiffres."}; if(!D.adresse.trim()) return {ok:false, msg:"L'adresse ne peut pas être vide."}; }
+    if(d.kind==="zone"){ const n = D.zone.communes.split(",").filter(x => x.trim()).length; if(n>10) return {ok:false, msg:"10 communes au maximum."}; }
+    if(d.kind==="marques"){ const n = D.marques.split(",").filter(x => x.trim()).length; if(!n) return {ok:false, msg:"Indiquez au moins une marque."}; if(n>10) return {ok:false, msg:"10 marques au maximum."}; }
+    return {ok:true};
+  }
+
+  function editorHtml(k){
+    const d = EDT[k], D = st.draft;
+    const rules = d.kind==="photo" ? photoRules(d) : d.rules;
+    let body = "";
+    const wc = (id, v, max) => `<div class="wc${words(v)>max?" over":""}" id="wc-${id}">${words(v)} / ${max} mots</div>`;
+    if(d.kind==="text") body = `<label class="f" for="ed-${k}">Votre texte<input type="text" id="ed-${k}" data-ed="${k}" maxlength="${d.ml}" value="${esc(D[k])}"></label>${wc(k,D[k],d.max)}`;
+    if(d.kind==="area") body = `<label class="f" for="ed-${k}">Votre texte<textarea id="ed-${k}" data-ed="${k}" maxlength="${d.ml}" rows="${d.max>50?7:3}">${esc(D[k])}</textarea></label>${wc(k,D[k],d.max)}`;
+    if(d.kind==="services") body = D.services.map((s,i) => `<div class="svc">
+        <label class="f" for="sv-${i}-t">Service ${i+1}<input type="text" id="sv-${i}-t" data-svc="${i}:t" maxlength="28" value="${esc(s.t)}"></label>${wc(`s${i}t`,s.t,3)}
+        <label class="f" for="sv-${i}-d">Sa description<input type="text" id="sv-${i}-d" data-svc="${i}:d" maxlength="90" value="${esc(s.d)}"></label>${wc(`s${i}d`,s.d,12)}</div>`).join("");
+    if(d.kind==="prix") body = rowsHtml("e");
+    if(d.kind==="hours") body = hoursHtml("e", D.horaires);
+    if(d.kind==="contact") body = `<label class="f" for="ed-tel">Téléphone<input type="tel" id="ed-tel" data-ed="tel" maxlength="16" inputmode="tel" value="${esc(D.tel)}"></label>
+      <label class="f" for="ed-adresse">Adresse<input type="text" id="ed-adresse" data-ed="adresse" maxlength="70" value="${esc(D.adresse)}"></label>`;
+    if(d.kind==="zone") body = `<div class="chips" role="radiogroup" aria-label="Distance">${ZONES.map(z => `<button type="button" class="chip" role="radio" aria-checked="${D.zone.c===z[0]}" data-ezone="${z[0]}">${z[1]}</button>`).join("")}</div>
+      <label class="f" for="ed-communes">Communes <small>facultatif</small><input type="text" id="ed-communes" data-ezc="1" maxlength="140" value="${esc(D.zone.communes)}"></label>`;
+    if(d.kind==="marques") body = `<label class="f" for="ed-marques">Vos marques<input type="text" id="ed-marques" data-ed="marques" maxlength="150" value="${esc(D.marques)}"></label>`;
+    if(d.kind==="photo"){ const img = D[k];
+      body = `<div class="phcur${d.orient==="port"?" port":""}">${img ? `<img src="${img.url}" alt="La photo choisie">` : `<div class="s-ph" style="--s-soft:${M().pal.soft};--s-tint:${M().pal.tint};--s-bg:${M().pal.bg};--s-mut:${M().pal.mut}"><span>Photo proposée</span></div>`}</div>
+        <label class="drop" for="ep-${k}"><span class="plus" aria-hidden="true">+</span><b>${img ? "Choisir une autre photo" : "Choisir ma photo"}</b><span class="hint">On vérifie tout de suite qu'elle convient.</span>
+        <input type="file" id="ep-${k}" data-ephoto="${k}" accept="image/jpeg,image/png,image/webp"></label>
+        ${img ? `<button type="button" class="mini" id="ph-reset">Remettre la photo proposée</button>` : ""}`;
+    }
+    const v = edValid();
+    return `<button type="button" class="backlink" id="ed-cancel-top">← Toutes les retouches</button>
+      <div><h1 style="margin-bottom:6px">${d.label}</h1><p class="lead" style="margin:0">Le changement apparaît tout de suite sur votre site.</p></div>
+      <div class="rules"><b>Ce qu'il faut ici</b><ul>${rules.map(r => `<li>${r}</li>`).join("")}</ul></div>
+      ${body}
+      <div class="edmsg ${st.edmsg ? (st.edmsgKind||"") : (v.ok ? "" : "bad")}" id="edmsg" role="status">${esc(st.edmsg || (v.ok ? "" : v.msg))}</div>
+      <div class="edbtns"><button type="button" class="btn primary" id="ed-ok"${v.ok?"":" disabled"}>Valider ce changement</button><button type="button" class="btn ghost" id="ed-cancel">Annuler</button></div>`;
+  }
+
+  /* ---------- Rendu ---------- */
+  function renderPhases(){
+    const v = st.view, has = Object.keys(edits).length > 0;
+    const state = v==="q" ? ["on","",""] : v==="final" ? ["done","", st.pay?"on":""] : ["done", st.pay ? (has?"done":"") : "on", st.pay?"on":""];
+    const item = (n, lab, sm) => `<li class="${state[n-1]}"><i>${state[n-1]==="done" ? "✓" : n}</i>${lab}${sm?` <small>${sm}</small>`:""}</li>`;
+    $("phases").innerHTML = item(1,"Vos choix") + item(2,"Vos retouches","facultatif") + item(3,"Commande");
+  }
+  function render(){
+    renderPhases();
+    document.body.classList.toggle("sheet-open", st.view==="edit" && !!st.sel);
+    if(st.view==="q") return renderQ();
+    $("app").innerHTML = `<div class="wrap wide">
+      <div class="pv">
+        ${st.view==="edit" ? `<div class="tapnote"><i>✎ Modifier</i><span>Touchez un élément marqué sur le site pour le changer.</span></div>` : ""}
+        <div class="pv-head"><b>Votre site</b><div class="dev-toggle" role="group" aria-label="Taille d'écran"><button type="button" id="d-phone" aria-pressed="${st.device==="phone"}">Téléphone</button><button type="button" id="d-desk" aria-pressed="${st.device==="desk"}">Ordinateur</button></div></div>
+        <div class="browser ${st.device}"><div class="bar"><i></i><i></i><i></i><div class="url">${slug(S2.nom)||"votrecommerce"}.fr</div></div><div class="sitebox" id="preview">${siteHtml(viewS(), st.view==="edit")}</div></div>
+      </div>
+      <div class="panel${st.view==="edit" && st.sel ? " sheet" : ""}" id="panel">${panelHtml()}</div>
+    </div>`;
+  }
+  const viewS = () => Object.assign({}, S2, st.draft || {});
+  function renderPreview(){ const p = $("preview"); if(p) p.innerHTML = siteHtml(viewS(), st.view==="edit"); }
+
+  const OFFER = btn => `<div class="offer"><div class="top"><span class="name">L'Essentiel</span><span class="price">290 € <small>HT, une fois</small></span></div>
+      <div class="then">Puis <b>10 € HT par mois</b>, à partir de la validation de votre site : hébergement, nom de domaine, sécurité. Sans engagement, résiliable chaque mois.</div>
+      <ul><li>Ce site, finalisé avec vos photos et vos textes</li><li>Votre nom de domaine, à votre nom</li><li>2 allers-retours avec notre équipe avant la mise en ligne</li><li>Mise en ligne en 48 heures environ, après réception de vos contenus</li></ul>
+      <button type="button" class="btn primary wide" id="pay">${btn}</button>
+      ${st.pay ? `<div class="stripe"><b>Prototype.</b> Ici s'ouvre la page de paiement sécurisé. Aucun paiement n'est demandé sur cette page de démonstration.</div>` : ""}</div>`;
+
+  function panelHtml(){
+    if(st.view==="final") return `<div><h1>Voici <em>votre site</em>.</h1><p class="lead">Fait à partir de vos réponses. S'il vous plaît tel quel, vous pouvez le commander tout de suite.</p></div>
+      ${OFFER("Il me plaît, je commande · 290 € HT ↗")}
+      <div class="retouch"><b>Envie de retoucher un détail ?</b><span class="hint">Vous touchez le site pour changer un titre, une photo, un prix ou vos horaires. Chaque endroit a ses règles, pour que le résultat reste beau.</span>
+        <button type="button" class="btn line" id="go-edit">Retoucher mon site</button></div>
+      <button type="button" class="alt" id="back-q">← Modifier mes réponses</button>`;
+    if(st.sel) return editorHtml(st.sel);
+    const ks = Object.keys(edits);
+    return `<div><h1>Retouchez <em>votre site</em>.</h1><p class="lead">Touchez un élément marqué « Modifier » sur le site. Vous voyez le résultat tout de suite, et vous validez.</p></div>
+      ${ks.length ? `<div class="t">Vos retouches (${ks.length})</div><ul class="rlist">${ks.map(k => `<li><span>${EDT[k].label}</span><button type="button" data-undo="${k}">Annuler</button></li>`).join("")}</ul>`
+        : `<div class="empty">Aucune retouche pour l'instant.</div>`}
+      ${OFFER("J'ai fini, je commande · 290 € HT ↗")}
+      <button type="button" class="alt" id="to-final">← Revenir à la présentation</button>`;
+  }
+
+  function renderQ(){
+    const k = steps[st.cur], qs = qSteps(), qi = qs.indexOf(k);
+    let h = "";
+    if(k==="intro"){
+      h = `<div class="step"><h1>Votre site est <em>presque prêt</em>.</h1>
+        <p class="lead">Quelques questions pour qu'il vous ressemble. Une seule à la fois, et toujours des réponses à cliquer.</p>
+        <ul class="intro-list"><li><i>1</i><span><b>Vos choix.</b> ${qs.length} petites questions, environ 2 minutes. Une hésitation ? Passez : on fait au mieux.</span></li>
+        <li><i>2</i><span><b>Votre site.</b> Vous le voyez en entier. S'il vous plaît, vous le commandez.</span></li>
+        <li><i>3</i><span><b>Des retouches, si vous voulez.</b> Vous touchez le site pour changer un titre, une photo ou un prix.</span></li></ul></div>`;
+    } else {
+      const d = DEF[k], a = ans(k);
+      const list = typeof d.choices === "function" ? d.choices() : d.choices;
+      const ch = list ? `<div class="choices${d.cols?" c"+d.cols:""}" role="radiogroup" aria-label="${esc(d.name)}">${list.map(c => `<button type="button" class="choice" role="radio" aria-checked="${a.choice===c[0]}" data-choice="${c[0]}" id="c-${k}-${c[0]}">${c[3]?`<span class="badge">${c[3]}</span>`:""}<span class="rad" aria-hidden="true"></span><span class="tx"><b>${c[1]}</b>${c[2]?`<small>${esc(c[2])}</small>`:""}</span></button>`).join("")}</div>` : "";
+      const more = d.more ? d.more(a.choice) : "";
+      h = `<div class="step"><h1>${d.title}</h1><p class="lead">${d.lead()}</p>${ch}${more?`<div class="more">${more}</div>`:""}</div>`;
+    }
+    const last = st.cur === steps.length-1;
+    $("app").innerHTML = `<div class="wrap"><section aria-live="polite">
+      <div class="progress">${qs.map((_,i) => `<i class="${i<=qi?"on":""}"></i>`).join("")}</div>
+      <div class="meta">${qi>=0 ? `Étape ${qi+1} sur ${qs.length} · ${DEF[k].name}` : "Phase 1 · Vos choix"}</div>
+      <form id="form" novalidate><div id="stage">${h}</div>
+        <div class="err" id="err" role="alert">${esc(st.err)}</div>
+        <div class="nav">${st.cur>0?`<button type="button" class="btn ghost" id="back">← Retour</button>`:""}
+          <button type="submit" class="btn primary" id="next">${k==="intro"?"C'est parti ↗":last?"Voir mon site ↗":"Continuer ↗"}</button>
+          ${k!=="intro"?`<button type="button" class="skip" id="skip">Passer, faites au mieux</button>`:""}</div>
+        <div class="reassure"><span>Des réponses à cliquer</span><span>Chaque question peut se passer</span><span>Rien n'est payé avant la fin</span></div>
+      </form></section>
+      <aside class="side" aria-label="Ce qu'on prépare"><div class="card"><h2>Votre site</h2><ul class="plan">${qs.map(s => { const m = summary(s);
+        return `<li class="${s===k?"cur":""}"><span>${DEF[s].name}</span><span class="pill ${m}">${m==="ok"?"✓ Noté":m==="auto"?"On fait au mieux":"À faire"}</span></li>`; }).join("")}</ul></div>
+      <p class="note">À la fin, vous voyez votre site en entier. Les retouches se font directement dessus, avec des règles simples pour chaque endroit.</p>
+      <p class="note">Prototype : vos réponses et vos photos restent dans cette page. Rien n'est envoyé.</p></aside></div>`;
+  }
+
+  /* ---------- Bandeau de simulation ---------- */
+  function renderProto(){ $("p-opts").innerHTML = Object.keys(OPTLAB).map(o => `<label for="po-${o}"><input type="checkbox" id="po-${o}" data-po="${o}"${opts.has(o)?" checked":""}>${OPTLAB[o]}</label>`).join(""); }
+  function restart(){ A = {}; edits = {}; S0 = S2 = null; Object.assign(st, {view:"q", cur:0, err:"", sel:null, draft:null, pay:false, edmsg:""}); buildSteps(); render(); window.scrollTo({top:0}); }
+  $("p-metier").addEventListener("change", e => { metier = e.target.value; opts = new Set(METIERS[metier].opts); renderProto(); restart(); });
+  $("p-opts").addEventListener("change", e => { const o = e.target.dataset.po; if(!o) return; e.target.checked ? opts.add(o) : opts.delete(o); restart(); });
+
+  /* ---------- Sélection et validation d'une retouche ---------- */
+  function select(k){
+    if(!EDT[k]) return;
+    st.sel = k; st.edmsg = ""; st.edmsgKind = "";
+    st.draft = {}; fieldsOf(k).forEach(f => st.draft[f] = clone(S2[f]));
+    if(k==="prix" && !st.draft.prix) st.draft.prix = clone(M().prix);
+    render();
+    const p = $("panel"); if(p && window.matchMedia("(min-width:961px)").matches) p.scrollTop = 0;
+  }
+  function closeEd(){ st.sel = null; st.draft = null; st.edmsg = ""; render(); }
+  function commit(){
+    const k = st.sel; if(!edValid().ok) return;
+    if(k==="prix") st.draft.prix = st.draft.prix.filter(x => x[0].trim() && x[1].trim());
+    if(k==="zone") st.draft.zone.communes = st.draft.zone.communes.trim();
+    const changed = fieldsOf(k).some(f => JSON.stringify(st.draft[f]) !== JSON.stringify(S0[f]));
+    Object.assign(S2, st.draft);
+    if(changed) edits[k] = true; else delete edits[k];
+    closeEd();
+  }
+  function refreshEd(){
+    renderPreview();
+    const v = edValid(), b = $("ed-ok"), m = $("edmsg");
+    if(b) b.disabled = !v.ok;
+    if(m && !st.edmsg){ m.textContent = v.ok ? "" : v.msg; m.className = "edmsg" + (v.ok ? "" : " bad"); }
+  }
+
+  /* ---------- Événements ---------- */
+  const app = $("app");
+  app.addEventListener("submit", e => {
+    e.preventDefault();
+    const k = steps[st.cur];
+    if(k==="contact"){ const v = ans("contact").text.trim(); if(v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ st.err = "Cette adresse e-mail semble incomplète. Vérifiez-la, ou passez la question."; return render(); } }
+    if(k==="apropos" && (ans("apropos").vals||[]).length > 3){ st.err = "Choisissez 3 réponses au maximum."; return render(); }
+    if(A[k]) A[k].skipped = false;
+    next();
+  });
+  function next(){
+    st.err = "";
+    if(st.cur < steps.length-1){ st.cur++; render(); }
+    else { S0 = buildSite(); S2 = clone(S0); edits = {}; st.view = "final"; st.pay = false; render(); }
+    window.scrollTo({top:0});
+  }
+
+  app.addEventListener("click", e => {
+    const t = e.target.closest("button,[data-edit]");
+    if(!t) return;
+    const id = t.id, ds = t.dataset;
+    if(st.view==="edit" && ds.edit && !t.matches("button")){ select(ds.edit); return; }
+    if(ds.choice){ const a = ans(steps[st.cur]); a.choice = ds.choice; a.skipped = false; st.err = ""; render(); $("c-"+steps[st.cur]+"-"+ds.choice)?.focus(); return; }
+    if(ds.ab){ const [g,v] = ds.ab.split(":"); ans("apropos")[g] = v; render(); return; }
+    if(ds.val !== undefined){ const a = ans("apropos"); a.vals = a.vals || []; const i = a.vals.indexOf(ds.val);
+      if(i>=0) a.vals.splice(i,1); else if(a.vals.length < 3) a.vals.push(ds.val); else { st.err = "3 réponses au maximum : retirez-en une pour en choisir une autre."; }
+      render(); st.err = ""; return; }
+    if(ds.rm !== undefined){ const f = ans("photos").files.splice(+ds.rm,1)[0]; if(f) URL.revokeObjectURL(f.url); render(); return; }
+    if(ds.prm){ const [w,i] = ds.prm.split(":"); prRows(w).splice(+i,1); render(); return; }
+    if(ds.padd){ const rows = prRows(ds.padd); if(rows.length < PR_MAX) rows.push(["",""]); render(); $(`pr-${ds.padd}-n-${rows.length-1}`)?.focus(); return; }
+    if(ds.hadd){ const [w,i] = ds.hadd.split(":"); hRows(w)[+i].r.push(["14:00","18:00"]); render(); return; }
+    if(ds.hdel){ const [w,i] = ds.hdel.split(":"); hRows(w)[+i].r.splice(1); render(); return; }
+    if(ds.ezone){ st.draft.zone.c = ds.ezone; render(); return; }
+    if(ds.undo){ fieldsOf(ds.undo).forEach(f => S2[f] = clone(S0[f])); delete edits[ds.undo]; render(); return; }
+    switch(id){
+      case "back": st.err = ""; if(st.cur>0){ st.cur--; render(); window.scrollTo({top:0}); } break;
+      case "skip": ans(steps[st.cur]).skipped = true; next(); break;
+      case "d-phone": st.device = "phone"; render(); break;
+      case "d-desk": st.device = "desk"; render(); break;
+      case "pay": st.pay = true; render(); break;
+      case "go-edit": st.view = "edit"; st.pay = false; render(); window.scrollTo({top:0}); break;
+      case "to-final": st.view = "final"; st.pay = false; render(); break;
+      case "back-q": st.view = "q"; st.cur = steps.length-1; st.pay = false; render(); window.scrollTo({top:0}); break;
+      case "ed-ok": commit(); break;
+      case "ed-cancel": case "ed-cancel-top": closeEd(); break;
+      case "ph-reset": st.draft[st.sel] = null; st.edmsg = ""; render(); break;
+    }
+  });
+
+  app.addEventListener("input", e => {
+    const t = e.target, ds = t.dataset;
+    if(ds.bind){ ans(ds.bind).text = t.value; t.classList.remove("bad"); return; }
+    if(ds.pr){ const [w,i,j] = ds.pr.split(":"); prRows(w)[+i][+j] = t.value; if(w==="e") refreshEd(); return; }
+    if(ds.ht){ const [w,i,j,x] = ds.ht.split(":"); hRows(w)[+i].r[+j][+x] = t.value; if(w==="e") refreshEd(); return; }
+    if(st.view!=="edit" || !st.draft) return;
+    st.edmsg = "";
+    if(ds.ed){ const f = ds.ed, d = EDT[st.sel], max = d.max;
+      if(max){ const n = words(t.value), wc = $("wc-"+f); if(wc){ wc.textContent = `${n} / ${max} mots`; wc.classList.toggle("over", n>max); }
+        t.classList.toggle("bad", n>max); }
+      st.draft[f] = t.value;
+      refreshEd(); return; }
+    if(ds.svc){ const [i,f] = ds.svc.split(":"), max = f==="t"?3:12, n = words(t.value), wc = $(`wc-s${i}${f}`);
+      st.draft.services[+i][f] = t.value; if(wc){ wc.textContent = `${n} / ${max} mots`; wc.classList.toggle("over", n>max); } t.classList.toggle("bad", n>max); refreshEd(); return; }
+    if(ds.ezc){ st.draft.zone.communes = t.value; refreshEd(); return; }
+  });
+
+  app.addEventListener("change", async e => {
+    const t = e.target, ds = t.dataset;
+    if(ds.hopen){ const [w,i] = ds.hopen.split(":"), d = hRows(w)[+i]; d.open = t.checked; if(d.open && !d.r.length) d.r = [["09:00","18:00"]]; render(); $(`h-${w}-${i}`)?.focus(); return; }
+    if(ds.up==="photos"){
+      const a = ans("photos"), bad = [];
+      for(const f of t.files){ const r = await checkImage(f, null);
+        if(r.err) bad.push(`${f.name} : ${r.err}`);
+        else if(Math.max(r.img.w, r.img.h) < 1000){ URL.revokeObjectURL(r.img.url); bad.push(`${f.name} : trop petite (${r.img.w} × ${r.img.h} pixels). Prenez l'original, pas une capture d'écran.`); }
+        else a.files.push(r.img); }
+      st.err = bad.join("\n"); render(); return;
+    }
+    if(ds.up==="prix"){ const f = t.files[0]; if(f){ if(f.size > MAXMB*1048576){ st.err = `Ce fichier pèse plus de ${MAXMB} Mo.`; } else { ans("prix").files = [{name:f.name}]; st.err = ""; } render(); } return; }
+    if(ds.ephoto){
+      const k = ds.ephoto, f = t.files[0]; if(!f) return;
+      const r = await checkImage(f, EDT[k]);
+      if(r.err){ st.edmsg = r.err; st.edmsgKind = "bad"; }
+      else { st.draft[k] = r.img; st.edmsg = "✓ Cette photo convient. Regardez le résultat sur le site, puis validez."; st.edmsgKind = "good"; }
+      render(); return;
+    }
+  });
+
+  renderProto(); buildSteps(); render();
+})();
+</script>
+
+</body></html>
