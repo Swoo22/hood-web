@@ -89,7 +89,7 @@ a{color:var(--accent)}
   </div>
 </div>
 
-<script src="compte.js?v=20261112d"></script>
+<script src="compte.js?v=20261112e"></script>
 <script>
 (function(){
   const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
@@ -108,7 +108,7 @@ a{color:var(--accent)}
       const c=(p.reponses&&p.reponses.champs)||{};
       const nom=c.nom?esc(c.nom):"Votre site";
       if(p.statut==="commande"){
-        $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Site validé. On le prépare avec vos réponses et on vous écrit pour la suite : vos photos, l'adresse du site, puis le paiement juste avant la mise en ligne.</p>`;
+        $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Site validé. On le prépare avec vos réponses et on vous écrit pour la suite : l'adresse du site, d'éventuelles photos en plus, puis le paiement juste avant la mise en ligne.</p>`;
       }else{
         const e=Math.min(Math.max(p.etape||1,1),6),pct=Math.round(Math.min(e,6)/6*100);
         const ou=e>=6?"Votre première version est prête.":`Questionnaire : étape ${e} sur 5.`;

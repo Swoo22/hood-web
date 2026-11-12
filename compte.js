@@ -123,18 +123,19 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
 
   /* Photo envoyée pendant l'affinage : le dossier de dépôt du projet est
      redemandé avant chaque fichier (la base y vérifie les plafonds), puis le
-     fichier part dans l'espace privé « photos-projets ». Renvoie le nom du
-     fichier reçu, ou null. Rien n'est lisible depuis le navigateur. */
+     fichier part dans l'espace privé « photos-projets ». Renvoie {fichier}
+     ou {motif} (plafond_projet, plafond_site, eteint, projet, reseau). Rien n'est lisible depuis le navigateur. */
   const EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf" };
   C.deposerPhoto = async function (file, sorte) {
-    const sb = await charger(); if (!sb || !EXT[file.type] || !/^(photo|tarifs)$/.test(sorte)) return null;
+    const sb = await charger(); if (!sb || !EXT[file.type] || !/^(photo|tarifs)$/.test(sorte)) return { motif: "eteint" };
     const j = lire(CLE_JETON);
-    if (!projetConnecte && !j) return null;
+    if (!projetConnecte && !j) return { motif: "projet" };
     const r = await sb.rpc("hood_depot_photos", { p_jeton: projetConnecte ? null : j, p_projet: projetConnecte || null });
-    if (r.error || !r.data) return null;
+    if (r.error || !r.data) return { motif: "reseau" };
+    if (!r.data.depot) return { motif: String(r.data.motif || "projet") };
     const fichier = sorte + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + EXT[file.type];
-    const u = await sb.storage.from("photos-projets").upload(r.data + "/" + fichier, file, { contentType: file.type, upsert: false });
-    return u.error ? null : fichier;
+    const u = await sb.storage.from("photos-projets").upload(r.data.depot + "/" + fichier, file, { contentType: file.type, upsert: false });
+    return u.error ? { motif: "reseau" } : { fichier: fichier };
   };
 
   C.session = async function () {
