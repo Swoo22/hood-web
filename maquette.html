@@ -386,9 +386,9 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <div class="checks" id="opts-inc"></div>
         </div>
         <div class="optgroup">
-          <h3>En plus, si vous le souhaitez <span class="tag dev">sur devis</span></h3>
+          <h3>En plus, si vous le souhaitez <span class="tag inc">inclus aussi</span></h3>
           <div class="checks" id="opts-dev"></div>
-          <p class="hint">Le prix vous est annoncé avant, et rien n'est fait sans votre accord.</p>
+          <p class="hint">Sans supplément : compris dans les 290 € et les 10 € par mois (décision du 12 Nov. 2026).</p>
         </div>
         <div class="lbl" style="margin-bottom:10px">Votre logo <small>facultatif</small></div>
         <div class="upl" id="upl">
@@ -618,7 +618,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   };
 
   const COMMON_INC=[["apropos","Page À propos","Votre histoire, votre équipe",0],["tarifs","Vos tarifs affichés","Sans vente en ligne",0],["contact","Formulaire de contact","Vos clients vous écrivent depuis le site",0]];
-  const COMMON_DEV=[["avissite","Vos avis Google affichés sur le site","Par l'outil officiel de Google"],["insta","Votre Instagram sur le site","Un encart avec vos publications"]];
+  const COMMON_DEV=[["avissite","Vos avis Google affichés sur le site","Vos derniers avis, mis à jour automatiquement"],["insta","Votre Instagram sur le site","Vos dernières publications, mises à jour automatiquement"]];
   const FAM={
     bouche:{lab:"Restauration et commerces de bouche",
       inc:[["commandes","Commandes par téléphone","",1],["occasions","Vos occasions","Fêtes, anniversaires, événements",0],["galerie","Photos de vos produits","",0]],
@@ -940,7 +940,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     L.push("Services : "+services().join(", "));
     L.push("Modèle : "+tplName(k)+" ("+fam().lab+")");
     const inc=incChecked();if(inc.length)L.push("Sur le site : "+inc.join(", "));
-    const dev=devChecked();if(dev.length)L.push("Demandé en plus, sur devis : "+dev.join(", "));
+    const dev=devChecked();if(dev.length)L.push("Options en plus (incluses) : "+dev.join(", "));
     if(kind==="commande"){L.push("Adresse du site souhaitée : "+domFull());L.push("");afResume().forEach(x=>L.push(x));L.push("")}
     L.push("Logo : "+(logoURL?"je le joins à ce message":"pas de logo"));
     return L.join("\n");
@@ -1187,7 +1187,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     domVerifier();titInit();
     const dev=devChecked();
     $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
-      (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")+
+      (dev.length?`<div><span>Aussi dans votre site : ${esc(dev.join(", "))}</span><b>inclus</b></div>`:"")+
       `<div><small class="hint">Prix nets. TVA non applicable, article 293 B du CGI.</small></div>`}
 
   /* ---- Envoi des photos pendant l'affinage (12 Nov. 2026) ----
