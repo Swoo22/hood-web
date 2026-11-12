@@ -198,6 +198,20 @@ input.bad{border-color:var(--danger)}
 @media (prefers-reduced-motion:reduce){.viewport iframe,.veil-msg{transition:none}}
 .viewport.veil{pointer-events:none}
 .paybar{display:none}
+/* Révélation (étape 6) : titre en grand, site au centre, un seul bouton */
+body.s6 .wrap.final{grid-template-columns:minmax(0,1fr);max-width:1120px;gap:18px}
+body.s6 .progress,body.s6 .meta,body.s6 .tplname,body.s6 .note{display:none}
+body.s6 .step[data-step="6"]{text-align:center}
+body.s6 .final .step h1,body.s6 .step[data-step="6"] h1{font-size:clamp(36px,5.4vw,64px);margin-bottom:8px}
+body.s6 .step[data-step="6"] .lead{margin:0 auto}
+body.s6 .side{position:static;order:1}
+body.s6 .side-head{justify-content:center}
+body.s6 .side-head b{display:none}
+body.s6 .viewport{height:clamp(380px,calc(100vh - 400px),720px)}
+body.s6 #err{display:none}
+body.s6 .step[data-step="6"] .lead{margin-bottom:0}
+.reveal-cta{order:2;display:grid;justify-items:center;gap:6px}
+.reveal-cta .btn{font-size:18px;padding:16px 40px}
 @media (max-width:960px){
   body.veiled .viewport{height:170px}
   body.veiled .dev-toggle,body.veiled .tplname,body.veiled .note{display:none}
@@ -206,6 +220,7 @@ input.bad{border-color:var(--danger)}
   body.veiled .veil-msg b{font-size:14px;padding:8px 14px}
   body.veiled .wrap{gap:16px}
   body.revealed .viewport{height:min(58vh,560px)}
+  .reveal-cta #go-pay{display:none}
   body.after .side{order:1}
   body.s6 .paybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px -18px rgba(0,0,0,.35)}
   body.s6{padding-bottom:110px}
@@ -324,10 +339,8 @@ input.bad{border-color:var(--danger)}
 
       <!-- 6. Le site est prêt -->
       <div class="step" data-step="6" hidden>
-        <h1 id="ready-title">Voici votre site.</h1>
-        <p class="lead" id="ready-lead">Voici une première version de votre site.</p>
-        <button type="button" class="btn primary wide" id="go-pay">Personnaliser mon site</button>
-        <button type="button" class="alt" id="back-q" style="margin-top:14px">← Modifier mes réponses</button>
+        <h1 id="ready-title">Voici un premier aperçu&#8239;!</h1>
+        <p class="lead" id="ready-lead">Votre site, construit avec vos réponses.</p>
       </div>
 
       <!-- 7. Commande -->
@@ -383,8 +396,12 @@ input.bad{border-color:var(--danger)}
     <div class="tplname"><span>Modèle : <b id="p-tpl">à choisir</b></span><span id="p-fam"></span></div>
     <p class="note"><span data-compte="off">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez.</span><!-- Texte validé par Simone le 12 Nov. 2026 (RGPD art. 13) --><span data-compte="on" hidden>Dès que vous donnez votre email, vos réponses sont enregistrées par HOOD pour que vous puissiez reprendre votre site, et effacées 180 jours après votre dernière visite. Votre logo reste dans votre navigateur.</span> <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
   </aside>
+  <div class="reveal-cta" id="reveal-cta" hidden>
+    <button type="button" class="btn primary" id="go-pay">Je finalise mon site</button>
+    <button type="button" class="alt" id="back-q">← Modifier mes réponses</button>
+  </div>
 </main>
-<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Personnaliser mon site</button></div>
+<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Je finalise mon site</button></div>
 
 <script src="compte.js?v=20261112b"></script>
 <script>
@@ -612,7 +629,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   /* ---- Rendu dans l'iframe, mis à l'échelle ---- */
   const frame=$("frame"),vp=$("vp");let timer=0,lastScroll=0,renderId=0;
   function size(){
-    const W=device==="phone"?390:1280,w=vp.clientWidth,hgt=vp.clientHeight,s=Math.min(1,w/W);
+    /* Ordinateur : jamais moins de 640 px de haut à l'intérieur, pour que le site garde ses proportions sur un écran bas */
+    const w=vp.clientWidth,hgt=vp.clientHeight,W=device==="phone"?390:Math.round(Math.min(1920,Math.max(1280,640*w/Math.max(hgt,1)))),s=Math.min(1,w/W);
     frame.style.width=W+"px";frame.style.height=(hgt/s)+"px";frame.style.transform=`scale(${s})`;
   }
   new ResizeObserver(size).observe(vp);
@@ -693,8 +711,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("next").innerHTML=n===TOTAL?"Montrez-moi mon site":"Continuer";
     $("err").textContent="";$("side-title").textContent=end?"Votre site":"Votre futur site";
     const nom=txt("nom");
-    if(n===6){$("ready-title").textContent=`Voici le site de ${nom}.`;
-      $("ready-lead").textContent="C'est une première version. Ajoutez vos photos, vos textes, vos horaires : on en fait votre site.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
+    $("reveal-cta").hidden=n!==6;
+    if(n===6){$("ready-lead").textContent=nom?`Le site de ${nom}, construit avec vos réponses.`:"Votre site, construit avec vos réponses.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
     if(n===7){if(!txt("domaine"))$("domaine").value=slug(nom)||"votrecommerce";
       const dev=devChecked();
       $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
