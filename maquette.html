@@ -234,6 +234,7 @@ input.bad{border-color:var(--danger)}
 .th{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--bg-soft);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
 .th img{width:100%;height:100%;object-fit:cover}
 .th button{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.domain select{font:inherit;font-weight:700;border:0;border-left:1px solid var(--line);background:var(--bg-soft);color:var(--ink);padding:0 10px;cursor:pointer}
 .dom-etat{font-size:14px;font-weight:700;margin:-8px 0 0;min-height:1.2em}
 .dom-etat.dom-ok{color:var(--ok)}.dom-etat.dom-ko{color:var(--warn)}
 .dom-sugg{display:grid;gap:6px;margin-top:-6px}
@@ -247,7 +248,7 @@ input.bad{border-color:var(--danger)}
 .tit-res button:hover,.tit-res button:focus-visible{border-color:var(--accent);background:var(--accent-soft)}
 .tit-res small,.tit-ok small{color:var(--muted);font-size:13px}
 .tit-ok{display:grid;gap:2px;border:1.5px solid var(--ok);background:var(--ok-soft);border-radius:10px;padding:10px 12px}
-.tit-man{display:grid;gap:12px}
+.tit-man,.tit-contact{display:grid;gap:12px}
 .anav{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .anav .skip{margin-left:auto}
 /* Révélation (étape 6) : titre en grand, site au centre, un seul bouton */
@@ -479,11 +480,11 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <p class="lead" id="cmd-lead">On le finalise avec vos réponses, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
           <div class="fields">
             <label class="f">L'adresse de votre site
-              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><span>.fr</span></div>
+              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><select id="af-dom-ext" aria-label="Extension"><option value="fr">.fr</option><option value="com">.com</option></select></div>
             </label>
             <p class="dom-etat" id="dom-etat" role="status" aria-live="polite"></p>
             <div class="dom-sugg" id="dom-sugg" hidden><span class="hint">Libres en ce moment :</span><div class="dom-chips" id="dom-chips"></div></div>
-            <span class="hint">Vérifiée en direct auprès du registre officiel des adresses en .fr. On la réserve à votre nom juste après le paiement.</span>
+            <span class="hint">En .fr ou en .com, vérifiée en direct auprès des registres officiels. On la réserve au nom de votre entreprise juste après le paiement.</span>
             <input type="hidden" id="af-dom-dispo" value="">
             <fieldset class="tit" id="tit">
               <legend>Le titulaire de votre nom de domaine</legend>
@@ -499,6 +500,12 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
                 <label class="f">Nom de l'entreprise <small>comme sur l'avis de situation Sirene ou le Kbis</small><input type="text" id="af-tit-nom" maxlength="120" autocomplete="organization"></label>
                 <label class="f">Numéro SIREN <small>9 chiffres</small><input type="text" id="af-tit-siren" inputmode="numeric" maxlength="11"></label>
                 <label class="f">Adresse du siège<input type="text" id="af-tit-adresse" maxlength="200" autocomplete="street-address"></label>
+              </div>
+              <div class="tit-contact" id="tit-contact" hidden>
+                <label class="f">Gérant ou gérante <small>prénom et nom</small><input type="text" id="af-tit-gerant" maxlength="100" autocomplete="name"></label>
+                <label class="f">Téléphone<input type="tel" id="af-tit-tel" maxlength="20" autocomplete="tel" inputmode="tel" placeholder="Ex. : 04 74 00 00 00"></label>
+                <label class="f">E-mail du titulaire<input type="email" id="af-tit-email" maxlength="254" autocomplete="email" inputmode="email"></label>
+                <span class="hint">Demandés par le registre des noms de domaine. Ils ne sont pas affichés sur votre site.</span>
               </div>
               <input type="hidden" id="af-tit-source" value="">
             </fieldset>
@@ -895,7 +902,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const incChecked=()=>[...form.querySelectorAll('#opts-inc input:checked')].map(i=>i.dataset.lab);
   function recap(kind){
     const m=metier(),k=tplKey(),L=[];
-    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 €, payés à la commande, puis 10 € par mois à partir de la mise en ligne.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
+    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 €, payés à la validation, puis 10 € par mois à partir de la validation.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
     L.push("");
     if(kind==="remarques"&&txt("remarques")){L.push("Ce que j'aimerais changer : "+txt("remarques"));L.push("")}
     L.push("Entreprise : "+txt("nom"));L.push("Métier : "+(m?m.lab:""));L.push("Ville : "+txt("ville"));
@@ -905,7 +912,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     L.push("Modèle : "+tplName(k)+" ("+fam().lab+")");
     const inc=incChecked();if(inc.length)L.push("Sur le site : "+inc.join(", "));
     const dev=devChecked();if(dev.length)L.push("Demandé en plus, sur devis : "+dev.join(", "));
-    if(kind==="commande"){L.push("Adresse du site souhaitée : "+txt("domaine")+".fr");L.push("");afResume().forEach(x=>L.push(x));L.push("")}
+    if(kind==="commande"){L.push("Adresse du site souhaitée : "+domFull());L.push("");afResume().forEach(x=>L.push(x));L.push("")}
     L.push("Logo : "+(logoURL?"je le joins à ce message":"pas de logo"));
     return L.join("\n");
   }
@@ -1056,33 +1063,38 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function afRows(){let last=3;for(let i=0;i<12;i++)if(txt("af-pn-"+i)||txt("af-pp-"+i))last=Math.max(last,i);
     form.querySelectorAll(".prow").forEach(r=>{if(+r.dataset.row<=last)r.hidden=false});
     $("af-addrow").hidden=!form.querySelector(".prow[hidden]")}
-  /* ---- Nom de domaine : disponibilité en direct (demande de Steve, 12 Nov. 2026) ----
-     Registre officiel des .fr (Afnic, interface publique RDAP) : 404 = libre, 200 = déjà pris.
+  /* ---- Nom de domaine : disponibilité en direct (Steve, 12 Nov. 2026 : .fr et .com au lancement) ----
+     Registres officiels (RDAP public) : Afnic pour le .fr, Verisign pour le .com ; 404 = libre, 200 = déjà pris.
      Vérifié de nouveau au moment de la réservation, après le paiement. */
+  const RDAP={fr:n=>"https://rdap.nic.fr/domain/"+encodeURIComponent(n)+".fr",com:n=>"https://rdap.verisign.com/com/v1/domain/"+encodeURIComponent(n)+".com"};
   const domCache={};let domTimer=0,domSeq=0;
+  const domExt=()=>RDAP[$("af-dom-ext").value]?$("af-dom-ext").value:"fr";
+  const domFull=(n,e)=>(n===undefined?txt("domaine"):n)+"."+(e||domExt());
   const domValide=n=>n.length>=2&&n.length<=63&&/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(n);
-  function domLibre(n){if(!domCache[n])domCache[n]=fetch("https://rdap.nic.fr/domain/"+encodeURIComponent(n)+".fr",{headers:{accept:"application/rdap+json"}})
-    .then(r=>r.status===404?true:r.status===200?false:null).catch(()=>null);return domCache[n]}
+  function domLibre(n,e){const k=n+"."+e;if(!domCache[k])domCache[k]=fetch(RDAP[e](n),{headers:{accept:"application/rdap+json"}})
+    .then(r=>r.status===404?true:r.status===200?false:null).catch(()=>null);return domCache[k]}
   function domEtat(t,c){const E=$("dom-etat");E.textContent=t;E.className="dom-etat"+(c?" "+c:"")}
+  function domUrl(){$("p-url").textContent=domFull(txt("domaine")||"votrecommerce")}
   async function domVerifier(){
-    const n=txt("domaine"),id=++domSeq;$("dom-sugg").hidden=true;
+    const n=txt("domaine"),e=domExt(),id=++domSeq;$("dom-sugg").hidden=true;domUrl();
     if(!domValide(n)){$("af-dom-dispo").value="";domEtat("Lettres sans accents, chiffres et tirets seulement, 2 caractères au moins.","dom-ko");return}
-    domEtat("Vérification de "+n+".fr…");
-    const ok=await domLibre(n);if(id!==domSeq)return;
+    domEtat("Vérification de "+domFull(n,e)+"…");
+    const ok=await domLibre(n,e);if(id!==domSeq)return;
     $("af-dom-dispo").value=ok===true?"libre":ok===false?"pris":"inconnu";
-    if(ok===true)domEtat("✓ "+n+".fr est libre.","dom-ok");
-    else if(ok===false){domEtat("✗ "+n+".fr est déjà pris. Choisissez-en une autre.","dom-ko");domSuggerer(n,id)}
+    if(ok===true)domEtat("✓ "+domFull(n,e)+" est libre.","dom-ok");
+    else if(ok===false){domEtat("✗ "+domFull(n,e)+" est déjà pris. Choisissez-en une autre.","dom-ko");domSuggerer(n,e,id)}
     else domEtat("Vérification impossible pour l'instant : on la refera juste avant la réservation.");
   }
-  async function domSuggerer(n,id){
-    const nom=slug(txt("nom"))||n,ville=slug(txt("ville")),m=metier(),met=m?slug(m.m):"";
-    const c=[...new Set([ville&&nom+"-"+ville,met&&!nom.includes(met)&&met+"-"+nom,met&&ville&&met+"-"+ville,"le-"+nom,nom+"-"+(ville?ville.slice(0,4):"pro"),nom+"-officiel"]
-      .filter(x=>x&&x!==n&&domValide(x)))].slice(0,6);
-    const res=await Promise.all(c.map(x=>domLibre(x).then(ok=>ok===true?x:null)));if(id!==domSeq)return;
+  async function domSuggerer(n,e,id){
+    const nom=slug(txt("nom"))||n,ville=slug(txt("ville")),m=metier(),met=m?slug(m.m):"",autre=e==="fr"?"com":"fr";
+    const noms=[...new Set([ville&&nom+"-"+ville,met&&!nom.includes(met)&&met+"-"+nom,met&&ville&&met+"-"+ville,"le-"+nom,nom+"-"+(ville?ville.slice(0,4):"pro")]
+      .filter(x=>x&&x!==n&&domValide(x)))].slice(0,5);
+    const c=[[n,autre],...noms.map(x=>[x,e])];
+    const res=await Promise.all(c.map(([x,y])=>domLibre(x,y).then(ok=>ok===true?[x,y]:null)));if(id!==domSeq)return;
     const libres=res.filter(Boolean).slice(0,3);if(!libres.length)return;
     const box=$("dom-chips");box.innerHTML="";
-    libres.forEach(x=>{const b=document.createElement("button");b.type="button";b.textContent=x+".fr";
-      b.addEventListener("click",()=>{$("domaine").value=x;$("p-url").textContent=x+".fr";modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
+    libres.forEach(([x,y])=>{const b=document.createElement("button");b.type="button";b.textContent=domFull(x,y);
+      b.addEventListener("click",()=>{$("domaine").value=x;$("af-dom-ext").value=y;modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
     $("dom-sugg").hidden=false;
   }
 
@@ -1093,8 +1105,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     let t=0;for(let i=0;i<9;i++){let n=+d[i];if(i%2===1){n*=2;if(n>9)n-=9}t+=n}return t%10===0};
   const fmtSiren=v=>String(v||"").replace(/\D/g,"").replace(/^(\d{3})(\d{3})(\d{3})$/,"$1 $2 $3");
   let titTimer=0,titSeq=0;
+  const telOk=v=>/^(\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(String(v||"").trim());
   function titAfficher(){
     const ok=txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse");
+    $("tit-contact").hidden=!(ok||txt("af-tit-source")==="manuel");
+    if(!txt("af-tit-email"))$("af-tit-email").value=txt("af-contact")||txt("email");
     const auto=txt("af-tit-source")==="annuaire";
     $("tit-ok").hidden=!(ok&&auto);$("tit-cherche").hidden=ok&&auto;$("tit-man").hidden=auto||!(txt("af-tit-source")==="manuel");
     if(ok&&auto){$("tit-ok").innerHTML="";const b=document.createElement("b");b.textContent="✓ "+txt("af-tit-nom");
@@ -1105,6 +1120,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   function titChoisir(e){
     $("af-tit-nom").value=e.nom;$("af-tit-siren").value=e.siren;$("af-tit-adresse").value=e.adresse;$("af-tit-source").value="annuaire";
+    if(e.gerant&&!txt("af-tit-gerant"))$("af-tit-gerant").value=e.gerant;
     modifie=true;sauver();titAfficher();$("err").textContent="";
   }
   async function titChercher(){
@@ -1114,7 +1130,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     let res=null;
     try{const r=await fetch("https://recherche-entreprises.api.gouv.fr/search?per_page=5&etat_administratif=A&q="+encodeURIComponent(q.replace(/(\d)\s+(?=\d)/g,"$1")));
       if(r.ok){const j=await r.json();res=(j.results||[]).map(x=>({nom:String(x.nom_complet||x.nom_raison_sociale||"").slice(0,120),siren:String(x.siren||""),
-        adresse:String((x.siege&&x.siege.adresse)||"").slice(0,200)})).filter(x=>x.nom&&sirenOk(x.siren))}}catch(e){}
+        adresse:String((x.siege&&x.siege.adresse)||"").slice(0,200),
+        gerant:(()=>{const d=(x.dirigeants||[]).find(y=>y&&y.type_dirigeant!=="personne morale"&&(y.prenoms||y.nom));if(!d)return "";
+          const cap=t=>String(t||"").toLowerCase().replace(/(^|[\s-])\S/g,c=>c.toUpperCase());return (cap(String(d.prenoms||"").split(" ")[0])+" "+cap(d.nom)).trim().slice(0,100)})()})).filter(x=>x.nom&&sirenOk(x.siren))}}catch(e){}
     if(id!==titSeq)return;
     box.innerHTML="";
     if(res===null){$("tit-msg").textContent="L'annuaire des entreprises ne répond pas : saisissez votre entreprise à la main.";return}
@@ -1128,12 +1146,18 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("tit-manuel").addEventListener("click",()=>{$("af-tit-source").value="manuel";titAfficher();$("af-tit-nom").focus()});
   ["af-tit-nom","af-tit-siren","af-tit-adresse"].forEach(i=>$(i).addEventListener("input",()=>{if(txt("af-tit-source")!=="annuaire")$("af-tit-source").value="manuel"}));
   function titInit(){titAfficher();if(!(txt("af-tit-nom")&&txt("af-tit-source"))&&!txt("tit-q")){$("tit-q").value=[txt("nom"),txt("ville")].filter(Boolean).join(" ");titChercher()}}
-  function titValide(){return !!(txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse"))}
+  function titValide(){return !!(txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse")&&txt("af-tit-gerant")&&telOk(txt("af-tit-tel"))&&C_EMAIL(txt("af-tit-email")))}
+  const C_EMAIL=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(e||"").trim());
+  function titManque(){if(!(txt("af-tit-nom")&&txt("af-tit-adresse")))return ["Indiquez l'entreprise titulaire du nom de domaine.",$("tit-man").hidden?$("tit-q"):$("af-tit-nom")];
+    if(!sirenOk(txt("af-tit-siren")))return ["Ce numéro SIREN n'est pas valide : vérifiez les 9 chiffres.",$("af-tit-siren")];
+    if(!txt("af-tit-gerant"))return ["Indiquez le prénom et le nom du gérant ou de la gérante.",$("af-tit-gerant")];
+    if(!telOk(txt("af-tit-tel")))return ["Indiquez un numéro de téléphone français (10 chiffres).",$("af-tit-tel")];
+    return ["Indiquez l'e-mail du titulaire.",$("af-tit-email")]}
   function afValider(){
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
-    $("p-url").textContent=txt("domaine")+".fr";domVerifier();titInit();
+    domVerifier();titInit();
     const dev=devChecked();
-    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir de la mise en ligne<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
+    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
       (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")+
       `<div><small class="hint">Prix nets. TVA non applicable, article 293 B du CGI.</small></div>`}
 
@@ -1229,16 +1253,16 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(afList().includes("marques")&&txt("af-marques"))L.push("Marques : "+txt("af-marques"));
     if(afList().includes("histoire"))L.push("Histoire : "+($("af-pas-histoire").checked?"pas de partie histoire":$("af-say").textContent));
     if(afList().includes("contact")&&txt("af-contact"))L.push("Messages du formulaire à : "+txt("af-contact"));
-    if(txt("af-tit-nom"))L.push("Titulaire du nom de domaine : "+txt("af-tit-nom")+", SIREN "+fmtSiren(txt("af-tit-siren"))+", "+txt("af-tit-adresse"));
+    if(txt("af-tit-nom"))L.push("Titulaire du nom de domaine : "+txt("af-tit-nom")+", SIREN "+fmtSiren(txt("af-tit-siren"))+", "+txt("af-tit-adresse")+" ; gérant : "+txt("af-tit-gerant")+", "+txt("af-tit-tel")+", "+txt("af-tit-email"));
     if(afList().includes("prix")&&afVal("prix")==="photo"&&upListe("tarifs").length)L.push(`Tarifs : ${upListe("tarifs").length} fichier(s) reçu(s)`);
     return L}
-  $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr";
+  $("af-dom-ext").addEventListener("change",()=>{modifie=true;sauver();domVerifier()});
+  $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;domUrl();
     clearTimeout(domTimer);$("af-dom-dispo").value="";domEtat("");$("dom-sugg").hidden=true;domTimer=setTimeout(domVerifier,450)});
   $("pay").addEventListener("click",()=>{
     if(!domValide(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     if($("af-dom-dispo").value==="pris"){$("err").textContent="Cette adresse est déjà prise : choisissez-en une libre.";$("domaine").classList.add("bad");$("domaine").focus();return}
-    if(!titValide()){$("err").textContent=txt("af-tit-siren")&&!sirenOk(txt("af-tit-siren"))?"Ce numéro SIREN n'est pas valide : vérifiez les 9 chiffres.":"Indiquez l'entreprise titulaire du nom de domaine.";
-      ($("tit-man").hidden?$("tit-q"):(sirenOk(txt("af-tit-siren"))?$("af-tit-nom"):$("af-tit-siren"))).focus();return}
+    if(!titValide()){const [m,el]=titManque();$("err").textContent=m;el.focus();return}
     $("domaine").classList.remove("bad");
     if(LIEN_PAIEMENT&&!$("cgv-ok").checked){$("err").textContent="Cochez la case d'acceptation des CGV pour continuer.";$("cgv-ok").focus();return}
     if(LIEN_PAIEMENT){const go=()=>{location.href=LIEN_PAIEMENT+(LIEN_PAIEMENT.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
@@ -1253,8 +1277,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       .then(ok=>ok||new Promise(r=>setTimeout(r,800)).then(()=>COMPTE.valider(etat())).catch(()=>false))
       .then(ok=>{$("pay").disabled=false;$("pay").textContent="Je valide mon site";
         if(ok){valide=true;marquerValide();note("");show(9)}else openMail("commande")})});
-  function marquerValide(){$("ok-dom").textContent=txt("domaine")+".fr";try{localStorage.setItem("hood_valide",JSON.stringify({dom:txt("domaine")+".fr"}))}catch(e){}}
-  function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
+  function marquerValide(){$("ok-dom").textContent=domFull();try{localStorage.setItem("hood_valide",JSON.stringify({dom:domFull()}))}catch(e){}}
+  function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),domFull().slice(0,68),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
   if(LIEN_PAIEMENT){$("cgv-wrap").hidden=false;$("pay").innerHTML=STRIPE_LINK?"Je paie 290 € et je mets en ligne":"Payer 290 € · essai, aucun débit";
     $("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";
     $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":"Mode essai : rien n'est débité. Carte de test 4242 4242 4242 4242, date future, code 123. TVA non applicable, article 293 B du CGI."}
