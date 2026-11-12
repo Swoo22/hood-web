@@ -129,7 +129,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
   C.payer = async function (etat) {
     const sb = await charger(); if (!sb) return { motif: "eteint" };
     const j = lire(CLE_JETON);
-    if (!projetConnecte && !j) return { motif: "projet" };
+    if (!projetConnecte && !j) return { motif: "sans_projet" };  /* rien d'enregistré pour ce navigateur */
     let session = null;
     if (projetConnecte) { try { session = (await sb.auth.getSession()).data.session; } catch (e) { session = null; } }
     try {
