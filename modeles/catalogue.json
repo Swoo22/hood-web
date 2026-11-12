@@ -1792,5 +1792,3047 @@
    "Coaching individuel",
    "Accès libre"
   ]
+ },
+ {
+  "fichier": "V17A-macon.html",
+  "verticale": "Maçon",
+  "nom": "Maçonnerie Ferrand",
+  "style": "Style Éditorial",
+  "titre": "Maçonnerie Ferrand · Maçon · 42000 Saint-Étienne",
+  "commerce": "Maçonnerie Ferrand",
+  "metier": "Maçon",
+  "lieu": "42000 Saint-Étienne",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "42000 Saint-Étienne",
+  "logo": "Maçonnerie",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Extension de maison",
+   "Murs & clôtures",
+   "Dalle & terrasse béton",
+   "Ouverture de mur porteur"
+  ]
+ },
+ {
+  "fichier": "V17B-macon.html",
+  "verticale": "Maçon",
+  "nom": "Bâti Pierre",
+  "style": "Style Impact",
+  "titre": "Bâti Pierre · Maçon · 86000 Poitiers",
+  "commerce": "Bâti Pierre",
+  "metier": "Maçon",
+  "lieu": "86000 Poitiers",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "86000 Poitiers",
+  "logo": "BÂTI",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Extension de maison",
+   "Murs & clôtures",
+   "Dalle & terrasse béton",
+   "Ouverture de mur porteur"
+  ]
+ },
+ {
+  "fichier": "V17C-macon.html",
+  "verticale": "Maçon",
+  "nom": "Atelier Mortier",
+  "style": "Style Moderne",
+  "titre": "Atelier Mortier · Maçon · 24000 Périgueux",
+  "commerce": "Atelier Mortier",
+  "metier": "Maçon",
+  "lieu": "24000 Périgueux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "24000 Périgueux",
+  "logo": "mortier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Extension de maison",
+   "Murs & clôtures",
+   "Dalle & terrasse béton",
+   "Ouverture de mur porteur"
+  ]
+ },
+ {
+  "fichier": "V18A-renovation.html",
+  "verticale": "Rénovation générale",
+  "nom": "Maison Rénov'",
+  "style": "Style Éditorial",
+  "titre": "Maison Rénov' · Rénovation générale · 44000 Nantes",
+  "commerce": "Maison Rénov'",
+  "metier": "Rénovation générale",
+  "lieu": "44000 Nantes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "44000 Nantes",
+  "logo": "Maison",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Rénovation complète",
+   "Cuisine sur mesure",
+   "Salle de bains",
+   "Plâtrerie & cloisons"
+  ]
+ },
+ {
+  "fichier": "V18B-renovation.html",
+  "verticale": "Rénovation générale",
+  "nom": "Rénov Plus",
+  "style": "Style Impact",
+  "titre": "Rénov Plus · Rénovation générale · 67000 Strasbourg",
+  "commerce": "Rénov Plus",
+  "metier": "Rénovation générale",
+  "lieu": "67000 Strasbourg",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "67000 Strasbourg",
+  "logo": "RÉNOV",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Rénovation complète",
+   "Cuisine sur mesure",
+   "Salle de bains",
+   "Plâtrerie & cloisons"
+  ]
+ },
+ {
+  "fichier": "V18C-renovation.html",
+  "verticale": "Rénovation générale",
+  "nom": "Atelier Neuf",
+  "style": "Style Moderne",
+  "titre": "Atelier Neuf · Rénovation générale · 06000 Nice",
+  "commerce": "Atelier Neuf",
+  "metier": "Rénovation générale",
+  "lieu": "06000 Nice",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06000 Nice",
+  "logo": "atelier neuf",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Rénovation complète",
+   "Cuisine sur mesure",
+   "Salle de bains",
+   "Plâtrerie & cloisons"
+  ]
+ },
+ {
+  "fichier": "V19A-carreleur.html",
+  "verticale": "Carreleur",
+  "nom": "Carrelages Moreau",
+  "style": "Style Éditorial",
+  "titre": "Carrelages Moreau · Carreleur · 30000 Nîmes",
+  "commerce": "Carrelages Moreau",
+  "metier": "Carreleur",
+  "lieu": "30000 Nîmes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "30000 Nîmes",
+  "logo": "Carrelages",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Carrelage de sol",
+   "Faïence murale",
+   "Grands formats & marbre",
+   "Terrasse extérieure"
+  ]
+ },
+ {
+  "fichier": "V19B-carreleur.html",
+  "verticale": "Carreleur",
+  "nom": "Pose Carrelage 51",
+  "style": "Style Impact",
+  "titre": "Pose Carrelage 51 · Carreleur · 51100 Reims",
+  "commerce": "Pose Carrelage 51",
+  "metier": "Carreleur",
+  "lieu": "51100 Reims",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "51100 Reims",
+  "logo": "POSE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Carrelage de sol",
+   "Faïence murale",
+   "Grands formats & marbre",
+   "Terrasse extérieure"
+  ]
+ },
+ {
+  "fichier": "V19C-carreleur.html",
+  "verticale": "Carreleur",
+  "nom": "Joint Parfait",
+  "style": "Style Moderne",
+  "titre": "Joint Parfait · Carreleur · 64000 Pau",
+  "commerce": "Joint Parfait",
+  "metier": "Carreleur",
+  "lieu": "64000 Pau",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "64000 Pau",
+  "logo": "joint parfait",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Carrelage de sol",
+   "Faïence murale",
+   "Grands formats & marbre",
+   "Terrasse extérieure"
+  ]
+ },
+ {
+  "fichier": "V20A-climaticien.html",
+  "verticale": "Climaticien",
+  "nom": "Air Frais Provence",
+  "style": "Style Éditorial",
+  "titre": "Air Frais Provence · Climaticien · 84000 Avignon",
+  "commerce": "Air Frais Provence",
+  "metier": "Climaticien",
+  "lieu": "84000 Avignon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "84000 Avignon",
+  "logo": "Air",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Climatisation monosplit",
+   "Multisplit",
+   "Pompe à chaleur air-air",
+   "Entretien annuel"
+  ]
+ },
+ {
+  "fichier": "V20B-climaticien.html",
+  "verticale": "Climaticien",
+  "nom": "Clim Express 34",
+  "style": "Style Impact",
+  "titre": "Clim Express 34 · Climaticien · 34000 Montpellier",
+  "commerce": "Clim Express 34",
+  "metier": "Climaticien",
+  "lieu": "34000 Montpellier",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "34000 Montpellier",
+  "logo": "CLIM",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Climatisation monosplit",
+   "Multisplit",
+   "Pompe à chaleur air-air",
+   "Entretien annuel"
+  ]
+ },
+ {
+  "fichier": "V20C-climaticien.html",
+  "verticale": "Climaticien",
+  "nom": "Brise",
+  "style": "Style Moderne",
+  "titre": "Brise · Climaticien · 13008 Marseille",
+  "commerce": "Brise",
+  "metier": "Climaticien",
+  "lieu": "13008 Marseille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "13008 Marseille",
+  "logo": "brise",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Climatisation monosplit",
+   "Multisplit",
+   "Pompe à chaleur air-air",
+   "Entretien annuel"
+  ]
+ },
+ {
+  "fichier": "V21A-photovoltaique.html",
+  "verticale": "Installateur photovoltaïque",
+  "nom": "Soleil d'Ici",
+  "style": "Style Éditorial",
+  "titre": "Soleil d'Ici · Installateur photovoltaïque · 47000 Agen",
+  "commerce": "Soleil d'Ici",
+  "metier": "Installateur photovoltaïque",
+  "lieu": "47000 Agen",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "47000 Agen",
+  "logo": "Soleil",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Autoconsommation 3 à 9 kWc",
+   "Batterie de stockage",
+   "Suivi de production",
+   "Entretien & nettoyage"
+  ]
+ },
+ {
+  "fichier": "V21B-photovoltaique.html",
+  "verticale": "Installateur photovoltaïque",
+  "nom": "Solaire Direct 37",
+  "style": "Style Impact",
+  "titre": "Solaire Direct 37 · Installateur photovoltaïque · 37000 Tours",
+  "commerce": "Solaire Direct 37",
+  "metier": "Installateur photovoltaïque",
+  "lieu": "37000 Tours",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "37000 Tours",
+  "logo": "SOLAIRE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Autoconsommation 3 à 9 kWc",
+   "Batterie de stockage",
+   "Suivi de production",
+   "Entretien & nettoyage"
+  ]
+ },
+ {
+  "fichier": "V21C-photovoltaique.html",
+  "verticale": "Installateur photovoltaïque",
+  "nom": "Photon",
+  "style": "Style Moderne",
+  "titre": "Photon · Installateur photovoltaïque · 38000 Grenoble",
+  "commerce": "Photon",
+  "metier": "Installateur photovoltaïque",
+  "lieu": "38000 Grenoble",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "38000 Grenoble",
+  "logo": "photon",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Autoconsommation 3 à 9 kWc",
+   "Batterie de stockage",
+   "Suivi de production",
+   "Entretien & nettoyage"
+  ]
+ },
+ {
+  "fichier": "V22A-nettoyage.html",
+  "verticale": "Nettoyage",
+  "nom": "Maison Nette",
+  "style": "Style Éditorial",
+  "titre": "Maison Nette · Nettoyage · 75017 Paris",
+  "commerce": "Maison Nette",
+  "metier": "Nettoyage",
+  "lieu": "75017 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75017 Paris",
+  "logo": "Maison",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Ménage régulier",
+   "Nettoyage de bureaux",
+   "Vitres & vitrines",
+   "Canapés & tapis"
+  ]
+ },
+ {
+  "fichier": "V22B-nettoyage.html",
+  "verticale": "Nettoyage",
+  "nom": "Net Pro Services",
+  "style": "Style Impact",
+  "titre": "Net Pro Services · Nettoyage · 69002 Lyon",
+  "commerce": "Net Pro Services",
+  "metier": "Nettoyage",
+  "lieu": "69002 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69002 Lyon",
+  "logo": "NET",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Ménage régulier",
+   "Nettoyage de bureaux",
+   "Vitres & vitrines",
+   "Canapés & tapis"
+  ]
+ },
+ {
+  "fichier": "V22C-nettoyage.html",
+  "verticale": "Nettoyage",
+  "nom": "Éclat",
+  "style": "Style Moderne",
+  "titre": "Éclat · Nettoyage · 33000 Bordeaux",
+  "commerce": "Éclat",
+  "metier": "Nettoyage",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "éclat",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Ménage régulier",
+   "Nettoyage de bureaux",
+   "Vitres & vitrines",
+   "Canapés & tapis"
+  ]
+ },
+ {
+  "fichier": "V23A-esthetique.html",
+  "verticale": "Esthéticienne",
+  "nom": "Atelier Peau",
+  "style": "Style Éditorial",
+  "titre": "Atelier Peau · Esthéticienne · 75006 Paris",
+  "commerce": "Atelier Peau",
+  "metier": "Esthéticienne",
+  "lieu": "75006 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75006 Paris",
+  "logo": "Atelier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Soin du visage signature",
+   "Rehaussement de cils",
+   "Restructuration sourcils",
+   "Modelage visage"
+  ]
+ },
+ {
+  "fichier": "V23B-esthetique.html",
+  "verticale": "Esthéticienne",
+  "nom": "Studio Regard",
+  "style": "Style Impact",
+  "titre": "Studio Regard · Esthéticienne · 59000 Lille",
+  "commerce": "Studio Regard",
+  "metier": "Esthéticienne",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "STUDIO",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Soin du visage signature",
+   "Rehaussement de cils",
+   "Restructuration sourcils",
+   "Modelage visage"
+  ]
+ },
+ {
+  "fichier": "V23C-esthetique.html",
+  "verticale": "Esthéticienne",
+  "nom": "Lumière de Peau",
+  "style": "Style Moderne",
+  "titre": "Lumière de Peau · Esthéticienne · 35000 Rennes",
+  "commerce": "Lumière de Peau",
+  "metier": "Esthéticienne",
+  "lieu": "35000 Rennes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "35000 Rennes",
+  "logo": "lumière",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Soin du visage signature",
+   "Rehaussement de cils",
+   "Restructuration sourcils",
+   "Modelage visage"
+  ]
+ },
+ {
+  "fichier": "V24A-ongles.html",
+  "verticale": "Prothésiste ongulaire",
+  "nom": "Studio Laque",
+  "style": "Style Éditorial",
+  "titre": "Studio Laque · Prothésiste ongulaire · 13001 Marseille",
+  "commerce": "Studio Laque",
+  "metier": "Prothésiste ongulaire",
+  "lieu": "13001 Marseille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "13001 Marseille",
+  "logo": "Studio",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Semi-permanent",
+   "Gel sur ongles naturels",
+   "Extensions & capsules",
+   "Nail art"
+  ]
+ },
+ {
+  "fichier": "V24B-ongles.html",
+  "verticale": "Prothésiste ongulaire",
+  "nom": "Nail Bar Opéra",
+  "style": "Style Impact",
+  "titre": "Nail Bar Opéra · Prothésiste ongulaire · 75009 Paris",
+  "commerce": "Nail Bar Opéra",
+  "metier": "Prothésiste ongulaire",
+  "lieu": "75009 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75009 Paris",
+  "logo": "NAIL",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Semi-permanent",
+   "Gel sur ongles naturels",
+   "Extensions & capsules",
+   "Nail art"
+  ]
+ },
+ {
+  "fichier": "V24C-ongles.html",
+  "verticale": "Prothésiste ongulaire",
+  "nom": "Doigts de Fée",
+  "style": "Style Moderne",
+  "titre": "Doigts de Fée · Prothésiste ongulaire · 21000 Dijon",
+  "commerce": "Doigts de Fée",
+  "metier": "Prothésiste ongulaire",
+  "lieu": "21000 Dijon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "21000 Dijon",
+  "logo": "doigts de fée",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Semi-permanent",
+   "Gel sur ongles naturels",
+   "Extensions & capsules",
+   "Nail art"
+  ]
+ },
+ {
+  "fichier": "V25A-tatouage.html",
+  "verticale": "Salon de tatouage",
+  "nom": "Encre Noire",
+  "style": "Style Éditorial",
+  "titre": "Encre Noire · Salon de tatouage · 31000 Toulouse",
+  "commerce": "Encre Noire",
+  "metier": "Salon de tatouage",
+  "lieu": "31000 Toulouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "31000 Toulouse",
+  "logo": "Encre",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Flash",
+   "Projet sur mesure",
+   "Retouche & recouvrement",
+   "Piercing"
+  ]
+ },
+ {
+  "fichier": "V25B-tatouage.html",
+  "verticale": "Salon de tatouage",
+  "nom": "Black Needle",
+  "style": "Style Impact",
+  "titre": "Black Needle · Salon de tatouage · 69001 Lyon",
+  "commerce": "Black Needle",
+  "metier": "Salon de tatouage",
+  "lieu": "69001 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69001 Lyon",
+  "logo": "BLACK",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Flash",
+   "Projet sur mesure",
+   "Retouche & recouvrement",
+   "Piercing"
+  ]
+ },
+ {
+  "fichier": "V25C-tatouage.html",
+  "verticale": "Salon de tatouage",
+  "nom": "Atelier Trait",
+  "style": "Style Moderne",
+  "titre": "Atelier Trait · Salon de tatouage · 44000 Nantes",
+  "commerce": "Atelier Trait",
+  "metier": "Salon de tatouage",
+  "lieu": "44000 Nantes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "44000 Nantes",
+  "logo": "trait",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Flash",
+   "Projet sur mesure",
+   "Retouche & recouvrement",
+   "Piercing"
+  ]
+ },
+ {
+  "fichier": "V26A-carrosserie.html",
+  "verticale": "Carrosserie & detailing",
+  "nom": "Carrosserie Martin",
+  "style": "Style Éditorial",
+  "titre": "Carrosserie Martin · Carrosserie & detailing · 57000 Metz",
+  "commerce": "Carrosserie Martin",
+  "metier": "Carrosserie & detailing",
+  "lieu": "57000 Metz",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "57000 Metz",
+  "logo": "Carrosserie",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Réparation de carrosserie",
+   "Peinture en cabine",
+   "Polissage & céramique",
+   "Nettoyage intérieur"
+  ]
+ },
+ {
+  "fichier": "V26B-carrosserie.html",
+  "verticale": "Carrosserie & detailing",
+  "nom": "Shine Detailing",
+  "style": "Style Impact",
+  "titre": "Shine Detailing · Carrosserie & detailing · 06400 Cannes",
+  "commerce": "Shine Detailing",
+  "metier": "Carrosserie & detailing",
+  "lieu": "06400 Cannes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06400 Cannes",
+  "logo": "SHINE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Réparation de carrosserie",
+   "Peinture en cabine",
+   "Polissage & céramique",
+   "Nettoyage intérieur"
+  ]
+ },
+ {
+  "fichier": "V26C-carrosserie.html",
+  "verticale": "Carrosserie & detailing",
+  "nom": "Atelier Carbone",
+  "style": "Style Moderne",
+  "titre": "Atelier Carbone · Carrosserie & detailing · 76000 Rouen",
+  "commerce": "Atelier Carbone",
+  "metier": "Carrosserie & detailing",
+  "lieu": "76000 Rouen",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "76000 Rouen",
+  "logo": "carbone",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Réparation de carrosserie",
+   "Peinture en cabine",
+   "Polissage & céramique",
+   "Nettoyage intérieur"
+  ]
+ },
+ {
+  "fichier": "V27A-services-domicile.html",
+  "verticale": "Services à domicile",
+  "nom": "Coup de Main",
+  "style": "Style Éditorial",
+  "titre": "Coup de Main · Services à domicile · 78000 Versailles",
+  "commerce": "Coup de Main",
+  "metier": "Services à domicile",
+  "lieu": "78000 Versailles",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "78000 Versailles",
+  "logo": "Coup",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Montage de meubles",
+   "Petits travaux & fixations",
+   "Pose de TV",
+   "Ménage & repassage"
+  ]
+ },
+ {
+  "fichier": "V27B-services-domicile.html",
+  "verticale": "Services à domicile",
+  "nom": "Dom Services 31",
+  "style": "Style Impact",
+  "titre": "Dom Services 31 · Services à domicile · 31000 Toulouse",
+  "commerce": "Dom Services 31",
+  "metier": "Services à domicile",
+  "lieu": "31000 Toulouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "31000 Toulouse",
+  "logo": "DOM",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Montage de meubles",
+   "Petits travaux & fixations",
+   "Pose de TV",
+   "Ménage & repassage"
+  ]
+ },
+ {
+  "fichier": "V27C-services-domicile.html",
+  "verticale": "Services à domicile",
+  "nom": "Allô Lucas",
+  "style": "Style Moderne",
+  "titre": "Allô Lucas · Services à domicile · 49000 Angers",
+  "commerce": "Allô Lucas",
+  "metier": "Services à domicile",
+  "lieu": "49000 Angers",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "49000 Angers",
+  "logo": "allô lucas",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Montage de meubles",
+   "Petits travaux & fixations",
+   "Pose de TV",
+   "Ménage & repassage"
+  ]
+ },
+ {
+  "fichier": "V28A-pisciniste.html",
+  "verticale": "Pisciniste",
+  "nom": "Bleu Lagon Piscines",
+  "style": "Style Éditorial",
+  "titre": "Bleu Lagon Piscines · Pisciniste · 83000 Toulon",
+  "commerce": "Bleu Lagon Piscines",
+  "metier": "Pisciniste",
+  "lieu": "83000 Toulon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "83000 Toulon",
+  "logo": "Bleu",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Construction de piscine",
+   "Entretien hebdomadaire",
+   "Ouverture & hivernage",
+   "Rénovation & liner"
+  ]
+ },
+ {
+  "fichier": "V28B-pisciniste.html",
+  "verticale": "Pisciniste",
+  "nom": "Piscines Azur 33",
+  "style": "Style Impact",
+  "titre": "Piscines Azur 33 · Pisciniste · 33700 Mérignac",
+  "commerce": "Piscines Azur 33",
+  "metier": "Pisciniste",
+  "lieu": "33700 Mérignac",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33700 Mérignac",
+  "logo": "PISCINES",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Construction de piscine",
+   "Entretien hebdomadaire",
+   "Ouverture & hivernage",
+   "Rénovation & liner"
+  ]
+ },
+ {
+  "fichier": "V28C-pisciniste.html",
+  "verticale": "Pisciniste",
+  "nom": "Clair",
+  "style": "Style Moderne",
+  "titre": "Clair · Pisciniste · 30000 Nîmes",
+  "commerce": "Clair",
+  "metier": "Pisciniste",
+  "lieu": "30000 Nîmes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "30000 Nîmes",
+  "logo": "clair",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Construction de piscine",
+   "Entretien hebdomadaire",
+   "Ouverture & hivernage",
+   "Rénovation & liner"
+  ]
+ },
+ {
+  "fichier": "V29A-elagage-jardin.html",
+  "verticale": "Élagage & entretien de jardins",
+  "nom": "Cime & Racines",
+  "style": "Style Éditorial",
+  "titre": "Cime & Racines · Élagage & entretien de jardins · 74000 Annecy",
+  "commerce": "Cime & Racines",
+  "metier": "Élagage & entretien de jardins",
+  "lieu": "74000 Annecy",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "74000 Annecy",
+  "logo": "Cime",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Élagage",
+   "Abattage",
+   "Taille de haies",
+   "Entretien à l'année"
+  ]
+ },
+ {
+  "fichier": "V29B-elagage-jardin.html",
+  "verticale": "Élagage & entretien de jardins",
+  "nom": "Jardin Net 45",
+  "style": "Style Impact",
+  "titre": "Jardin Net 45 · Élagage & entretien de jardins · 45000 Orléans",
+  "commerce": "Jardin Net 45",
+  "metier": "Élagage & entretien de jardins",
+  "lieu": "45000 Orléans",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "45000 Orléans",
+  "logo": "JARDIN",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Élagage",
+   "Abattage",
+   "Taille de haies",
+   "Entretien à l'année"
+  ]
+ },
+ {
+  "fichier": "V29C-elagage-jardin.html",
+  "verticale": "Élagage & entretien de jardins",
+  "nom": "Branche",
+  "style": "Style Moderne",
+  "titre": "Branche · Élagage & entretien de jardins · 29200 Brest",
+  "commerce": "Branche",
+  "metier": "Élagage & entretien de jardins",
+  "lieu": "29200 Brest",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "29200 Brest",
+  "logo": "branche",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Élagage",
+   "Abattage",
+   "Taille de haies",
+   "Entretien à l'année"
+  ]
+ },
+ {
+  "fichier": "V30A-garde-animaux.html",
+  "verticale": "Garde & promenade d'animaux",
+  "nom": "Patte Douce",
+  "style": "Style Éditorial",
+  "titre": "Patte Douce · Garde & promenade d'animaux · 92100 Boulogne",
+  "commerce": "Patte Douce",
+  "metier": "Garde & promenade d'animaux",
+  "lieu": "92100 Boulogne",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "92100 Boulogne",
+  "logo": "Patte",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Promenade",
+   "Visite à domicile",
+   "Garde en famille",
+   "Chats & NAC"
+  ]
+ },
+ {
+  "fichier": "V30B-garde-animaux.html",
+  "verticale": "Garde & promenade d'animaux",
+  "nom": "Dog Walk Lyon",
+  "style": "Style Impact",
+  "titre": "Dog Walk Lyon · Garde & promenade d'animaux · 69006 Lyon",
+  "commerce": "Dog Walk Lyon",
+  "metier": "Garde & promenade d'animaux",
+  "lieu": "69006 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69006 Lyon",
+  "logo": "DOG",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Promenade",
+   "Visite à domicile",
+   "Garde en famille",
+   "Chats & NAC"
+  ]
+ },
+ {
+  "fichier": "V30C-garde-animaux.html",
+  "verticale": "Garde & promenade d'animaux",
+  "nom": "Moustache",
+  "style": "Style Moderne",
+  "titre": "Moustache · Garde & promenade d'animaux · 35000 Rennes",
+  "commerce": "Moustache",
+  "metier": "Garde & promenade d'animaux",
+  "lieu": "35000 Rennes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "35000 Rennes",
+  "logo": "moustache",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Promenade",
+   "Visite à domicile",
+   "Garde en famille",
+   "Chats & NAC"
+  ]
+ },
+ {
+  "fichier": "V31A-educateur-canin.html",
+  "verticale": "Éducateur canin",
+  "nom": "Bon Chien",
+  "style": "Style Éditorial",
+  "titre": "Bon Chien · Éducateur canin · 60200 Compiègne",
+  "commerce": "Bon Chien",
+  "metier": "Éducateur canin",
+  "lieu": "60200 Compiègne",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "60200 Compiègne",
+  "logo": "Bon",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "École du chiot",
+   "Éducation de base",
+   "Marche en laisse",
+   "Comportement"
+  ]
+ },
+ {
+  "fichier": "V31B-educateur-canin.html",
+  "verticale": "Éducateur canin",
+  "nom": "Canin Academy",
+  "style": "Style Impact",
+  "titre": "Canin Academy · Éducateur canin · 13090 Aix-en-Provence",
+  "commerce": "Canin Academy",
+  "metier": "Éducateur canin",
+  "lieu": "13090 Aix-en-Provence",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "13090 Aix-en-Provence",
+  "logo": "CANIN",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "École du chiot",
+   "Éducation de base",
+   "Marche en laisse",
+   "Comportement"
+  ]
+ },
+ {
+  "fichier": "V31C-educateur-canin.html",
+  "verticale": "Éducateur canin",
+  "nom": "Laisse Libre",
+  "style": "Style Moderne",
+  "titre": "Laisse Libre · Éducateur canin · 87000 Limoges",
+  "commerce": "Laisse Libre",
+  "metier": "Éducateur canin",
+  "lieu": "87000 Limoges",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "87000 Limoges",
+  "logo": "laisse libre",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "École du chiot",
+   "Éducation de base",
+   "Marche en laisse",
+   "Comportement"
+  ]
+ },
+ {
+  "fichier": "V32A-demenagement.html",
+  "verticale": "Déménageur",
+  "nom": "Roux Déménagement",
+  "style": "Style Éditorial",
+  "titre": "Roux Déménagement · Déménageur · 21000 Dijon",
+  "commerce": "Roux Déménagement",
+  "metier": "Déménageur",
+  "lieu": "21000 Dijon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "21000 Dijon",
+  "logo": "Roux",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Déménagement local",
+   "Formule emballage",
+   "Garde-meubles",
+   "Petits volumes"
+  ]
+ },
+ {
+  "fichier": "V32B-demenagement.html",
+  "verticale": "Déménageur",
+  "nom": "Move Express 59",
+  "style": "Style Impact",
+  "titre": "Move Express 59 · Déménageur · 59000 Lille",
+  "commerce": "Move Express 59",
+  "metier": "Déménageur",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "MOVE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Déménagement local",
+   "Formule emballage",
+   "Garde-meubles",
+   "Petits volumes"
+  ]
+ },
+ {
+  "fichier": "V32C-demenagement.html",
+  "verticale": "Déménageur",
+  "nom": "Carton Plein",
+  "style": "Style Moderne",
+  "titre": "Carton Plein · Déménageur · 37000 Tours",
+  "commerce": "Carton Plein",
+  "metier": "Déménageur",
+  "lieu": "37000 Tours",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "37000 Tours",
+  "logo": "carton plein",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Déménagement local",
+   "Formule emballage",
+   "Garde-meubles",
+   "Petits volumes"
+  ]
+ },
+ {
+  "fichier": "V33A-chauffeur-vtc.html",
+  "verticale": "Chauffeur VTC",
+  "nom": "Prestige Drive",
+  "style": "Style Éditorial",
+  "titre": "Prestige Drive · Chauffeur VTC · 06000 Nice",
+  "commerce": "Prestige Drive",
+  "metier": "Chauffeur VTC",
+  "lieu": "06000 Nice",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06000 Nice",
+  "logo": "Prestige",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Transfert aéroport & gare",
+   "Mise à disposition",
+   "Mariages & événements",
+   "Comptes entreprises"
+  ]
+ },
+ {
+  "fichier": "V33B-chauffeur-vtc.html",
+  "verticale": "Chauffeur VTC",
+  "nom": "VTC Lyon Gare",
+  "style": "Style Impact",
+  "titre": "VTC Lyon Gare · Chauffeur VTC · 69003 Lyon",
+  "commerce": "VTC Lyon Gare",
+  "metier": "Chauffeur VTC",
+  "lieu": "69003 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69003 Lyon",
+  "logo": "VTC",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Transfert aéroport & gare",
+   "Mise à disposition",
+   "Mariages & événements",
+   "Comptes entreprises"
+  ]
+ },
+ {
+  "fichier": "V33C-chauffeur-vtc.html",
+  "verticale": "Chauffeur VTC",
+  "nom": "Trajet",
+  "style": "Style Moderne",
+  "titre": "Trajet · Chauffeur VTC · 67000 Strasbourg",
+  "commerce": "Trajet",
+  "metier": "Chauffeur VTC",
+  "lieu": "67000 Strasbourg",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "67000 Strasbourg",
+  "logo": "trajet",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Transfert aéroport & gare",
+   "Mise à disposition",
+   "Mariages & événements",
+   "Comptes entreprises"
+  ]
+ },
+ {
+  "fichier": "V34A-producteur.html",
+  "verticale": "Producteur en vente directe",
+  "nom": "Ferme des Tilleuls",
+  "style": "Style Éditorial",
+  "titre": "Ferme des Tilleuls · Producteur en vente directe · 49250 Beaufort-en-Anjou",
+  "commerce": "Ferme des Tilleuls",
+  "metier": "Producteur en vente directe",
+  "lieu": "49250 Beaufort-en-Anjou",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "49250 Beaufort-en-Anjou",
+  "logo": "Ferme",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Panier de la semaine",
+   "Vente à la ferme",
+   "Sur les marchés",
+   "Miel & confitures"
+  ]
+ },
+ {
+  "fichier": "V34B-producteur.html",
+  "verticale": "Producteur en vente directe",
+  "nom": "Le Panier Paysan",
+  "style": "Style Impact",
+  "titre": "Le Panier Paysan · Producteur en vente directe · 26000 Valence",
+  "commerce": "Le Panier Paysan",
+  "metier": "Producteur en vente directe",
+  "lieu": "26000 Valence",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "26000 Valence",
+  "logo": "PANIER",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Panier de la semaine",
+   "Vente à la ferme",
+   "Sur les marchés",
+   "Miel & confitures"
+  ]
+ },
+ {
+  "fichier": "V34C-producteur.html",
+  "verticale": "Producteur en vente directe",
+  "nom": "Rucher du Causse",
+  "style": "Style Moderne",
+  "titre": "Rucher du Causse · Producteur en vente directe · 46000 Cahors",
+  "commerce": "Rucher du Causse",
+  "metier": "Producteur en vente directe",
+  "lieu": "46000 Cahors",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "46000 Cahors",
+  "logo": "rucher",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Panier de la semaine",
+   "Vente à la ferme",
+   "Sur les marchés",
+   "Miel & confitures"
+  ]
+ },
+ {
+  "fichier": "V35A-gite-chambres-hotes.html",
+  "verticale": "Gîte & chambres d'hôtes",
+  "nom": "Mas des Oliviers",
+  "style": "Style Éditorial",
+  "titre": "Mas des Oliviers · Gîte & chambres d'hôtes · 84220 Gordes",
+  "commerce": "Mas des Oliviers",
+  "metier": "Gîte & chambres d'hôtes",
+  "lieu": "84220 Gordes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "84220 Gordes",
+  "logo": "Mas",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Chambres d'hôtes",
+   "Gîte entier",
+   "Petit-déjeuner maison",
+   "Table d'hôtes"
+  ]
+ },
+ {
+  "fichier": "V35B-gite-chambres-hotes.html",
+  "verticale": "Gîte & chambres d'hôtes",
+  "nom": "Gîte La Grange",
+  "style": "Style Impact",
+  "titre": "Gîte La Grange · Gîte & chambres d'hôtes · 24620 Les Eyzies",
+  "commerce": "Gîte La Grange",
+  "metier": "Gîte & chambres d'hôtes",
+  "lieu": "24620 Les Eyzies",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "24620 Les Eyzies",
+  "logo": "GÎTE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Chambres d'hôtes",
+   "Gîte entier",
+   "Petit-déjeuner maison",
+   "Table d'hôtes"
+  ]
+ },
+ {
+  "fichier": "V35C-gite-chambres-hotes.html",
+  "verticale": "Gîte & chambres d'hôtes",
+  "nom": "Les Volets Bleus",
+  "style": "Style Moderne",
+  "titre": "Les Volets Bleus · Gîte & chambres d'hôtes · 56340 Carnac",
+  "commerce": "Les Volets Bleus",
+  "metier": "Gîte & chambres d'hôtes",
+  "lieu": "56340 Carnac",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "56340 Carnac",
+  "logo": "volets bleus",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Chambres d'hôtes",
+   "Gîte entier",
+   "Petit-déjeuner maison",
+   "Table d'hôtes"
+  ]
+ },
+ {
+  "fichier": "V36A-soutien-scolaire.html",
+  "verticale": "Professeur particulier",
+  "nom": "Cours Lumière",
+  "style": "Style Éditorial",
+  "titre": "Cours Lumière · Professeur particulier · 78000 Versailles",
+  "commerce": "Cours Lumière",
+  "metier": "Professeur particulier",
+  "lieu": "78000 Versailles",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "78000 Versailles",
+  "logo": "Cours",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Maths & sciences",
+   "Français & langues",
+   "Brevet & bac",
+   "Méthodologie"
+  ]
+ },
+ {
+  "fichier": "V36B-soutien-scolaire.html",
+  "verticale": "Professeur particulier",
+  "nom": "Prépa Bac 31",
+  "style": "Style Impact",
+  "titre": "Prépa Bac 31 · Professeur particulier · 31000 Toulouse",
+  "commerce": "Prépa Bac 31",
+  "metier": "Professeur particulier",
+  "lieu": "31000 Toulouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "31000 Toulouse",
+  "logo": "PRÉPA",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Maths & sciences",
+   "Français & langues",
+   "Brevet & bac",
+   "Méthodologie"
+  ]
+ },
+ {
+  "fichier": "V36C-soutien-scolaire.html",
+  "verticale": "Professeur particulier",
+  "nom": "Méthode",
+  "style": "Style Moderne",
+  "titre": "Méthode · Professeur particulier · 35000 Rennes",
+  "commerce": "Méthode",
+  "metier": "Professeur particulier",
+  "lieu": "35000 Rennes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "35000 Rennes",
+  "logo": "méthode",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Maths & sciences",
+   "Français & langues",
+   "Brevet & bac",
+   "Méthodologie"
+  ]
+ },
+ {
+  "fichier": "V37A-prof-musique.html",
+  "verticale": "Professeur de musique",
+  "nom": "Atelier Clé de Sol",
+  "style": "Style Éditorial",
+  "titre": "Atelier Clé de Sol · Professeur de musique · 67000 Strasbourg",
+  "commerce": "Atelier Clé de Sol",
+  "metier": "Professeur de musique",
+  "lieu": "67000 Strasbourg",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "67000 Strasbourg",
+  "logo": "Clé",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Piano",
+   "Guitare",
+   "Éveil musical",
+   "Solfège & théorie"
+  ]
+ },
+ {
+  "fichier": "V37B-prof-musique.html",
+  "verticale": "Professeur de musique",
+  "nom": "Studio Accord",
+  "style": "Style Impact",
+  "titre": "Studio Accord · Professeur de musique · 13006 Marseille",
+  "commerce": "Studio Accord",
+  "metier": "Professeur de musique",
+  "lieu": "13006 Marseille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "13006 Marseille",
+  "logo": "STUDIO",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Piano",
+   "Guitare",
+   "Éveil musical",
+   "Solfège & théorie"
+  ]
+ },
+ {
+  "fichier": "V37C-prof-musique.html",
+  "verticale": "Professeur de musique",
+  "nom": "Note Bleue",
+  "style": "Style Moderne",
+  "titre": "Note Bleue · Professeur de musique · 44000 Nantes",
+  "commerce": "Note Bleue",
+  "metier": "Professeur de musique",
+  "lieu": "44000 Nantes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "44000 Nantes",
+  "logo": "note bleue",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Piano",
+   "Guitare",
+   "Éveil musical",
+   "Solfège & théorie"
+  ]
+ },
+ {
+  "fichier": "V38A-chef-domicile.html",
+  "verticale": "Chef à domicile",
+  "nom": "Table Privée",
+  "style": "Style Éditorial",
+  "titre": "Table Privée · Chef à domicile · 75016 Paris",
+  "commerce": "Table Privée",
+  "metier": "Chef à domicile",
+  "lieu": "75016 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75016 Paris",
+  "logo": "Table",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Dîner à domicile",
+   "Cours de cuisine",
+   "Cocktail & apéritif",
+   "Repas de la semaine"
+  ]
+ },
+ {
+  "fichier": "V38B-chef-domicile.html",
+  "verticale": "Chef à domicile",
+  "nom": "Chef Maison",
+  "style": "Style Impact",
+  "titre": "Chef Maison · Chef à domicile · 69006 Lyon",
+  "commerce": "Chef Maison",
+  "metier": "Chef à domicile",
+  "lieu": "69006 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69006 Lyon",
+  "logo": "CHEF",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Dîner à domicile",
+   "Cours de cuisine",
+   "Cocktail & apéritif",
+   "Repas de la semaine"
+  ]
+ },
+ {
+  "fichier": "V38C-chef-domicile.html",
+  "verticale": "Chef à domicile",
+  "nom": "Assiette",
+  "style": "Style Moderne",
+  "titre": "Assiette · Chef à domicile · 33000 Bordeaux",
+  "commerce": "Assiette",
+  "metier": "Chef à domicile",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "assiette",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Dîner à domicile",
+   "Cours de cuisine",
+   "Cocktail & apéritif",
+   "Repas de la semaine"
+  ]
+ },
+ {
+  "fichier": "V39A-patissier.html",
+  "verticale": "Pâtissier & cake designer",
+  "nom": "Maison Sucre",
+  "style": "Style Éditorial",
+  "titre": "Maison Sucre · Pâtissier & cake designer · 06000 Nice",
+  "commerce": "Maison Sucre",
+  "metier": "Pâtissier & cake designer",
+  "lieu": "06000 Nice",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06000 Nice",
+  "logo": "Maison",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Wedding cake",
+   "Gâteau d'anniversaire",
+   "Cupcakes & sweet table",
+   "Viennoiseries & tartes"
+  ]
+ },
+ {
+  "fichier": "V39B-patissier.html",
+  "verticale": "Pâtissier & cake designer",
+  "nom": "Cake Studio",
+  "style": "Style Impact",
+  "titre": "Cake Studio · Pâtissier & cake designer · 59000 Lille",
+  "commerce": "Cake Studio",
+  "metier": "Pâtissier & cake designer",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "CAKE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Wedding cake",
+   "Gâteau d'anniversaire",
+   "Cupcakes & sweet table",
+   "Viennoiseries & tartes"
+  ]
+ },
+ {
+  "fichier": "V39C-patissier.html",
+  "verticale": "Pâtissier & cake designer",
+  "nom": "Fournil Doux",
+  "style": "Style Moderne",
+  "titre": "Fournil Doux · Pâtissier & cake designer · 21000 Dijon",
+  "commerce": "Fournil Doux",
+  "metier": "Pâtissier & cake designer",
+  "lieu": "21000 Dijon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "21000 Dijon",
+  "logo": "fournil doux",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Wedding cake",
+   "Gâteau d'anniversaire",
+   "Cupcakes & sweet table",
+   "Viennoiseries & tartes"
+  ]
+ },
+ {
+  "fichier": "V40A-librairie.html",
+  "verticale": "Librairie indépendante",
+  "nom": "Librairie des Halles",
+  "style": "Style Éditorial",
+  "titre": "Librairie des Halles · Librairie indépendante · 37000 Tours",
+  "commerce": "Librairie des Halles",
+  "metier": "Librairie indépendante",
+  "lieu": "37000 Tours",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "37000 Tours",
+  "logo": "Librairie",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Coups de cœur",
+   "Jeunesse",
+   "Commande en 48 h",
+   "Rencontres d'auteurs"
+  ]
+ },
+ {
+  "fichier": "V40B-librairie.html",
+  "verticale": "Librairie indépendante",
+  "nom": "Bulles & Cases",
+  "style": "Style Impact",
+  "titre": "Bulles & Cases · Librairie indépendante · 33000 Bordeaux",
+  "commerce": "Bulles & Cases",
+  "metier": "Librairie indépendante",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "BULLES",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Coups de cœur",
+   "Jeunesse",
+   "Commande en 48 h",
+   "Rencontres d'auteurs"
+  ]
+ },
+ {
+  "fichier": "V40C-librairie.html",
+  "verticale": "Librairie indépendante",
+  "nom": "Page Blanche",
+  "style": "Style Moderne",
+  "titre": "Page Blanche · Librairie indépendante · 29000 Quimper",
+  "commerce": "Page Blanche",
+  "metier": "Librairie indépendante",
+  "lieu": "29000 Quimper",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "29000 Quimper",
+  "logo": "page blanche",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Coups de cœur",
+   "Jeunesse",
+   "Commande en 48 h",
+   "Rencontres d'auteurs"
+  ]
+ },
+ {
+  "fichier": "V41A-boutique-jeux.html",
+  "verticale": "Boutique de jeux",
+  "nom": "Le Plateau",
+  "style": "Style Éditorial",
+  "titre": "Le Plateau · Boutique de jeux · 38000 Grenoble",
+  "commerce": "Le Plateau",
+  "metier": "Boutique de jeux",
+  "lieu": "38000 Grenoble",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "38000 Grenoble",
+  "logo": "Le",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Jeux de société",
+   "Soirées jeux",
+   "Classiques",
+   "Conseil & démo"
+  ]
+ },
+ {
+  "fichier": "V41B-boutique-jeux.html",
+  "verticale": "Boutique de jeux",
+  "nom": "Dé Critique",
+  "style": "Style Impact",
+  "titre": "Dé Critique · Boutique de jeux · 34000 Montpellier",
+  "commerce": "Dé Critique",
+  "metier": "Boutique de jeux",
+  "lieu": "34000 Montpellier",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "34000 Montpellier",
+  "logo": "DÉ",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Jeux de société",
+   "Soirées jeux",
+   "Classiques",
+   "Conseil & démo"
+  ]
+ },
+ {
+  "fichier": "V41C-boutique-jeux.html",
+  "verticale": "Boutique de jeux",
+  "nom": "Meeple",
+  "style": "Style Moderne",
+  "titre": "Meeple · Boutique de jeux · 80000 Amiens",
+  "commerce": "Meeple",
+  "metier": "Boutique de jeux",
+  "lieu": "80000 Amiens",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "80000 Amiens",
+  "logo": "meeple",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Jeux de société",
+   "Soirées jeux",
+   "Classiques",
+   "Conseil & démo"
+  ]
+ },
+ {
+  "fichier": "V42A-usinage-metallerie.html",
+  "verticale": "Usinage & métallerie",
+  "nom": "Mécanique Lambert",
+  "style": "Style Éditorial",
+  "titre": "Mécanique Lambert · Usinage & métallerie · 25000 Besançon",
+  "commerce": "Mécanique Lambert",
+  "metier": "Usinage & métallerie",
+  "lieu": "25000 Besançon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "25000 Besançon",
+  "logo": "Mécanique",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Usinage CNC",
+   "Tournage",
+   "Découpe laser",
+   "Soudure & chaudronnerie"
+  ]
+ },
+ {
+  "fichier": "V42B-usinage-metallerie.html",
+  "verticale": "Usinage & métallerie",
+  "nom": "Métal Découpe 42",
+  "style": "Style Impact",
+  "titre": "Métal Découpe 42 · Usinage & métallerie · 42000 Saint-Étienne",
+  "commerce": "Métal Découpe 42",
+  "metier": "Usinage & métallerie",
+  "lieu": "42000 Saint-Étienne",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "42000 Saint-Étienne",
+  "logo": "MÉTAL",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Usinage CNC",
+   "Tournage",
+   "Découpe laser",
+   "Soudure & chaudronnerie"
+  ]
+ },
+ {
+  "fichier": "V42C-usinage-metallerie.html",
+  "verticale": "Usinage & métallerie",
+  "nom": "Atelier Acier",
+  "style": "Style Moderne",
+  "titre": "Atelier Acier · Usinage & métallerie · 68100 Mulhouse",
+  "commerce": "Atelier Acier",
+  "metier": "Usinage & métallerie",
+  "lieu": "68100 Mulhouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "68100 Mulhouse",
+  "logo": "acier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Usinage CNC",
+   "Tournage",
+   "Découpe laser",
+   "Soudure & chaudronnerie"
+  ]
+ },
+ {
+  "fichier": "V43A-marquage-textile.html",
+  "verticale": "Atelier de marquage textile",
+  "nom": "Fil & Encre",
+  "style": "Style Éditorial",
+  "titre": "Fil & Encre · Atelier de marquage textile · 59100 Roubaix",
+  "commerce": "Fil & Encre",
+  "metier": "Atelier de marquage textile",
+  "lieu": "59100 Roubaix",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59100 Roubaix",
+  "logo": "Fil",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Broderie",
+   "Sérigraphie",
+   "Flocage & transfert",
+   "Textiles fournis"
+  ]
+ },
+ {
+  "fichier": "V43B-marquage-textile.html",
+  "verticale": "Atelier de marquage textile",
+  "nom": "Brod'Express",
+  "style": "Style Impact",
+  "titre": "Brod'Express · Atelier de marquage textile · 49000 Angers",
+  "commerce": "Brod'Express",
+  "metier": "Atelier de marquage textile",
+  "lieu": "49000 Angers",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "49000 Angers",
+  "logo": "BROD'",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Broderie",
+   "Sérigraphie",
+   "Flocage & transfert",
+   "Textiles fournis"
+  ]
+ },
+ {
+  "fichier": "V43C-marquage-textile.html",
+  "verticale": "Atelier de marquage textile",
+  "nom": "Trame",
+  "style": "Style Moderne",
+  "titre": "Trame · Atelier de marquage textile · 69007 Lyon",
+  "commerce": "Trame",
+  "metier": "Atelier de marquage textile",
+  "lieu": "69007 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69007 Lyon",
+  "logo": "trame",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Broderie",
+   "Sérigraphie",
+   "Flocage & transfert",
+   "Textiles fournis"
+  ]
+ },
+ {
+  "fichier": "V44A-yoga-pilates.html",
+  "verticale": "Yoga & Pilates",
+  "nom": "Studio Shanti",
+  "style": "Style Éditorial",
+  "titre": "Studio Shanti · Yoga & Pilates · 75011 Paris",
+  "commerce": "Studio Shanti",
+  "metier": "Yoga & Pilates",
+  "lieu": "75011 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75011 Paris",
+  "logo": "Studio",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Hatha yoga",
+   "Vinyasa",
+   "Pilates",
+   "Méditation"
+  ]
+ },
+ {
+  "fichier": "V44B-yoga-pilates.html",
+  "verticale": "Yoga & Pilates",
+  "nom": "Pilates Lab",
+  "style": "Style Impact",
+  "titre": "Pilates Lab · Yoga & Pilates · 06400 Cannes",
+  "commerce": "Pilates Lab",
+  "metier": "Yoga & Pilates",
+  "lieu": "06400 Cannes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06400 Cannes",
+  "logo": "PILATES",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Hatha yoga",
+   "Vinyasa",
+   "Pilates",
+   "Méditation"
+  ]
+ },
+ {
+  "fichier": "V44C-yoga-pilates.html",
+  "verticale": "Yoga & Pilates",
+  "nom": "Souffle",
+  "style": "Style Moderne",
+  "titre": "Souffle · Yoga & Pilates · 64200 Biarritz",
+  "commerce": "Souffle",
+  "metier": "Yoga & Pilates",
+  "lieu": "64200 Biarritz",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "64200 Biarritz",
+  "logo": "souffle",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Hatha yoga",
+   "Vinyasa",
+   "Pilates",
+   "Méditation"
+  ]
+ },
+ {
+  "fichier": "V45A-photographe.html",
+  "verticale": "Photographe",
+  "nom": "Lumière Nue",
+  "style": "Style Éditorial",
+  "titre": "Lumière Nue · Photographe · 75018 Paris",
+  "commerce": "Lumière Nue",
+  "metier": "Photographe",
+  "lieu": "75018 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75018 Paris",
+  "logo": "Lumière",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Séance portrait",
+   "Mariage",
+   "Photo d'entreprise",
+   "Famille"
+  ]
+ },
+ {
+  "fichier": "V45B-photographe.html",
+  "verticale": "Photographe",
+  "nom": "Studio Grain",
+  "style": "Style Impact",
+  "titre": "Studio Grain · Photographe · 69004 Lyon",
+  "commerce": "Studio Grain",
+  "metier": "Photographe",
+  "lieu": "69004 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69004 Lyon",
+  "logo": "STUDIO",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Séance portrait",
+   "Mariage",
+   "Photo d'entreprise",
+   "Famille"
+  ]
+ },
+ {
+  "fichier": "V45C-photographe.html",
+  "verticale": "Photographe",
+  "nom": "Instant",
+  "style": "Style Moderne",
+  "titre": "Instant · Photographe · 13007 Marseille",
+  "commerce": "Instant",
+  "metier": "Photographe",
+  "lieu": "13007 Marseille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "13007 Marseille",
+  "logo": "instant",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Séance portrait",
+   "Mariage",
+   "Photo d'entreprise",
+   "Famille"
+  ]
+ },
+ {
+  "fichier": "V46A-wedding-planner.html",
+  "verticale": "Wedding planner",
+  "nom": "Maison Oui",
+  "style": "Style Éditorial",
+  "titre": "Maison Oui · Wedding planner · 33000 Bordeaux",
+  "commerce": "Maison Oui",
+  "metier": "Wedding planner",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "Maison",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Organisation complète",
+   "Coordination du jour J",
+   "Décoration & scénographie",
+   "Recherche de lieu"
+  ]
+ },
+ {
+  "fichier": "V46B-wedding-planner.html",
+  "verticale": "Wedding planner",
+  "nom": "Le Grand Jour",
+  "style": "Style Impact",
+  "titre": "Le Grand Jour · Wedding planner · 84000 Avignon",
+  "commerce": "Le Grand Jour",
+  "metier": "Wedding planner",
+  "lieu": "84000 Avignon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "84000 Avignon",
+  "logo": "LE GRAND",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Organisation complète",
+   "Coordination du jour J",
+   "Décoration & scénographie",
+   "Recherche de lieu"
+  ]
+ },
+ {
+  "fichier": "V46C-wedding-planner.html",
+  "verticale": "Wedding planner",
+  "nom": "Cortège",
+  "style": "Style Moderne",
+  "titre": "Cortège · Wedding planner · 74000 Annecy",
+  "commerce": "Cortège",
+  "metier": "Wedding planner",
+  "lieu": "74000 Annecy",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "74000 Annecy",
+  "logo": "cortège",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Organisation complète",
+   "Coordination du jour J",
+   "Décoration & scénographie",
+   "Recherche de lieu"
+  ]
+ },
+ {
+  "fichier": "V47A-decoratrice-interieur.html",
+  "verticale": "Décoratrice d'intérieur",
+  "nom": "Atelier Intérieur",
+  "style": "Style Éditorial",
+  "titre": "Atelier Intérieur · Décoratrice d'intérieur · 75011 Paris",
+  "commerce": "Atelier Intérieur",
+  "metier": "Décoratrice d'intérieur",
+  "lieu": "75011 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75011 Paris",
+  "logo": "Atelier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Conseil déco à domicile",
+   "Planche & plan 3D",
+   "Projet clé en main",
+   "Home staging"
+  ]
+ },
+ {
+  "fichier": "V47B-decoratrice-interieur.html",
+  "verticale": "Décoratrice d'intérieur",
+  "nom": "Casa Studio",
+  "style": "Style Impact",
+  "titre": "Casa Studio · Décoratrice d'intérieur · 06000 Nice",
+  "commerce": "Casa Studio",
+  "metier": "Décoratrice d'intérieur",
+  "lieu": "06000 Nice",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "06000 Nice",
+  "logo": "CASA",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Conseil déco à domicile",
+   "Planche & plan 3D",
+   "Projet clé en main",
+   "Home staging"
+  ]
+ },
+ {
+  "fichier": "V47C-decoratrice-interieur.html",
+  "verticale": "Décoratrice d'intérieur",
+  "nom": "Matière",
+  "style": "Style Moderne",
+  "titre": "Matière · Décoratrice d'intérieur · 35000 Rennes",
+  "commerce": "Matière",
+  "metier": "Décoratrice d'intérieur",
+  "lieu": "35000 Rennes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "35000 Rennes",
+  "logo": "matière",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Conseil déco à domicile",
+   "Planche & plan 3D",
+   "Projet clé en main",
+   "Home staging"
+  ]
+ },
+ {
+  "fichier": "V48A-artiste-ceramiste.html",
+  "verticale": "Artiste & céramiste",
+  "nom": "Atelier Argile",
+  "style": "Style Éditorial",
+  "titre": "Atelier Argile · Artiste & céramiste · 24000 Périgueux",
+  "commerce": "Atelier Argile",
+  "metier": "Artiste & céramiste",
+  "lieu": "24000 Périgueux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "24000 Périgueux",
+  "logo": "Atelier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Pièces uniques",
+   "Commandes sur mesure",
+   "Cours & stages",
+   "Expositions"
+  ]
+ },
+ {
+  "fichier": "V48B-artiste-ceramiste.html",
+  "verticale": "Artiste & céramiste",
+  "nom": "Terre Brute",
+  "style": "Style Impact",
+  "titre": "Terre Brute · Artiste & céramiste · 84000 Avignon",
+  "commerce": "Terre Brute",
+  "metier": "Artiste & céramiste",
+  "lieu": "84000 Avignon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "84000 Avignon",
+  "logo": "TERRE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Pièces uniques",
+   "Commandes sur mesure",
+   "Cours & stages",
+   "Expositions"
+  ]
+ },
+ {
+  "fichier": "V48C-artiste-ceramiste.html",
+  "verticale": "Artiste & céramiste",
+  "nom": "Émail",
+  "style": "Style Moderne",
+  "titre": "Émail · Artiste & céramiste · 22000 Saint-Brieuc",
+  "commerce": "Émail",
+  "metier": "Artiste & céramiste",
+  "lieu": "22000 Saint-Brieuc",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "22000 Saint-Brieuc",
+  "logo": "émail",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Pièces uniques",
+   "Commandes sur mesure",
+   "Cours & stages",
+   "Expositions"
+  ]
+ },
+ {
+  "fichier": "V49A-videaste.html",
+  "verticale": "Vidéaste",
+  "nom": "Plan Large",
+  "style": "Style Éditorial",
+  "titre": "Plan Large · Vidéaste · 44000 Nantes",
+  "commerce": "Plan Large",
+  "metier": "Vidéaste",
+  "lieu": "44000 Nantes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "44000 Nantes",
+  "logo": "Plan",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Film d'entreprise",
+   "Film de mariage",
+   "Vidéos réseaux sociaux",
+   "Captation d'événement"
+  ]
+ },
+ {
+  "fichier": "V49B-videaste.html",
+  "verticale": "Vidéaste",
+  "nom": "Rec Studio",
+  "style": "Style Impact",
+  "titre": "Rec Studio · Vidéaste · 59000 Lille",
+  "commerce": "Rec Studio",
+  "metier": "Vidéaste",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "REC",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Film d'entreprise",
+   "Film de mariage",
+   "Vidéos réseaux sociaux",
+   "Captation d'événement"
+  ]
+ },
+ {
+  "fichier": "V49C-videaste.html",
+  "verticale": "Vidéaste",
+  "nom": "Séquence",
+  "style": "Style Moderne",
+  "titre": "Séquence · Vidéaste · 31000 Toulouse",
+  "commerce": "Séquence",
+  "metier": "Vidéaste",
+  "lieu": "31000 Toulouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "31000 Toulouse",
+  "logo": "séquence",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Film d'entreprise",
+   "Film de mariage",
+   "Vidéos réseaux sociaux",
+   "Captation d'événement"
+  ]
+ },
+ {
+  "fichier": "V50A-graphiste.html",
+  "verticale": "Graphiste & designer",
+  "nom": "Studio Forme",
+  "style": "Style Éditorial",
+  "titre": "Studio Forme · Graphiste & designer · 67000 Strasbourg",
+  "commerce": "Studio Forme",
+  "metier": "Graphiste & designer",
+  "lieu": "67000 Strasbourg",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "67000 Strasbourg",
+  "logo": "Studio",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Logo & identité",
+   "Charte graphique",
+   "Print",
+   "Packaging"
+  ]
+ },
+ {
+  "fichier": "V50B-graphiste.html",
+  "verticale": "Graphiste & designer",
+  "nom": "Pixel Nord",
+  "style": "Style Impact",
+  "titre": "Pixel Nord · Graphiste & designer · 59000 Lille",
+  "commerce": "Pixel Nord",
+  "metier": "Graphiste & designer",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "PIXEL",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Logo & identité",
+   "Charte graphique",
+   "Print",
+   "Packaging"
+  ]
+ },
+ {
+  "fichier": "V50C-graphiste.html",
+  "verticale": "Graphiste & designer",
+  "nom": "Ligne",
+  "style": "Style Moderne",
+  "titre": "Ligne · Graphiste & designer · 33000 Bordeaux",
+  "commerce": "Ligne",
+  "metier": "Graphiste & designer",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "ligne",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Logo & identité",
+   "Charte graphique",
+   "Print",
+   "Packaging"
+  ]
+ },
+ {
+  "fichier": "V51A-musiciens-evenements.html",
+  "verticale": "Musiciens pour événements",
+  "nom": "Les Swing Brothers",
+  "style": "Style Éditorial",
+  "titre": "Les Swing Brothers · Musiciens pour événements · 69002 Lyon",
+  "commerce": "Les Swing Brothers",
+  "metier": "Musiciens pour événements",
+  "lieu": "69002 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69002 Lyon",
+  "logo": "Swing",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Cérémonie",
+   "Cocktail acoustique",
+   "Soirée dansante",
+   "DJ set"
+  ]
+ },
+ {
+  "fichier": "V51B-musiciens-evenements.html",
+  "verticale": "Musiciens pour événements",
+  "nom": "Live Factory",
+  "style": "Style Impact",
+  "titre": "Live Factory · Musiciens pour événements · 75010 Paris",
+  "commerce": "Live Factory",
+  "metier": "Musiciens pour événements",
+  "lieu": "75010 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75010 Paris",
+  "logo": "LIVE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Cérémonie",
+   "Cocktail acoustique",
+   "Soirée dansante",
+   "DJ set"
+  ]
+ },
+ {
+  "fichier": "V51C-musiciens-evenements.html",
+  "verticale": "Musiciens pour événements",
+  "nom": "Accord Parfait",
+  "style": "Style Moderne",
+  "titre": "Accord Parfait · Musiciens pour événements · 35000 Rennes",
+  "commerce": "Accord Parfait",
+  "metier": "Musiciens pour événements",
+  "lieu": "35000 Rennes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "35000 Rennes",
+  "logo": "accord",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Cérémonie",
+   "Cocktail acoustique",
+   "Soirée dansante",
+   "DJ set"
+  ]
+ },
+ {
+  "fichier": "V52A-consultant-pme.html",
+  "verticale": "Conseil aux dirigeants de PME",
+  "nom": "Cap Dirigeants",
+  "style": "Style Éditorial",
+  "titre": "Cap Dirigeants · Conseil aux dirigeants de PME · 69003 Lyon",
+  "commerce": "Cap Dirigeants",
+  "metier": "Conseil aux dirigeants de PME",
+  "lieu": "69003 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69003 Lyon",
+  "logo": "Cap",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Diagnostic 360",
+   "Accompagnement mensuel",
+   "Pilotage financier",
+   "Ateliers dirigeants"
+  ]
+ },
+ {
+  "fichier": "V52B-consultant-pme.html",
+  "verticale": "Conseil aux dirigeants de PME",
+  "nom": "Boussole Conseil",
+  "style": "Style Impact",
+  "titre": "Boussole Conseil · Conseil aux dirigeants de PME · 44000 Nantes",
+  "commerce": "Boussole Conseil",
+  "metier": "Conseil aux dirigeants de PME",
+  "lieu": "44000 Nantes",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "44000 Nantes",
+  "logo": "BOUSSOLE",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Diagnostic 360",
+   "Accompagnement mensuel",
+   "Pilotage financier",
+   "Ateliers dirigeants"
+  ]
+ },
+ {
+  "fichier": "V52C-consultant-pme.html",
+  "verticale": "Conseil aux dirigeants de PME",
+  "nom": "Levier",
+  "style": "Style Moderne",
+  "titre": "Levier · Conseil aux dirigeants de PME · 31000 Toulouse",
+  "commerce": "Levier",
+  "metier": "Conseil aux dirigeants de PME",
+  "lieu": "31000 Toulouse",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "31000 Toulouse",
+  "logo": "levier",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Diagnostic 360",
+   "Accompagnement mensuel",
+   "Pilotage financier",
+   "Ateliers dirigeants"
+  ]
+ },
+ {
+  "fichier": "V53A-osteopathe.html",
+  "verticale": "Ostéopathe D.O.",
+  "nom": "Cabinet Lefèvre",
+  "style": "Style Éditorial",
+  "titre": "Cabinet Lefèvre · Ostéopathe D.O. · 92100 Boulogne",
+  "commerce": "Cabinet Lefèvre",
+  "metier": "Ostéopathe D.O.",
+  "lieu": "92100 Boulogne",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "92100 Boulogne",
+  "logo": "Cabinet",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Consultation adulte",
+   "Consultation à domicile",
+   "Sportifs",
+   "Femmes enceintes"
+  ]
+ },
+ {
+  "fichier": "V53B-osteopathe.html",
+  "verticale": "Ostéopathe D.O.",
+  "nom": "Ostéo Bastille",
+  "style": "Style Impact",
+  "titre": "Ostéo Bastille · Ostéopathe D.O. · 75011 Paris",
+  "commerce": "Ostéo Bastille",
+  "metier": "Ostéopathe D.O.",
+  "lieu": "75011 Paris",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "75011 Paris",
+  "logo": "OSTÉO",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Consultation adulte",
+   "Consultation à domicile",
+   "Sportifs",
+   "Femmes enceintes"
+  ]
+ },
+ {
+  "fichier": "V53C-osteopathe.html",
+  "verticale": "Ostéopathe D.O.",
+  "nom": "Cabinet Rive",
+  "style": "Style Moderne",
+  "titre": "Cabinet Rive · Ostéopathe D.O. · 17000 La Rochelle",
+  "commerce": "Cabinet Rive",
+  "metier": "Ostéopathe D.O.",
+  "lieu": "17000 La Rochelle",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "17000 La Rochelle",
+  "logo": "rive",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Consultation adulte",
+   "Consultation à domicile",
+   "Sportifs",
+   "Femmes enceintes"
+  ]
+ },
+ {
+  "fichier": "V54A-dieteticienne.html",
+  "verticale": "Diététicienne-nutritionniste",
+  "nom": "Cabinet Saveurs",
+  "style": "Style Éditorial",
+  "titre": "Cabinet Saveurs · Diététicienne-nutritionniste · 69006 Lyon",
+  "commerce": "Cabinet Saveurs",
+  "metier": "Diététicienne-nutritionniste",
+  "lieu": "69006 Lyon",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "69006 Lyon",
+  "logo": "Cabinet",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Bilan diététique",
+   "Consultation de suivi",
+   "Téléconsultation",
+   "Ateliers en entreprise"
+  ]
+ },
+ {
+  "fichier": "V54B-dieteticienne.html",
+  "verticale": "Diététicienne-nutritionniste",
+  "nom": "Nutri Santé 33",
+  "style": "Style Impact",
+  "titre": "Nutri Santé 33 · Diététicienne-nutritionniste · 33000 Bordeaux",
+  "commerce": "Nutri Santé 33",
+  "metier": "Diététicienne-nutritionniste",
+  "lieu": "33000 Bordeaux",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "33000 Bordeaux",
+  "logo": "NUTRI",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Bilan diététique",
+   "Consultation de suivi",
+   "Téléconsultation",
+   "Ateliers en entreprise"
+  ]
+ },
+ {
+  "fichier": "V54C-dieteticienne.html",
+  "verticale": "Diététicienne-nutritionniste",
+  "nom": "Assiette Juste",
+  "style": "Style Moderne",
+  "titre": "Assiette Juste · Diététicienne-nutritionniste · 59000 Lille",
+  "commerce": "Assiette Juste",
+  "metier": "Diététicienne-nutritionniste",
+  "lieu": "59000 Lille",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "59000 Lille",
+  "logo": "assiette juste",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Bilan diététique",
+   "Consultation de suivi",
+   "Téléconsultation",
+   "Ateliers en entreprise"
+  ]
+ },
+ {
+  "fichier": "V55A-agence-web.html",
+  "verticale": "Agence web & marketing local",
+  "nom": "Vitrine Locale",
+  "style": "Style Éditorial",
+  "titre": "Vitrine Locale · Agence web & marketing local · 37000 Tours",
+  "commerce": "Vitrine Locale",
+  "metier": "Agence web & marketing local",
+  "lieu": "37000 Tours",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "37000 Tours",
+  "logo": "Vitrine",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Site vitrine",
+   "Référencement local",
+   "Réseaux sociaux",
+   "Maintenance"
+  ]
+ },
+ {
+  "fichier": "V55B-agence-web.html",
+  "verticale": "Agence web & marketing local",
+  "nom": "Clic Pro",
+  "style": "Style Impact",
+  "titre": "Clic Pro · Agence web & marketing local · 76000 Rouen",
+  "commerce": "Clic Pro",
+  "metier": "Agence web & marketing local",
+  "lieu": "76000 Rouen",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "76000 Rouen",
+  "logo": "CLIC",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Site vitrine",
+   "Référencement local",
+   "Réseaux sociaux",
+   "Maintenance"
+  ]
+ },
+ {
+  "fichier": "V55C-agence-web.html",
+  "verticale": "Agence web & marketing local",
+  "nom": "Signal",
+  "style": "Style Moderne",
+  "titre": "Signal · Agence web & marketing local · 38000 Grenoble",
+  "commerce": "Signal",
+  "metier": "Agence web & marketing local",
+  "lieu": "38000 Grenoble",
+  "tel": "01 00 00 00 00",
+  "adresse": "12 rue du Marché",
+  "cp_ville": "38000 Grenoble",
+  "logo": "signal",
+  "couleurs": [
+   "#F7F0E3",
+   "#FFFBF4",
+   "#1D1A16",
+   "#6F665B"
+  ],
+  "exemples": [
+   "Site vitrine",
+   "Référencement local",
+   "Réseaux sociaux",
+   "Maintenance"
+  ]
  }
 ]
