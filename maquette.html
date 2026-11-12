@@ -240,6 +240,14 @@ input.bad{border-color:var(--danger)}
 .dom-chips{display:flex;flex-wrap:wrap;gap:8px}
 .dom-chips button{font:inherit;font-size:14px;font-weight:700;border:1.5px solid var(--accent);color:var(--accent);background:var(--card);border-radius:999px;padding:8px 13px;cursor:pointer}
 .dom-chips button:hover,.dom-chips button:focus-visible{background:var(--accent-soft)}
+.tit{border:1px solid var(--line);border-radius:12px;padding:14px;margin:0;display:grid;gap:10px;min-width:0}
+.tit legend{font-weight:800;font-size:15px;padding:0 6px}
+.tit-res{display:grid;gap:8px}
+.tit-res button{display:grid;gap:2px;text-align:left;width:100%;font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.tit-res button:hover,.tit-res button:focus-visible{border-color:var(--accent);background:var(--accent-soft)}
+.tit-res small,.tit-ok small{color:var(--muted);font-size:13px}
+.tit-ok{display:grid;gap:2px;border:1.5px solid var(--ok);background:var(--ok-soft);border-radius:10px;padding:10px 12px}
+.tit-man{display:grid;gap:12px}
 .anav{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .anav .skip{margin-left:auto}
 /* Révélation (étape 6) : titre en grand, site au centre, un seul bouton */
@@ -477,6 +485,23 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
             <div class="dom-sugg" id="dom-sugg" hidden><span class="hint">Libres en ce moment :</span><div class="dom-chips" id="dom-chips"></div></div>
             <span class="hint">Vérifiée en direct auprès du registre officiel des adresses en .fr. On la réserve à votre nom juste après le paiement.</span>
             <input type="hidden" id="af-dom-dispo" value="">
+            <fieldset class="tit" id="tit">
+              <legend>Le titulaire de votre nom de domaine</legend>
+              <span class="hint">Votre adresse est enregistrée au nom de votre entreprise : c'est obligatoire pour un .fr, et elle reste à vous.</span>
+              <div class="tit-ok" id="tit-ok" hidden></div>
+              <div id="tit-cherche">
+                <label class="f">Votre entreprise <small>son nom et sa ville, ou son numéro SIREN</small><input type="text" id="tit-q" autocomplete="off" maxlength="120"></label>
+                <p class="hint" id="tit-msg" role="status" aria-live="polite"></p>
+                <div class="tit-res" id="tit-res"></div>
+                <button type="button" class="linkbtn" id="tit-manuel">Mon entreprise n'apparaît pas : je la saisis</button>
+              </div>
+              <div class="tit-man" id="tit-man" hidden>
+                <label class="f">Nom de l'entreprise <small>comme sur l'avis de situation Sirene ou le Kbis</small><input type="text" id="af-tit-nom" maxlength="120" autocomplete="organization"></label>
+                <label class="f">Numéro SIREN <small>9 chiffres</small><input type="text" id="af-tit-siren" inputmode="numeric" maxlength="11"></label>
+                <label class="f">Adresse du siège<input type="text" id="af-tit-adresse" maxlength="200" autocomplete="street-address"></label>
+              </div>
+              <input type="hidden" id="af-tit-source" value="">
+            </fieldset>
             <div class="sum" id="sum"></div>
             <label class="ck" id="cgv-wrap" hidden><input type="checkbox" id="cgv-ok"><span>J'accepte les <a href="/cgv-provisoire" target="_blank" rel="noopener">conditions générales de vente</a> et je commande pour mon activité professionnelle.</span></label>
             <button type="button" class="btn primary wide" id="pay">Je valide mon site</button>
@@ -1060,9 +1085,53 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       b.addEventListener("click",()=>{$("domaine").value=x;$("p-url").textContent=x+".fr";modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
     $("dom-sugg").hidden=false;
   }
+
+  /* ---- Titulaire du nom de domaine (R16 ; obligatoire pour un .fr) ----
+     Recherche dans l'annuaire public des entreprises (recherche-entreprises.api.gouv.fr) ;
+     à défaut, saisie à la main, SIREN contrôlé (clé de Luhn). */
+  const sirenOk=v=>{const d=String(v||"").replace(/\s/g,"");if(!/^\d{9}$/.test(d))return false;
+    let t=0;for(let i=0;i<9;i++){let n=+d[i];if(i%2===1){n*=2;if(n>9)n-=9}t+=n}return t%10===0};
+  const fmtSiren=v=>String(v||"").replace(/\D/g,"").replace(/^(\d{3})(\d{3})(\d{3})$/,"$1 $2 $3");
+  let titTimer=0,titSeq=0;
+  function titAfficher(){
+    const ok=txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse");
+    const auto=txt("af-tit-source")==="annuaire";
+    $("tit-ok").hidden=!(ok&&auto);$("tit-cherche").hidden=ok&&auto;$("tit-man").hidden=auto||!(txt("af-tit-source")==="manuel");
+    if(ok&&auto){$("tit-ok").innerHTML="";const b=document.createElement("b");b.textContent="✓ "+txt("af-tit-nom");
+      const sm=document.createElement("small");sm.textContent="SIREN "+fmtSiren(txt("af-tit-siren"))+" · "+txt("af-tit-adresse");
+      const ch=document.createElement("button");ch.type="button";ch.className="linkbtn";ch.textContent="Changer d'entreprise";ch.style.justifySelf="start";
+      ch.addEventListener("click",()=>{["af-tit-nom","af-tit-siren","af-tit-adresse","af-tit-source"].forEach(i=>$(i).value="");modifie=true;sauver();titAfficher();$("tit-q").focus()});
+      $("tit-ok").append(b,sm,ch)}
+  }
+  function titChoisir(e){
+    $("af-tit-nom").value=e.nom;$("af-tit-siren").value=e.siren;$("af-tit-adresse").value=e.adresse;$("af-tit-source").value="annuaire";
+    modifie=true;sauver();titAfficher();$("err").textContent="";
+  }
+  async function titChercher(){
+    const q=txt("tit-q"),id=++titSeq,box=$("tit-res");
+    if(q.replace(/\s/g,"").length<3){box.innerHTML="";$("tit-msg").textContent="";return}
+    $("tit-msg").textContent="Recherche…";
+    let res=null;
+    try{const r=await fetch("https://recherche-entreprises.api.gouv.fr/search?per_page=5&etat_administratif=A&q="+encodeURIComponent(q.replace(/(\d)\s+(?=\d)/g,"$1")));
+      if(r.ok){const j=await r.json();res=(j.results||[]).map(x=>({nom:String(x.nom_complet||x.nom_raison_sociale||"").slice(0,120),siren:String(x.siren||""),
+        adresse:String((x.siege&&x.siege.adresse)||"").slice(0,200)})).filter(x=>x.nom&&sirenOk(x.siren))}}catch(e){}
+    if(id!==titSeq)return;
+    box.innerHTML="";
+    if(res===null){$("tit-msg").textContent="L'annuaire des entreprises ne répond pas : saisissez votre entreprise à la main.";return}
+    if(!res.length){$("tit-msg").textContent="Aucune entreprise trouvée. Essayez avec le numéro SIREN, ou saisissez-la à la main.";return}
+    $("tit-msg").textContent="Choisissez votre entreprise :";
+    res.forEach(e=>{const b=document.createElement("button");b.type="button";const n=document.createElement("b");n.textContent=e.nom;
+      const sm=document.createElement("small");sm.textContent="SIREN "+fmtSiren(e.siren)+" · "+e.adresse;b.append(n,sm);
+      b.addEventListener("click",()=>titChoisir(e));box.append(b)});
+  }
+  $("tit-q").addEventListener("input",()=>{clearTimeout(titTimer);titTimer=setTimeout(titChercher,500)});
+  $("tit-manuel").addEventListener("click",()=>{$("af-tit-source").value="manuel";titAfficher();$("af-tit-nom").focus()});
+  ["af-tit-nom","af-tit-siren","af-tit-adresse"].forEach(i=>$(i).addEventListener("input",()=>{if(txt("af-tit-source")!=="annuaire")$("af-tit-source").value="manuel"}));
+  function titInit(){titAfficher();if(!(txt("af-tit-nom")&&txt("af-tit-source"))&&!txt("tit-q")){$("tit-q").value=[txt("nom"),txt("ville")].filter(Boolean).join(" ");titChercher()}}
+  function titValide(){return !!(txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse"))}
   function afValider(){
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
-    $("p-url").textContent=txt("domaine")+".fr";domVerifier();
+    $("p-url").textContent=txt("domaine")+".fr";domVerifier();titInit();
     const dev=devChecked();
     $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
       (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
@@ -1159,6 +1228,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(afList().includes("marques")&&txt("af-marques"))L.push("Marques : "+txt("af-marques"));
     if(afList().includes("histoire"))L.push("Histoire : "+($("af-pas-histoire").checked?"pas de partie histoire":$("af-say").textContent));
     if(afList().includes("contact")&&txt("af-contact"))L.push("Messages du formulaire à : "+txt("af-contact"));
+    if(txt("af-tit-nom"))L.push("Titulaire du nom de domaine : "+txt("af-tit-nom")+", SIREN "+fmtSiren(txt("af-tit-siren"))+", "+txt("af-tit-adresse"));
     if(afList().includes("prix")&&afVal("prix")==="photo"&&upListe("tarifs").length)L.push(`Tarifs : ${upListe("tarifs").length} fichier(s) reçu(s)`);
     return L}
   $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr";
@@ -1166,6 +1236,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("pay").addEventListener("click",()=>{
     if(!domValide(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     if($("af-dom-dispo").value==="pris"){$("err").textContent="Cette adresse est déjà prise : choisissez-en une libre.";$("domaine").classList.add("bad");$("domaine").focus();return}
+    if(!titValide()){$("err").textContent=txt("af-tit-siren")&&!sirenOk(txt("af-tit-siren"))?"Ce numéro SIREN n'est pas valide : vérifiez les 9 chiffres.":"Indiquez l'entreprise titulaire du nom de domaine.";
+      ($("tit-man").hidden?$("tit-q"):(sirenOk(txt("af-tit-siren"))?$("af-tit-nom"):$("af-tit-siren"))).focus();return}
     $("domaine").classList.remove("bad");
     if(LIEN_PAIEMENT&&!$("cgv-ok").checked){$("err").textContent="Cochez la case d'acceptation des CGV pour continuer.";$("cgv-ok").focus();return}
     if(LIEN_PAIEMENT){const go=()=>{location.href=LIEN_PAIEMENT+(LIEN_PAIEMENT.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
@@ -1186,7 +1258,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";
     $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":"Mode essai : rien n'est débité. Carte de test 4242 4242 4242 4242, date future, code 123."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
-  form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-"))onChange()});
+  form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange()});
   form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
 
   /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ----
