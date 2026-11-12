@@ -126,6 +126,15 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return envoyerLien(sb, email, false);
   };
 
+  /* Lien reçu par mail : il mène à espace.html?token_hash=…&type=email.
+     La connexion ne se fait qu'au clic du visiteur sur « Ouvrir mon espace »,
+     pour qu'un antivirus de messagerie qui ouvre le lien ne l'use pas. */
+  C.verifier = async function (tokenHash, type) {
+    const sb = await charger(); if (!sb) return false;
+    const r = await sb.auth.verifyOtp({ token_hash: tokenHash, type: type || "email" });
+    return !r.error;
+  };
+
   C.deconnecter = async function () {
     const sb = await charger(); if (!sb) return;
     await sb.auth.signOut(); C.oublierJeton(); projetConnecte = null;
