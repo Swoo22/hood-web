@@ -111,10 +111,10 @@ a{color:var(--accent)}
         $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Commande reçue. On vous écrit pour la suite : vos photos, vos textes, vos horaires.</p>`;
       }else{
         const e=Math.min(Math.max(p.etape||1,1),6),pct=Math.round(Math.min(e,6)/6*100);
-        const ou=e>=6?"Votre site est prêt à commander.":`Questionnaire : étape ${e} sur 5.`;
+        const ou=e>=6?"Votre première version est prête.":`Questionnaire : étape ${e} sur 5.`;
         $("projet").innerHTML=`<p><b>${nom}</b></p><div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
           <p class="small">${ou} Dernière modification le ${esc(jour(p.maj_le))}.</p>
-          <a class="btn" href="maquette.html?reprendre=1">${e>=6?"Revoir et commander mon site":"Reprendre mon site"}</a>`;
+          <a class="btn" href="maquette.html?reprendre=1">${e>=6?"Revoir et finaliser mon site":"Reprendre mon site"}</a>`;
       }
     }
     const f=d.factures||[];

@@ -335,7 +335,7 @@ input.bad{border-color:var(--danger)}
             <li>2 allers-retours avec notre équipe avant la mise en ligne</li>
             <li>Mise en ligne en 48 heures environ, après réception de vos contenus</li>
           </ul>
-          <button type="button" class="btn primary wide" id="go-pay">Commander mon site ↗</button>
+          <button type="button" class="btn primary wide" id="go-pay">Ça me plaît, on continue</button>
           <div class="doubt"><b>Pas sûr ? Des questions ?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
             <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
         </div>
@@ -344,17 +344,17 @@ input.bad{border-color:var(--danger)}
 
       <!-- 7. Commande -->
       <div class="step" data-step="7" hidden>
-        <h1>Commander <em>votre site</em>.</h1>
-        <p class="lead" id="cmd-lead">Choisissez l'adresse de votre site, puis envoyez-nous votre commande. On vous répond avec le lien de paiement sécurisé.</p>
+        <h1>On finalise <em>votre site</em>.</h1>
+        <p class="lead" id="cmd-lead">Choisissez l'adresse de votre site et envoyez-nous votre demande. On le finalise avec vous, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
         <div class="fields">
           <label class="f">L'adresse de votre site
             <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine"><span>.fr</span></div>
             <span class="hint">On vérifie qu'elle est libre, puis on la réserve à votre nom après le paiement.</span>
           </label>
           <div class="sum" id="sum"></div>
-          <button type="button" class="btn primary wide" id="pay">Envoyer ma commande ↗</button>
-          <p class="secure" id="cmd-secure">Aucun paiement sur cette page. Prix hors taxes.</p>
-          <button type="button" class="alt" id="rdv2">Une question avant de payer ? Prendre un rendez-vous</button>
+          <button type="button" class="btn primary wide" id="pay">Finaliser mon site</button>
+          <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
+          <button type="button" class="alt" id="rdv2">Une question ? Prendre un rendez-vous</button>
           <button type="button" class="alt" id="back-ready">← Revoir mon site</button>
         </div>
       </div>
@@ -376,7 +376,7 @@ input.bad{border-color:var(--danger)}
       <div class="err" id="err" role="alert"></div>
       <div class="nav" id="nav">
         <button type="button" class="btn ghost" id="back">← Retour</button>
-        <button type="submit" class="btn primary" id="next">Continuer ↗</button>
+        <button type="submit" class="btn primary" id="next">Continuer</button>
         <button type="button" class="skip" id="skip">Passer cette question</button>
       </div>
       <div class="reassure" id="reassure"><span>Gratuit</span><span>Sans engagement</span><span>Aucune carte bancaire</span></div>
@@ -395,7 +395,7 @@ input.bad{border-color:var(--danger)}
     <p class="note"><span data-compte="off">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez.</span><!-- Texte validé par Simone le 12 Nov. 2026 (RGPD art. 13) --><span data-compte="on" hidden>Dès que vous donnez votre email, vos réponses sont enregistrées par HOOD pour que vous puissiez reprendre votre site, et effacées 180 jours après votre dernière visite. Votre logo reste dans votre navigateur.</span> <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
   </aside>
 </main>
-<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Commander mon site · 290 € HT ↗</button><button type="button" class="alt" id="doubt-sticky">Pas sûr ? Des questions ?</button></div>
+<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Ça me plaît, on continue</button><button type="button" class="alt" id="doubt-sticky">Pas sûr ? Des questions ?</button></div>
 
 <script src="compte.js?v=20261112b"></script>
 <script>
@@ -670,7 +670,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const incChecked=()=>[...form.querySelectorAll('#opts-inc input:checked')].map(i=>i.dataset.lab);
   function recap(kind){
     const m=metier(),k=tplKey(),L=[];
-    L.push(kind==="commande"?"Bonjour, je veux commander ce site avec l'offre L'Essentiel (290 € HT à la commande, puis 10 € HT par mois à partir de la validation du site).":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
+    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 € HT, payés une fois le site finalisé, puis 10 € HT par mois à partir de sa validation.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
     L.push("");
     if(kind==="remarques"&&txt("remarques")){L.push("Ce que j'aimerais changer : "+txt("remarques"));L.push("")}
     L.push("Entreprise : "+txt("nom"));L.push("Métier : "+(m?m.lab:""));L.push("Ville : "+txt("ville"));
@@ -685,10 +685,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     return L.join("\n");
   }
   function openMail(kind){
-    const subject=(kind==="commande"?"Je veux mon site HOOD : ":kind==="rdv"?"Rendez-vous HOOD : ":kind==="question"?"Question sur mon site HOOD : ":"Ma maquette HOOD : ")+txt("nom");
+    const subject=(kind==="commande"?"Je veux finaliser mon site HOOD : ":kind==="rdv"?"Rendez-vous HOOD : ":kind==="question"?"Question sur mon site HOOD : ":"Ma maquette HOOD : ")+txt("nom");
     const body=recap(kind);$("recap").value="À : "+MAIL+"\nObjet : "+subject+"\n\n"+body;$("logo-note").hidden=!logoURL;
-    $("sent-title").textContent=kind==="commande"?"Votre commande est prête.":kind==="rdv"?"Votre demande de rendez-vous est prête.":"Votre message est prêt.";
-    $("sent-lead").textContent=kind==="commande"?"Votre messagerie s'est ouverte avec votre commande déjà rédigée : il ne vous reste qu'à l'envoyer. On vous répond avec le lien de paiement sécurisé.":kind==="rdv"?"Votre messagerie s'est ouverte : indiquez vos disponibilités et votre numéro, puis envoyez. On vous propose un créneau, par téléphone ou en visio.":kind==="question"?"Votre messagerie s'est ouverte avec votre site en récapitulatif : écrivez votre question, puis envoyez.":"Votre messagerie s'est ouverte avec vos remarques déjà rédigées : il ne vous reste qu'à les envoyer. On ajuste votre site et on vous le renvoie.";
+    $("sent-title").textContent=kind==="commande"?"Votre demande est prête.":kind==="rdv"?"Votre demande de rendez-vous est prête.":"Votre message est prêt.";
+    $("sent-lead").textContent=kind==="commande"?"Votre messagerie s'est ouverte avec votre demande déjà rédigée : il ne vous reste qu'à l'envoyer. On vous répond pour finaliser votre site ensemble.":kind==="rdv"?"Votre messagerie s'est ouverte : indiquez vos disponibilités et votre numéro, puis envoyez. On vous propose un créneau, par téléphone ou en visio.":kind==="question"?"Votre messagerie s'est ouverte avec votre site en récapitulatif : écrivez votre question, puis envoyez.":"Votre messagerie s'est ouverte avec vos remarques déjà rédigées : il ne vous reste qu'à les envoyer. On ajuste votre site et on vous le renvoie.";
     show(8);
     const a=document.createElement("a");a.href="mailto:"+MAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);document.body.appendChild(a);a.click();a.remove();
   }
@@ -698,14 +698,14 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function show(n){
     step=n;veil(n);sauver();form.querySelectorAll(".step").forEach(s=>s.hidden=+s.dataset.step!==n);
     [...$("progress").children].forEach((b,i)=>b.classList.toggle("on",i<Math.min(n,TOTAL)));
-    $("meta").textContent=n<=TOTAL?`Étape ${n} sur ${TOTAL}${n<=2?" · environ 2 minutes":""}`:n===6?"Votre site":n===7?"Commande":"Dernière étape";
+    $("meta").textContent=n<=TOTAL?`Étape ${n} sur ${TOTAL}${n<=2?" · environ 2 minutes":""}`:n===6?"Votre site":n===7?"Finalisation":"Dernière étape";
     const end=n>TOTAL;$("wrap").classList.toggle("final",end);$("nav").hidden=end;$("reassure").hidden=end;
     $("back").hidden=n===1;$("skip").hidden=!(n===3||n===5);
-    $("next").innerHTML=n===TOTAL?"Voir mon site ↗":"Continuer ↗";
+    $("next").innerHTML=n===TOTAL?"Montrez-moi mon site":"Continuer";
     $("err").textContent="";$("side-title").textContent=end?"Votre site":"Votre futur site";
     const nom=txt("nom");
     if(n===6){$("ready-title").textContent=`Voici le site de ${nom}.`;
-      $("ready-lead").textContent="C'est une première version. Après votre commande, on la finalise avec vous : vos photos, vos textes, vos horaires. Puis on la met en ligne.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
+      $("ready-lead").textContent="C'est une première version. On la finalise ensemble : vos photos, vos textes, vos horaires. Vous ne payez qu'à la fin, quand votre site vous plaît.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
     if(n===7){if(!txt("domaine"))$("domaine").value=slug(nom)||"votrecommerce";
       const dev=devChecked();
       $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
@@ -731,7 +731,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,800))]).then(go,go);return}
     openMail("commande")});
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
-  if(STRIPE_LINK){$("pay").innerHTML="Payer 290 € et commander ↗";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
+  if(STRIPE_LINK){$("pay").innerHTML="Payer 290 € et mettre en ligne";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
   form.addEventListener("input",e=>{if(!["q","domaine","remarques"].includes(e.target.id))onChange()});
   form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if(e.target.type==="radio"||e.target.type==="checkbox")render()});
