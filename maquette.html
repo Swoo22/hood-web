@@ -234,6 +234,12 @@ input.bad{border-color:var(--danger)}
 .th{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--bg-soft);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
 .th img{width:100%;height:100%;object-fit:cover}
 .th button{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.dom-etat{font-size:14px;font-weight:700;margin:-8px 0 0;min-height:1.2em}
+.dom-etat.dom-ok{color:var(--ok)}.dom-etat.dom-ko{color:var(--warn)}
+.dom-sugg{display:grid;gap:6px;margin-top:-6px}
+.dom-chips{display:flex;flex-wrap:wrap;gap:8px}
+.dom-chips button{font:inherit;font-size:14px;font-weight:700;border:1.5px solid var(--accent);color:var(--accent);background:var(--card);border-radius:999px;padding:8px 13px;cursor:pointer}
+.dom-chips button:hover,.dom-chips button:focus-visible{background:var(--accent-soft)}
 .anav{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .anav .skip{margin-left:auto}
 /* Révélation (étape 6) : titre en grand, site au centre, un seul bouton */
@@ -464,9 +470,12 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <p class="lead" id="cmd-lead">On le finalise avec vos réponses, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
           <div class="fields">
             <label class="f">L'adresse de votre site
-              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine"><span>.fr</span></div>
-              <span class="hint">On vérifie qu'elle est libre, puis on la réserve à votre nom après le paiement.</span>
+              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><span>.fr</span></div>
             </label>
+            <p class="dom-etat" id="dom-etat" role="status" aria-live="polite"></p>
+            <div class="dom-sugg" id="dom-sugg" hidden><span class="hint">Libres en ce moment :</span><div class="dom-chips" id="dom-chips"></div></div>
+            <span class="hint">Vérifiée en direct auprès du registre officiel des adresses en .fr. On la réserve à votre nom juste après le paiement.</span>
+            <input type="hidden" id="af-dom-dispo" value="">
             <div class="sum" id="sum"></div>
             <button type="button" class="btn primary wide" id="pay">Je valide mon site</button>
             <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
@@ -1014,9 +1023,38 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function afRows(){let last=3;for(let i=0;i<12;i++)if(txt("af-pn-"+i)||txt("af-pp-"+i))last=Math.max(last,i);
     form.querySelectorAll(".prow").forEach(r=>{if(+r.dataset.row<=last)r.hidden=false});
     $("af-addrow").hidden=!form.querySelector(".prow[hidden]")}
+  /* ---- Nom de domaine : disponibilité en direct (demande de Steve, 12 Nov. 2026) ----
+     Registre officiel des .fr (Afnic, interface publique RDAP) : 404 = libre, 200 = déjà pris.
+     Vérifié de nouveau au moment de la réservation, après le paiement. */
+  const domCache={};let domTimer=0,domSeq=0;
+  const domValide=n=>n.length>=2&&n.length<=63&&/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(n);
+  function domLibre(n){if(!domCache[n])domCache[n]=fetch("https://rdap.nic.fr/domain/"+encodeURIComponent(n)+".fr",{headers:{accept:"application/rdap+json"}})
+    .then(r=>r.status===404?true:r.status===200?false:null).catch(()=>null);return domCache[n]}
+  function domEtat(t,c){const E=$("dom-etat");E.textContent=t;E.className="dom-etat"+(c?" "+c:"")}
+  async function domVerifier(){
+    const n=txt("domaine"),id=++domSeq;$("dom-sugg").hidden=true;
+    if(!domValide(n)){$("af-dom-dispo").value="";domEtat("Lettres sans accents, chiffres et tirets seulement, 2 caractères au moins.","dom-ko");return}
+    domEtat("Vérification de "+n+".fr…");
+    const ok=await domLibre(n);if(id!==domSeq)return;
+    $("af-dom-dispo").value=ok===true?"libre":ok===false?"pris":"inconnu";
+    if(ok===true)domEtat("✓ "+n+".fr est libre.","dom-ok");
+    else if(ok===false){domEtat("✗ "+n+".fr est déjà pris. Choisissez-en une autre.","dom-ko");domSuggerer(n,id)}
+    else domEtat("Vérification impossible pour l'instant : on la refera juste avant la réservation.");
+  }
+  async function domSuggerer(n,id){
+    const nom=slug(txt("nom"))||n,ville=slug(txt("ville")),m=metier(),met=m?slug(m.m):"";
+    const c=[...new Set([ville&&nom+"-"+ville,met&&!nom.includes(met)&&met+"-"+nom,met&&ville&&met+"-"+ville,"le-"+nom,nom+"-"+(ville?ville.slice(0,4):"pro"),nom+"-officiel"]
+      .filter(x=>x&&x!==n&&domValide(x)))].slice(0,6);
+    const res=await Promise.all(c.map(x=>domLibre(x).then(ok=>ok===true?x:null)));if(id!==domSeq)return;
+    const libres=res.filter(Boolean).slice(0,3);if(!libres.length)return;
+    const box=$("dom-chips");box.innerHTML="";
+    libres.forEach(x=>{const b=document.createElement("button");b.type="button";b.textContent=x+".fr";
+      b.addEventListener("click",()=>{$("domaine").value=x;$("p-url").textContent=x+".fr";modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
+    $("dom-sugg").hidden=false;
+  }
   function afValider(){
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
-    $("p-url").textContent=txt("domaine")+".fr";
+    $("p-url").textContent=txt("domaine")+".fr";domVerifier();
     const dev=devChecked();
     $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
       (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
@@ -1115,9 +1153,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(afList().includes("contact")&&txt("af-contact"))L.push("Messages du formulaire à : "+txt("af-contact"));
     if(afList().includes("prix")&&afVal("prix")==="photo"&&upListe("tarifs").length)L.push(`Tarifs : ${upListe("tarifs").length} fichier(s) reçu(s)`);
     return L}
-  $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr"});
+  $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr";
+    clearTimeout(domTimer);$("af-dom-dispo").value="";domEtat("");$("dom-sugg").hidden=true;domTimer=setTimeout(domVerifier,450)});
   $("pay").addEventListener("click",()=>{
-    if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
+    if(!domValide(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
+    if($("af-dom-dispo").value==="pris"){$("err").textContent="Cette adresse est déjà prise : choisissez-en une libre.";$("domaine").classList.add("bad");$("domaine").focus();return}
     $("domaine").classList.remove("bad");
     if(STRIPE_LINK){const go=()=>{location.href=STRIPE_LINK+(STRIPE_LINK.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
       if(!COMPTE.actif){go();return}
