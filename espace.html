@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mon espace, HOOD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#101114;--muted:#5d6272;--line:#e4e7ef;--accent:#0047ff;--soft:#f8f9fc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--ink:#f1f2f6;--muted:#9aa0b2;--line:#262b37;--accent:#4d7dff;--soft:#161922}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding:32px 16px 64px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-weight:900;font-size:24px;letter-spacing:-.5px;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+h1{font-size:clamp(30px,6vw,44px);line-height:1.05;letter-spacing:-1.5px;font-weight:900;margin:40px 0 12px}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font-size:20px;letter-spacing:-.3px;margin:0 0 10px}
+.lead{font-size:17px;color:var(--muted);margin:0 0 24px}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 20px}
+.small{font-size:14px;color:var(--muted)}
+label{display:block;font-weight:600;margin:0 0 6px}
+input[type=email]{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.btn{display:inline-block;font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 18px;background:var(--accent);color:#fff;text-decoration:none;cursor:pointer;margin-top:12px}
+.link{background:none;border:0;padding:0;font:inherit;color:var(--accent);cursor:pointer;text-decoration:underline}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;background:var(--accent)}
+ul.f{list-style:none;margin:0;padding:0}
+ul.f li{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line)}
+ul.f li:first-child{border-top:0}
+a{color:var(--accent)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="index.html">HOOD<span>.</span></a>
+    <button type="button" class="link" id="sortir" hidden>Me déconnecter</button>
+  </div>
+
+  <div id="chargement"><p class="lead" style="margin-top:40px">Un instant…</p></div>
+
+  <!-- Pas encore connecté -->
+  <div id="connexion" hidden>
+    <h1>Retrouver <em>votre site</em>.</h1>
+    <p class="lead">Donnez l'email utilisé dans le questionnaire. On vous envoie un lien qui vous connecte directement, sans mot de passe.</p>
+    <form class="card" id="f-lien" novalidate>
+      <label for="email">Votre email</label>
+      <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="Ex. : contact@plomberie-martin.fr">
+      <div id="captcha"></div>
+      <button class="btn" type="submit">Recevoir mon lien</button>
+      <p class="small" id="lien-msg" role="status"></p>
+    </form>
+    <p class="small">Pas encore de site ? <a href="maquette.html">Voir mon site web</a></p>
+  </div>
+
+  <!-- Connecté -->
+  <div id="espace" hidden>
+    <h1>Mon <em>espace</em>.</h1>
+    <p class="lead" id="bonjour"></p>
+    <section class="card">
+      <h2>Mon site</h2>
+      <div id="projet"></div>
+    </section>
+    <section class="card">
+      <h2>Mes factures</h2>
+      <div id="factures"></div>
+    </section>
+    <p class="small">Une question ? Écrivez-nous à <a href="mailto:contact@hood-web.com">contact@hood-web.com</a>.</p>
+  </div>
+
+  <!-- Fonction pas encore ouverte -->
+  <div id="bientot" hidden>
+    <h1>Votre espace <em>arrive bientôt</em>.</h1>
+    <p class="lead">En attendant, écrivez-nous à <a href="mailto:contact@hood-web.com">contact@hood-web.com</a> : on vous renvoie votre site.</p>
+  </div>
+</div>
+
+<script src="compte.js"></script>
+<script>
+(function(){
+  const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
+  const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+  const vue=id=>["chargement","connexion","espace","bientot"].forEach(v=>$(v).hidden=v!==id);
+  const euros=c=>(c/100).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});
+  const jour=d=>new Date(d).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+
+  function afficher(d){
+    $("sortir").hidden=false;
+    $("bonjour").textContent="Connecté avec "+(d.email||"votre email")+".";
+    const p=d.projet;
+    if(!p){
+      $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="maquette.html">Voir mon site web</a>';
+    }else{
+      const c=(p.reponses&&p.reponses.champs)||{};
+      const nom=c.nom?esc(c.nom):"Votre site";
+      if(p.statut==="commande"){
+        $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Commande reçue. On vous écrit pour la suite : vos photos, vos textes, vos horaires.</p>`;
+      }else{
+        const e=Math.min(Math.max(p.etape||1,1),6),pct=Math.round(Math.min(e,6)/6*100);
+        const ou=e>=6?"Votre site est prêt à commander.":`Questionnaire : étape ${e} sur 5.`;
+        $("projet").innerHTML=`<p><b>${nom}</b></p><div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
+          <p class="small">${ou} Dernière modification le ${esc(jour(p.maj_le))}.</p>
+          <a class="btn" href="maquette.html?reprendre=1">${e>=6?"Revoir et commander mon site":"Reprendre mon site"}</a>`;
+      }
+    }
+    const f=d.factures||[];
+    $("factures").innerHTML=f.length?'<ul class="f">'+f.map(x=>`<li><span>${esc(x.libelle)}<br><span class="small">N° ${esc(x.numero)}, ${esc(jour(x.date))}</span></span><span><b>${esc(euros(x.montant_centimes))}</b> · <a href="${esc(x.lien)}" target="_blank" rel="noopener">Voir la facture</a></span></li>`).join("")+"</ul>"
+      :'<p class="small">Aucune facture pour l\'instant. Elle apparaîtra ici dès votre paiement.</p>';
+    vue("espace");
+  }
+
+  async function demarrer(){
+    if(!C||!C.actif){vue("bientot");return}
+    try{
+      await C.pret();
+      const d=await C.monEspace();
+      if(d){if(location.hash)history.replaceState(null,"",location.pathname);afficher(d)}else vue("connexion");
+    }catch(e){vue("connexion")}
+  }
+
+  $("f-lien").addEventListener("submit",async e=>{
+    e.preventDefault();const em=$("email").value.trim();
+    if(!C.emailValide(em)){$("lien-msg").textContent="Cette adresse email ne semble pas complète.";return}
+    $("lien-msg").textContent="Envoi…";
+    try{await C.recevoirLien(em)}catch(x){}
+    $("lien-msg").textContent="Si un site est enregistré avec cette adresse, un lien vient de partir. Pensez à regarder dans vos indésirables.";
+  });
+  $("sortir").addEventListener("click",async()=>{await C.deconnecter();$("sortir").hidden=true;vue("connexion")});
+  demarrer();
+})();
+</script>
+</body>
+</html>
