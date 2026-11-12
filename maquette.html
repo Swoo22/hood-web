@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Voir mon site web, HOOD</title>
-<meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 € HT, puis 10 € HT par mois.">
+<meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 €, puis 10 € par mois.">
 <meta name="theme-color" content="#f8f9fc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -505,7 +505,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
             <div class="sum" id="sum"></div>
             <label class="ck" id="cgv-wrap" hidden><input type="checkbox" id="cgv-ok"><span>J'accepte les <a href="/cgv-provisoire" target="_blank" rel="noopener">conditions générales de vente</a> et je commande pour mon activité professionnelle.</span></label>
             <button type="button" class="btn primary wide" id="pay">Je valide mon site</button>
-            <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
+            <p class="secure" id="cmd-secure">Rien à payer maintenant. TVA non applicable, article 293 B du CGI.</p>
             <div class="doubt"><b>Pas sûr&#8239;? Des questions&#8239;?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
               <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
           </div>
@@ -895,7 +895,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const incChecked=()=>[...form.querySelectorAll('#opts-inc input:checked')].map(i=>i.dataset.lab);
   function recap(kind){
     const m=metier(),k=tplKey(),L=[];
-    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 € HT, payés une fois le site finalisé, puis 10 € HT par mois à partir de sa validation.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
+    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 €, payés une fois le site finalisé, puis 10 € par mois à partir de sa validation.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
     L.push("");
     if(kind==="remarques"&&txt("remarques")){L.push("Ce que j'aimerais changer : "+txt("remarques"));L.push("")}
     L.push("Entreprise : "+txt("nom"));L.push("Métier : "+(m?m.lab:""));L.push("Ville : "+txt("ville"));
@@ -1133,8 +1133,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
     $("p-url").textContent=txt("domaine")+".fr";domVerifier();titInit();
     const dev=devChecked();
-    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
-      (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
+    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
+      (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")+
+      `<div><small class="hint">Prix nets. TVA non applicable, article 293 B du CGI.</small></div>`}
 
   /* ---- Envoi des photos pendant l'affinage (12 Nov. 2026) ----
      Les fichiers partent tout de suite dans l'espace privé de HOOD (dossier du
@@ -1254,9 +1255,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
         if(ok){valide=true;marquerValide();note("");show(9)}else openMail("commande")})});
   function marquerValide(){$("ok-dom").textContent=txt("domaine")+".fr";try{localStorage.setItem("hood_valide",JSON.stringify({dom:txt("domaine")+".fr"}))}catch(e){}}
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
-  if(LIEN_PAIEMENT){$("cgv-wrap").hidden=false;$("pay").innerHTML=STRIPE_LINK?"Je paie 290 € HT et je mets en ligne":"Payer 290 € HT · essai, aucun débit";
+  if(LIEN_PAIEMENT){$("cgv-wrap").hidden=false;$("pay").innerHTML=STRIPE_LINK?"Je paie 290 € et je mets en ligne":"Payer 290 € · essai, aucun débit";
     $("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";
-    $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":"Mode essai : rien n'est débité. Carte de test 4242 4242 4242 4242, date future, code 123."}
+    $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":"Mode essai : rien n'est débité. Carte de test 4242 4242 4242 4242, date future, code 123. TVA non applicable, article 293 B du CGI."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
   form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange()});
   form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
