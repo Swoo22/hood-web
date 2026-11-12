@@ -217,8 +217,8 @@ input.bad{border-color:var(--danger)}
 .hr input{width:auto;padding:6px 8px;font-size:14px}
 .hrow:not(:has(.hday input:checked)) .hr{display:none}
 .hrow:not(:has(.hday input:checked))::after{content:"Fermé";color:var(--muted);font-size:13px}
-.qgroup{display:grid;gap:8px}
-.qgroup .t{font-weight:700;font-size:14px}
+.qgroup{display:grid;gap:8px;border:0;margin:0;padding:0;min-width:0}
+.qgroup .t{font-weight:700;font-size:14px;padding:0;margin-bottom:8px}
 .qgroup .t small{font-weight:500;color:var(--muted)}
 .say{border-left:3px solid var(--accent);padding:8px 12px;background:var(--bg-soft);border-radius:0 8px 8px 0;font-size:14px;display:grid;gap:2px}
 .say small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -235,6 +235,7 @@ body.s6 .side{position:static;order:1}
 body.s6 .side-head{justify-content:center}
 body.s6 .side-head b{display:none}
 body.s6 #compte-note,body.after #compte-note{display:none!important}
+body.deja-valide .side{display:none}body.deja-valide .wrap.final{grid-template-columns:minmax(0,560px)}
 body.s6 .viewport{height:clamp(380px,calc(100vh - 400px),720px)}
 body.s6 #err{display:none}
 body.s6 .step[data-step="6"] .lead{margin-bottom:0}
@@ -374,17 +375,17 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
       <!-- 7. Affinage, puis validation (décision de Steve, 12 Nov. 2026 : rien ne part avant) -->
       <div class="step" data-step="7" hidden>
         <input type="hidden" id="af-i" value="0">
-        <div class="aq" data-aq="photos" hidden>
+        <div class="aq" tabindex="-1" data-aq="photos" hidden>
           <h1>Quelles <em>photos</em> sur votre site&#8239;?</h1>
           <p class="lead">Pour montrer votre commerce sous son meilleur jour.</p>
           <div class="checks c1"><label class="ck"><input type="radio" name="af-photos" id="af-photos-mine" value="mine"><span>Mes propres photos<small>On vous envoie un lien pour les déposer, juste après votre validation</small></span></label><label class="ck"><input type="radio" name="af-photos" id="af-photos-ours" value="ours"><span>Celles que vous proposez<small>Choisies pour votre métier</small></span></label><label class="ck"><input type="radio" name="af-photos" id="af-photos-mix" value="mix"><span>Un peu des deux<small>Vos photos, complétées par les nôtres</small></span></label></div>
         </div>
-        <div class="aq" data-aq="ton" hidden>
+        <div class="aq" tabindex="-1" data-aq="ton" hidden>
           <h1>Comment parler à <em>vos clients</em>&#8239;?</h1>
           <p class="lead">On écrit tous les textes de votre site dans ce ton.</p>
           <div class="checks c1"><label class="ck"><input type="radio" name="af-ton" id="af-ton-chaleureux" value="chaleureux"><span>Chaleureux et simple<small><i id="af-ex-chaleureux"></i></small></span></label><label class="ck"><input type="radio" name="af-ton" id="af-ton-serieux" value="serieux"><span>Sérieux et rassurant<small><i id="af-ex-serieux"></i></small></span></label><label class="ck"><input type="radio" name="af-ton" id="af-ton-chic" value="chic"><span>Élégant<small><i id="af-ex-chic"></i></small></span></label></div>
         </div>
-        <div class="aq" data-aq="prix" hidden>
+        <div class="aq" tabindex="-1" data-aq="prix" hidden>
           <h1>Vos <em>prix</em>.</h1>
           <p class="lead">Comment préférez-vous nous les donner&#8239;?</p>
           <div class="checks c1"><label class="ck"><input type="radio" name="af-prix" id="af-prix-write" value="write"><span>Je les écris ici<small>Quelques lignes suffisent</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-photo" value="photo"><span>J'envoie une photo de ma carte ou de mes tarifs<small>Même écrite à la main : on vous envoie un lien après votre validation, et on recopie tout</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-none" value="none"><span>Pas de prix sur mon site</span></label></div>
@@ -395,33 +396,33 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
             <span class="hint">Si le prix varie, écrivez « à partir de ».</span>
           </div>
         </div>
-        <div class="aq" data-aq="horaires" hidden>
+        <div class="aq" tabindex="-1" data-aq="horaires" hidden>
           <h1>Vos <em>horaires</em>.</h1>
           <p class="lead">Les jours et les heures où vos clients peuvent venir ou vous appeler.</p>
           <div class="checks c1"><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-google" value="google"><span>Comme sur ma fiche Google<small>On les reprend tels quels</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-write" value="write"><span>Je les indique<small>Jour par jour, en quelques clics</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-none" value="none"><span>Pas d'horaires sur le site<small>Sur rendez-vous, par exemple</small></span></label></div>
           <div class="more" data-more="horaires-write" hidden><span class="hint">Cochez vos jours d'ouverture. La 2ᵉ plage est facultative.</span><div class="hours"><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-0" checked>Lundi</label><span class="hr"><input type="time" id="af-h-0-a" value="09:00" aria-label="Lundi, ouverture"> à <input type="time" id="af-h-0-b" value="12:00" aria-label="Lundi, fermeture"> <span class="h2">et <input type="time" id="af-h-0-c" value="14:00" aria-label="Lundi, réouverture"> à <input type="time" id="af-h-0-d" value="18:00" aria-label="Lundi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-1" checked>Mardi</label><span class="hr"><input type="time" id="af-h-1-a" value="09:00" aria-label="Mardi, ouverture"> à <input type="time" id="af-h-1-b" value="12:00" aria-label="Mardi, fermeture"> <span class="h2">et <input type="time" id="af-h-1-c" value="14:00" aria-label="Mardi, réouverture"> à <input type="time" id="af-h-1-d" value="18:00" aria-label="Mardi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-2" checked>Mercredi</label><span class="hr"><input type="time" id="af-h-2-a" value="09:00" aria-label="Mercredi, ouverture"> à <input type="time" id="af-h-2-b" value="12:00" aria-label="Mercredi, fermeture"> <span class="h2">et <input type="time" id="af-h-2-c" value="14:00" aria-label="Mercredi, réouverture"> à <input type="time" id="af-h-2-d" value="18:00" aria-label="Mercredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-3" checked>Jeudi</label><span class="hr"><input type="time" id="af-h-3-a" value="09:00" aria-label="Jeudi, ouverture"> à <input type="time" id="af-h-3-b" value="12:00" aria-label="Jeudi, fermeture"> <span class="h2">et <input type="time" id="af-h-3-c" value="14:00" aria-label="Jeudi, réouverture"> à <input type="time" id="af-h-3-d" value="18:00" aria-label="Jeudi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-4" checked>Vendredi</label><span class="hr"><input type="time" id="af-h-4-a" value="09:00" aria-label="Vendredi, ouverture"> à <input type="time" id="af-h-4-b" value="12:00" aria-label="Vendredi, fermeture"> <span class="h2">et <input type="time" id="af-h-4-c" value="14:00" aria-label="Vendredi, réouverture"> à <input type="time" id="af-h-4-d" value="18:00" aria-label="Vendredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-5" checked>Samedi</label><span class="hr"><input type="time" id="af-h-5-a" value="09:00" aria-label="Samedi, ouverture"> à <input type="time" id="af-h-5-b" value="12:00" aria-label="Samedi, fermeture"> <span class="h2">et <input type="time" id="af-h-5-c" value="" aria-label="Samedi, réouverture"> à <input type="time" id="af-h-5-d" value="" aria-label="Samedi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-6">Dimanche</label><span class="hr"><input type="time" id="af-h-6-a" value="" aria-label="Dimanche, ouverture"> à <input type="time" id="af-h-6-b" value="" aria-label="Dimanche, fermeture"> <span class="h2">et <input type="time" id="af-h-6-c" value="" aria-label="Dimanche, réouverture"> à <input type="time" id="af-h-6-d" value="" aria-label="Dimanche, fermeture du soir"></span></span></div></div></div>
         </div>
-        <div class="aq" data-aq="zone" hidden>
+        <div class="aq" tabindex="-1" data-aq="zone" hidden>
           <h1>Où <em>intervenez-vous</em>&#8239;?</h1>
           <p class="lead">Pour que vos clients sachent tout de suite si vous venez chez eux.</p>
           <div class="checks c2"><label class="ck"><input type="radio" name="af-zone" id="af-zone-ville" value="ville"><span>Dans ma ville</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-15" value="15"><span>Jusqu'à 15 km</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-30" value="30"><span>Jusqu'à 30 km</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-dept" value="dept"><span>Tout le département</span></label></div>
           <label class="f">Des communes à citer&#8239;? <small>facultatif, 10 au maximum</small><input type="text" id="af-communes" maxlength="140" placeholder="Ex. : Voiron, Coublevie, Saint-Jean-de-Moirans"></label>
         </div>
-        <div class="aq" data-aq="marques" hidden>
+        <div class="aq" tabindex="-1" data-aq="marques" hidden>
           <h1>Les <em>marques</em> que vous proposez.</h1>
           <p class="lead">Celles que vous vendez ou que vous utilisez, si vous voulez les afficher.</p>
           <label class="f">Vos marques <small>10 au maximum, séparées par des virgules</small><input type="text" id="af-marques" maxlength="150" placeholder="Ex. : Saphir, Famaco"></label>
         </div>
-        <div class="aq" data-aq="histoire" hidden>
+        <div class="aq" tabindex="-1" data-aq="histoire" hidden>
           <h1>Votre <em>histoire</em>.</h1>
           <p class="lead">Trois petites questions, et on écrit le texte pour vous.</p>
-          <div class="qgroup"><div class="t">Depuis quand êtes-vous là&#8239;?</div><div class="chips"><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-2" value="2"><span>Moins de 2 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-10" value="10"><span>2 à 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-plus" value="plus"><span>Plus de 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-30" value="30"><span>Plus de 30 ans</span></label></div></div>
-          <div class="qgroup"><div class="t">Vous êtes combien&#8239;?</div><div class="chips"><label class="chip"><input type="radio" name="af-eq" id="af-eq-seul" value="seul"><span>Seul ou seule</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-petit" value="petit"><span>2 ou 3 personnes</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-grand" value="grand"><span>4 ou plus</span></label></div></div>
-          <div class="qgroup"><div class="t">Ce qui compte pour vous <small>3 au maximum</small></div><div class="chips" id="af-vals"><label class="chip"><input type="checkbox" id="af-v-0"><span id="af-vl-0"></span></label><label class="chip"><input type="checkbox" id="af-v-1"><span id="af-vl-1"></span></label><label class="chip"><input type="checkbox" id="af-v-2"><span id="af-vl-2"></span></label><label class="chip"><input type="checkbox" id="af-v-3"><span id="af-vl-3"></span></label><label class="chip"><input type="checkbox" id="af-v-4"><span id="af-vl-4"></span></label><label class="chip"><input type="checkbox" id="af-v-5"><span id="af-vl-5"></span></label></div></div>
+          <fieldset class="qgroup"><legend class="t">Depuis quand êtes-vous là&#8239;?</legend><div class="chips"><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-2" value="2"><span>Moins de 2 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-10" value="10"><span>2 à 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-plus" value="plus"><span>Plus de 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-30" value="30"><span>Plus de 30 ans</span></label></div></fieldset>
+          <fieldset class="qgroup"><legend class="t">Vous êtes combien&#8239;?</legend><div class="chips"><label class="chip"><input type="radio" name="af-eq" id="af-eq-seul" value="seul"><span>Seul ou seule</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-petit" value="petit"><span>2 ou 3 personnes</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-grand" value="grand"><span>4 ou plus</span></label></div></fieldset>
+          <fieldset class="qgroup"><legend class="t">Ce qui compte pour vous <small>3 au maximum</small></legend><div class="chips" id="af-vals"><label class="chip"><input type="checkbox" id="af-v-0"><span id="af-vl-0"></span></label><label class="chip"><input type="checkbox" id="af-v-1"><span id="af-vl-1"></span></label><label class="chip"><input type="checkbox" id="af-v-2"><span id="af-vl-2"></span></label><label class="chip"><input type="checkbox" id="af-v-3"><span id="af-vl-3"></span></label><label class="chip"><input type="checkbox" id="af-v-4"><span id="af-vl-4"></span></label><label class="chip"><input type="checkbox" id="af-v-5"><span id="af-vl-5"></span></label></div></fieldset>
           <div class="say"><small>Ce qu'on écrira</small><span id="af-say"></span></div>
           <label class="ck" style="margin-top:6px"><input type="checkbox" id="af-pas-histoire"><span>Pas de partie « Notre histoire » sur mon site</span></label>
         </div>
-        <div class="aq" data-aq="valider" hidden>
+        <div class="aq" tabindex="-1" data-aq="valider" hidden>
           <h1>Validez <em>votre site</em>.</h1>
           <p class="lead" id="cmd-lead">On le finalise avec vos réponses, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
           <div class="fields">
@@ -453,6 +454,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <li><span><b>Le paiement</b>Vous payez juste avant la mise en ligne, quand votre site vous plaît.</span></li>
         </ol>
         <a class="btn line" href="espace.html" id="ok-espace">Retrouver mon site dans mon espace</a>
+        <button type="button" class="alt" id="ok-nouveau" style="margin-top:12px">Créer le site d'un autre commerce</button>
       </div>
 
       <!-- 8. Message prêt -->
@@ -861,7 +863,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
     $("p-url").textContent=txt("domaine")+".fr";
     const dev=devChecked();
-    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
+    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
       (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
   function afShow(i){
     const l=afList();i=Math.min(Math.max(i,0),l.length-1);$("af-i").value=i;const k=l[i],nq=l.length-1;
@@ -872,7 +874,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("af-back").textContent=i===0?"← Revoir mon site":"← Retour";
     afTexts();afMore();afRows();if(k==="valider")afValider();
   }
-  function afGo(d){const i=+$("af-i").value+d;if(i<0){show(6);return}afShow(i);sauver();
+  function afGo(d){const i=+$("af-i").value+d;if(i<0){show(6);return}afShow(i);modifie=true;sauver();
+    const q=form.querySelector(".aq:not([hidden])");if(q)q.focus({preventScroll:true});
     window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
   $("af-next").addEventListener("click",()=>afGo(1));
   $("af-skip").addEventListener("click",()=>afGo(1));
@@ -896,13 +899,18 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     $("domaine").classList.remove("bad");
     if(STRIPE_LINK){const go=()=>{location.href=STRIPE_LINK+(STRIPE_LINK.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
-      Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,800))]).then(go,go);return}
+      if(!COMPTE.actif){go();return}
+      Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))]).then(()=>COMPTE.valider(etat())).catch(()=>false)
+        .then(ok=>{if(ok){valide=true;marquerValide()}go()});return}
     if(!COMPTE.actif){openMail("commande");return}
     $("pay").disabled=true;$("pay").textContent="Validation…";
     Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))])
       .then(()=>COMPTE.valider(etat())).catch(()=>false)
+      /* Réponse perdue (réserve R3 de Justine) : un second essai ; la base répond « oui » sans nouvelle alerte si c'est déjà validé */
+      .then(ok=>ok||new Promise(r=>setTimeout(r,800)).then(()=>COMPTE.valider(etat())).catch(()=>false))
       .then(ok=>{$("pay").disabled=false;$("pay").textContent="Je valide mon site";
-        if(ok){valide=true;$("ok-dom").textContent=txt("domaine")+".fr";note("");show(9)}else openMail("commande")})});
+        if(ok){valide=true;marquerValide();note("");show(9)}else openMail("commande")})});
+  function marquerValide(){$("ok-dom").textContent=txt("domaine")+".fr";try{localStorage.setItem("hood_valide",JSON.stringify({dom:txt("domaine")+".fr"}))}catch(e){}}
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
   if(STRIPE_LINK){$("pay").innerHTML="Je valide et je paie 290 €";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
@@ -966,6 +974,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
 
   render();show(1);setDevice("phone");
+  /* Site déjà validé dans ce navigateur (réserve R6 de Justine) : on réaffiche « C'est validé ! » */
+  try{const v=JSON.parse(localStorage.getItem("hood_valide")||"null");
+    if(v&&v.dom&&!/[?&]reprendre=1\b/.test(location.search)){valide=true;$("ok-dom").textContent=String(v.dom).slice(0,70);document.body.classList.add("deja-valide");show(9)}}catch(e){}
+  $("ok-nouveau").addEventListener("click",()=>{try{localStorage.removeItem("hood_valide")}catch(e){}COMPTE.oublierJeton&&COMPTE.oublierJeton();location.href="maquette.html"});
 })();
 </script>
 </body></html>
