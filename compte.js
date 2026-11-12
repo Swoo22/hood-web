@@ -6,7 +6,7 @@
    turnstile : clé publique du captcha Cloudflare Turnstile (obligatoire avant d'allumer)
    La bibliothèque Supabase est servie par hood-web.com (dossier vendor), pas par un site tiers.
    Mise en service et retour arrière : dépôt Swoo22/Hood, docs/comptes-clients.md. */
-window.HOOD_COMPTE = { url: "", cle: "", turnstile: "" };
+window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb_publishable_RJgC_rtNKrdofg7vZ7P1Mg_A_SNAdmz", turnstile: "0x4AAAAAAF98I59gQzcJ7-IG" };
 
 (function () {
   const C = window.HOOD_COMPTE;
