@@ -74,6 +74,14 @@ a{color:var(--accent)}
     <p class="small">Une question ? Écrivez-nous à <a href="mailto:contact@hood-web.com">contact@hood-web.com</a>.</p>
   </div>
 
+  <!-- Arrivée par le lien du mail -->
+  <div id="ouvrir" hidden>
+    <h1>Votre site <em>vous attend</em>.</h1>
+    <p class="lead">Un clic pour ouvrir votre espace, sans mot de passe.</p>
+    <button class="btn" type="button" id="b-ouvrir">Ouvrir mon espace</button>
+    <p class="small" id="ouvrir-msg" role="status"></p>
+  </div>
+
   <!-- Fonction pas encore ouverte -->
   <div id="bientot" hidden>
     <h1>Votre espace <em>arrive bientôt</em>.</h1>
@@ -81,12 +89,12 @@ a{color:var(--accent)}
   </div>
 </div>
 
-<script src="compte.js?v=20261112"></script>
+<script src="compte.js?v=20261112b"></script>
 <script>
 (function(){
   const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
   const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
-  const vue=id=>["chargement","connexion","espace","bientot"].forEach(v=>$(v).hidden=v!==id);
+  const vue=id=>["chargement","connexion","espace","bientot","ouvrir"].forEach(v=>$(v).hidden=v!==id);
   const euros=c=>(c/100).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});
   const jour=d=>new Date(d).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
 
@@ -117,6 +125,14 @@ a{color:var(--accent)}
 
   async function demarrer(){
     if(!C||!C.actif){vue("bientot");return}
+    const q=new URLSearchParams(location.search),th=q.get("token_hash");
+    if(th){vue("ouvrir");
+      $("b-ouvrir").onclick=async()=>{$("b-ouvrir").disabled=true;$("ouvrir-msg").textContent="Ouverture…";
+        let ok=false;try{ok=await C.verifier(th,q.get("type")||"email")}catch(e){}
+        history.replaceState(null,"",location.pathname);
+        const d=ok?await C.monEspace().catch(()=>null):null;
+        if(d)afficher(d);else{vue("connexion");$("lien-msg").textContent="Ce lien a expiré ou a déjà servi. Demandez-en un nouveau ci-dessous."}};
+      return}
     try{
       await C.pret();
       const d=await C.monEspace();
