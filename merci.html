@@ -30,7 +30,9 @@ a{color:var(--accent)}
 <div class="wrap">
   <a class="logo" href="/">HOOD<span>.</span></a>
   <h1>Merci, votre commande <em>est enregistrée</em>.</h1>
-  <p class="lead">Votre paiement a bien été reçu. Stripe vous envoie un reçu par e-mail.</p>
+  <p class="lead" id="merci-paiement">Votre paiement a bien été reçu. Stripe vous envoie un reçu par e-mail.</p>
+  <script>/* Paiement en deux temps (12 Nov. 2026) : retour de la page créée par le serveur, la carte est autorisée et débitée après la réservation du domaine. */
+  if(/[?&]session_id=cs_(test|live)_[A-Za-z0-9]+/.test(location.search))document.getElementById("merci-paiement").textContent="Votre paiement est accepté. Les 290 € sont débités dès que votre nom de domaine est réservé au nom de votre entreprise ; si la réservation échouait, rien ne serait débité. Stripe vous envoie un reçu par e-mail.";</script>
   <ol>
     <li>Votre site part en ligne, d'abord à une adresse provisoire de HOOD.</li>
     <li>Votre nom de domaine est réservé au nom de votre entreprise : votre site y répond dès qu'il est actif, en général de quelques minutes à quelques heures.</li>

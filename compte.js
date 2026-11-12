@@ -121,6 +121,29 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return false;
   };
 
+  /* Paiement en deux temps (étape 2, 12 Nov. 2026) : la fonction serveur
+     « paiement-creer » fait vérifier le projet par la base, puis crée la page
+     de paiement Stripe (carte autorisée, débitée seulement après l'achat du
+     domaine). Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
+     sur le lien d'essai : non_configure, cle_reelle_refusee, reseau, eteint. */
+  C.payer = async function (etat) {
+    const sb = await charger(); if (!sb) return { motif: "eteint" };
+    const j = lire(CLE_JETON);
+    if (!projetConnecte && !j) return { motif: "projet" };
+    let session = null;
+    if (projetConnecte) { try { session = (await sb.auth.getSession()).data.session; } catch (e) { session = null; } }
+    try {
+      const r = await fetch(C.url + "/functions/v1/paiement-creer", {
+        method: "POST",
+        headers: { "content-type": "application/json", apikey: C.cle, authorization: "Bearer " + (session ? session.access_token : C.cle) },
+        body: JSON.stringify({ jeton: projetConnecte ? null : j, projet: projetConnecte || null, reponses: etat })
+      });
+      const d = await r.json().catch(() => ({}));
+      if (d && typeof d.url === "string" && /^https:\/\/checkout\.stripe\.com\//.test(d.url)) return { url: d.url };
+      return { motif: String((d && d.motif) || (r.status === 404 ? "non_configure" : "reseau")) };
+    } catch (e) { return { motif: "reseau" }; }
+  };
+
   /* Photo envoyée pendant l'affinage : le dossier de dépôt du projet est
      redemandé avant chaque fichier (la base y vérifie les plafonds), puis le
      fichier part dans l'espace privé « photos-projets ». Renvoie {fichier}
