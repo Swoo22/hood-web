@@ -232,6 +232,23 @@ input.bad{border-color:var(--danger)}
 .say small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .aq[data-aq="histoire"]:has(#af-pas-histoire:checked) .qgroup,.aq[data-aq="histoire"]:has(#af-pas-histoire:checked) .say{opacity:.4;pointer-events:none}
 .upz{display:grid;gap:10px}
+.fin-choix{display:grid;gap:10px}
+.fin-c{display:grid;gap:3px;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer}
+.fin-c b{font-size:16px}.fin-c small{color:var(--muted);font-size:13.5px}
+.fin-c:hover,.fin-c:focus-visible{border-color:var(--accent)}
+.fin-c.main{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}.fin-c.main small{color:inherit;opacity:.85}
+.rt{display:grid;gap:12px}
+.rt-aide{margin:0;padding:12px 14px;border-radius:12px;background:var(--accent-soft);font-size:14px}
+.rt-ed{display:grid;gap:8px;border:1.5px solid var(--accent);border-radius:14px;padding:14px;background:var(--card)}
+.rt-regles{margin:0;padding-left:18px;font-size:13px;color:var(--muted)}
+.rt-ed textarea{width:100%;font:inherit;font-size:15px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;resize:vertical;box-sizing:border-box}
+.rt-ed textarea.bad{border-color:#c2410c}
+.rt-wc{font-size:12.5px;color:var(--muted);text-align:right}.rt-wc.over{color:#c2410c;font-weight:700}
+.rt-msg{margin:0;font-size:13.5px;color:#c2410c}.rt-msg:empty{display:none}
+.rt-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.rt-l{display:grid;gap:6px;font-size:14px}.rt-l ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.rt-l li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.rt-l li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rules{font-size:13px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .rules b{color:var(--ink);font-size:13.5px}.rules ul{margin:4px 0 0;padding-left:18px;display:grid;gap:2px}
 .drop{position:relative;display:grid;justify-items:center;gap:4px;text-align:center;padding:20px 14px;border:1.5px dashed var(--line);border-radius:12px;background:var(--card);cursor:pointer}
@@ -483,6 +500,31 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <label class="f">Votre adresse e-mail<input type="email" id="af-contact" maxlength="254" autocomplete="email" inputmode="email" placeholder="Ex. : contact@moncommerce.fr"></label>
           <span class="hint">Elle n'est pas affichée sur le site.</span>
         </div>
+        <!-- Fin de l'affinage (demande de Steve, 12 Nov. 2026) : je paie, je retouche sur le site, ou je pose une question -->
+        <div class="aq" tabindex="-1" data-aq="fin" hidden>
+          <h1>Votre site est <em>prêt</em>.</h1>
+          <p class="lead" id="fin-lead">Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez.</p>
+          <div class="fin-choix" id="fin-choix">
+            <button type="button" class="fin-c main" id="fin-payer"><b>Il me plaît : je finalise et je paie</b><small>Votre adresse, le titulaire, puis le paiement. Le site part en ligne aussitôt.</small></button>
+            <button type="button" class="fin-c" id="fin-retouche"><b>Je retouche directement sur le site</b><small>Un titre, un texte, une photo : cliquez dessus et changez-le.</small></button>
+            <button type="button" class="fin-c" id="fin-question"><b>J'ai une question</b><small>On vous répond avant que vous payiez.</small></button>
+          </div>
+          <div class="rt" id="rt" hidden>
+            <p class="rt-aide" id="rt-aide"><b>Cliquez sur ce que vous voulez changer, directement dans votre site.</b> Les endroits modifiables sont entourés en pointillés.</p>
+            <div class="rt-ed" id="rt-ed" hidden>
+              <b id="rt-lab"></b>
+              <ul class="rt-regles" id="rt-regles"></ul>
+              <div id="rt-zone-txt"><textarea id="rt-txt" rows="3" maxlength="900" aria-labelledby="rt-lab"></textarea><div class="rt-wc" id="rt-wc"></div></div>
+              <div id="rt-zone-photo" hidden><label class="drop"><span class="plus" aria-hidden="true">+</span><b>Choisir une photo</b><span class="hint" id="rt-photo-hint">Au moins 1 000 pixels, en largeur de préférence.</span><input type="file" id="rt-photo" accept="image/jpeg,image/png,image/webp"></label></div>
+              <p class="rt-msg" id="rt-msg" role="status" aria-live="polite"></p>
+              <div class="rt-btns"><button type="button" class="btn primary" id="rt-ok">Valider la retouche</button><button type="button" class="btn line" id="rt-annuler">Annuler</button><button type="button" class="linkbtn" id="rt-orig" hidden>Remettre l'original</button></div>
+            </div>
+            <div id="rt-liste"></div>
+            <button type="button" class="btn primary wide" id="rt-fini">J'ai fini : je finalise et je paie</button>
+            <button type="button" class="linkbtn" id="rt-question">J'ai une question</button>
+          </div>
+          <input type="hidden" id="af-retouches" value="">
+        </div>
         <div class="aq" tabindex="-1" data-aq="valider" hidden>
           <h1>Validez <em>votre site</em>.</h1>
           <p class="lead" id="cmd-lead">Choisissez votre adresse, puis payez : votre site part en ligne aussitôt.</p>
@@ -587,7 +629,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
 </main>
 <div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Je finalise mon site</button></div>
 
-<script src="compte.js?v=20261112g"></script>
+<script src="compte.js?v=20261112h"></script>
 <script>
 const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fffdf9;--encre:#1f2a24;--doux:#6b746e;--rose:#c8566b;--vert:#e4efe7}\n*{box-sizing:border-box;margin:0}body{font-family:\"Palatino Linotype\",Palatino,\"Book Antiqua\",\"URW Palladio L\",serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--encre);color:#fff;font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eadfd3}\n.nom{font-size:1.2rem;letter-spacing:.04em}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--rose);color:#fff;text-decoration:none;padding:11px 20px;border-radius:2px;border:0}\n.btn.l{background:none;color:var(--rose);border:1px solid var(--rose)}\n.s2{background:var(--vert);padding:48px 16px 96px;text-align:center}\n.s2 h1{font-size:2.3rem;font-weight:normal;line-height:1.15;max-width:760px;margin:auto}.s2 h1 em{color:var(--rose)}\n.sous{display:block;margin:12px 0 22px;color:var(--doux);font-style:italic}.sous::first-letter{text-transform:uppercase}\n.wrap{max-width:1040px;margin:-64px auto 0;padding:0 16px}\n.sv{background:#fff;border:1px solid #eadfd3;box-shadow:0 10px 30px rgba(0,0,0,.08);min-height:240px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:40px 0}h2{font-weight:normal;font-size:1.7rem;margin-bottom:4px}\n.note{color:var(--doux);font-style:italic;margin-bottom:18px}\n.cartes{display:grid;gap:18px}.carte-s3{border-top:2px solid var(--rose);padding-top:10px}.carte-s3 h3{font-size:1.15rem;font-weight:normal}.carte-s3 p{color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:6px 0;border-bottom:1px solid #eadfd3}\n.duo>div+div{margin-top:36px}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:1px solid #eadfd3}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.4rem}.cartes{grid-template-columns:repeat(4,1fr)}.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px}.duo>div+div{margin-top:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<div class=\"s2\"><h1>Votre <em>[métier]<\/em> à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div>\n<main class=\"wrap\"><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<section><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"cartes\"><div class=\"carte-s3\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<section class=\"duo\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"duo\"><div><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div><h2>Avis<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "ardoise2": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--ardoise:#24362f;--craie:#f4f1e8;--doux:#b9c4bc;--jaune:#f2d06b;--bois:#8a6a4a}\n*{box-sizing:border-box;margin:0}body{font-family:Georgia,\"DejaVu Serif\",serif;background:var(--ardoise);color:var(--craie);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--jaune);color:var(--ardoise);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:22px 16px;border-bottom:8px solid var(--bois)}\n.nom{font-size:1.6rem;font-style:italic;display:block;margin-bottom:10px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--jaune);color:var(--ardoise);text-decoration:none;padding:11px 20px;border-radius:24px;border:0}\n.btn.l{background:none;color:var(--jaune);border:2px dashed var(--jaune)}\n.wrap{max-width:900px;margin:auto;padding:0 16px}\n.s2{text-align:center;padding:40px 0}.s2 h1{font-size:2.1rem;font-style:italic;font-weight:normal;line-height:1.2}\n.sous{display:block;color:var(--doux);margin:10px 0 22px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:28px;border:2px dashed rgba(244,241,232,.5);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:32px 0;border-top:2px dashed rgba(244,241,232,.25)}\nh2{font-size:1.5rem;font-style:italic;font-weight:normal;color:var(--jaune);text-align:center;margin-bottom:6px}\n.note{color:var(--doux);text-align:center;font-size:.9rem;margin-bottom:18px}\n.menu{list-style:none;padding:0;max-width:620px;margin:auto}.menu li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px dotted rgba(244,241,232,.35)}\n.menu b{font-weight:normal;font-size:1.1rem}.menu span{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0;text-align:center}.horaires li{padding:4px 0}\n.centre{text-align:center}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:8px solid var(--bois)}footer a{color:var(--craie)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.2rem}.paire{display:grid;grid-template-columns:1fr 1fr;gap:40px}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><h1>[nom_commerce], [métier] près de chez vous.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><h2>Ce que nous proposons<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><ul class=\"menu\"><li><b>Exemple de prestation 1<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 2<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 3<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 4<\/b><span>À fournir (David), selon le métier.<\/span><\/li><\/ul><\/section>\n<section class=\"paire\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div class=\"centre\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"centre\"><h2>Nous trouver<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section class=\"centre\"><h2>Ils en parlent<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<section class=\"centre\"><h2>Nous appeler<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "etiquette": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fff6f2;--encre:#3a2b33;--doux:#7d6b74;--corail:#ef7b62;--menthe:#bfe6d8;--lilas:#e6dcf5}\n*{box-sizing:border-box;margin:0}body{font-family:\"Century Gothic\",\"Avenir Next\",Avenir,\"URW Gothic\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{background:var(--lilas);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}\n.nom{font-weight:bold;background:var(--menthe);padding:6px 14px;border-radius:999px}\n.btn{display:inline-block;font-weight:bold;background:var(--corail);color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;border:0}\n.btn.l{background:#fff;color:var(--corail);border:2px solid var(--corail)}\n.wrap{max-width:1000px;margin:auto;padding:0 16px}\n.s2{padding:32px 0 24px}.s2 h1{font-size:2.2rem;line-height:1.15}.s2 h1::first-letter{text-transform:uppercase}\n.sous{display:inline-block;margin:12px 0 20px;color:var(--doux)}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:24px;background:var(--menthe);border-radius:28px;min-height:220px;display:grid;place-items:center;color:var(--encre);font-size:.9rem;text-align:center;padding:16px}\nsection{margin:28px 0;background:#fff;border-radius:24px;padding:28px 20px;box-shadow:0 2px 0 rgba(58,43,51,.08)}\n.tag{display:inline-block;background:var(--corail);color:#fff;font-size:.8rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;transform:rotate(-3deg);margin-bottom:10px}\nh2{font-size:1.4rem;margin-bottom:6px}.note{color:var(--doux);font-size:.85rem;margin-bottom:16px}\n.pilules{display:grid;gap:12px}.pilule{background:var(--lilas);border-radius:20px;padding:14px 18px}.pilule h3{font-size:1rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:5px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:24px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:56px 0 24px}.s2 h1{font-size:3rem}.sv{margin:0;min-height:320px}.pilules{grid-template-columns:1fr 1fr}.bas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.bas section{margin:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><div><h1>[métier] à [ville] : appelez [nom_commerce].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><br><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><span class=\"tag\">Prestations<\/span><h2>Au comptoir<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"pilules\"><div class=\"pilule\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<div class=\"bas\">\n<section><span class=\"tag\">Horaires<\/span><h2>Quand venir<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/section>\n<section id=\"s6\"><span class=\"tag\">Adresse<\/span><h2>Venir nous voir<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section><span class=\"tag\">Contact<\/span><h2>Nous joindre<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/p><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<\/div>\n<section><span class=\"tag\">À propos<\/span><h2>Le commerce<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "registre": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--papier:#fbfaf7;--encre:#111;--doux:#555;--rouge:#b3261e;--filet:#cfcac0}\n*{box-sizing:border-box;margin:0}body{font-family:\"Times New Roman\",Times,\"Liberation Serif\",serif;background:var(--papier);color:var(--encre);line-height:1.55;font-size:17px}\n.s0{font-family:Arial,sans-serif;background:var(--rouge);color:#fff;font-size:.78rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:20px 16px 12px;border-bottom:4px double var(--encre);max-width:1100px;margin:0 16px}\n.nom{font-size:2rem;font-weight:bold;letter-spacing:.02em;display:block}\n.date{font-family:Arial,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--doux);margin-top:6px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;font-size:.9rem;background:var(--encre);color:#fff;text-decoration:none;padding:10px 18px;border:0}\n.btn.l{background:none;color:var(--encre);border:1px solid var(--encre)}.btn.r{background:var(--rouge)}\n.wrap{max-width:1100px;margin:auto;padding:0 16px}\n.une{padding:24px 0;border-bottom:1px solid var(--encre)}\n.une h1{font-size:2.3rem;line-height:1.1}\n.sous{display:block;font-style:italic;color:var(--doux);margin:8px 0 16px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:20px;border:1px solid var(--encre);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:16px;background:#efede8}\n.cols>div{padding:20px 0;border-bottom:1px solid var(--filet)}\nh2{font-family:Arial,sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;color:var(--rouge);margin-bottom:8px}\n.note{font-style:italic;color:var(--doux);font-size:.9rem;margin-bottom:8px}\ndl dt{font-weight:bold;margin-top:8px}dl dd{margin:0;color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:2px 0}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.78rem;color:var(--doux);padding:20px 16px;border-top:4px double var(--encre);margin-top:24px}footer a{color:var(--encre)}\nbutton.btn{font-size:.9rem;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:860px){header{margin:0 auto}.une{display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:end}.une h1{font-size:3.6rem}.sv{margin:0}.cols{display:grid;grid-template-columns:repeat(3,1fr)}.cols>div{padding:20px;border-bottom:0;border-left:1px solid var(--filet)}.cols>div:first-child{border-left:0;padding-left:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><div class=\"date\">[métier] · [ville]<\/div><p style=\"margin-top:12px\"><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a><\/p><\/header>\n<main class=\"wrap\">\n<div class=\"une\"><div><h1>[nom_commerce], près de chez vous, à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<div class=\"cols\">\n<div><h2>Nos services<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><dl><dt>Exemple de prestation 1<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 2<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 3<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 4<\/dt><dd>À fournir (David), selon le métier.<\/dd><\/dl><\/div>\n<div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><h2 style=\"margin-top:20px\">À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin:10px 0 20px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><h2>Avis<\/h2><p style=\"margin-bottom:20px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "mosaique": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#f4f6f5;--encre:#18322f;--doux:#5d706d;--sarcelle:#1f7a72;--moutarde:#e7b53c;--blanc:#fff}\n*{box-sizing:border-box;margin:0}body{font-family:Tahoma,\"Segoe UI\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.55}\n.s0{background:var(--moutarde);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{position:sticky;top:0;z-index:2;background:var(--sarcelle);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}\n.nom{font-weight:bold}nav{display:none}nav a{color:#fff;text-decoration:none;margin-right:16px;font-size:.9rem}\n.btn{display:inline-block;font-weight:bold;background:var(--moutarde);color:var(--encre);text-decoration:none;padding:10px 18px;border-radius:10px;border:0}\n.btn.l{background:var(--blanc);color:var(--sarcelle);border:2px solid var(--sarcelle)}\n.grille{max-width:1160px;margin:auto;padding:16px;display:grid;gap:14px}\n.tuile{background:var(--blanc);border-radius:16px;padding:22px}\n.t-hero{background:var(--sarcelle);color:#fff}.t-hero h1{font-size:2rem;line-height:1.15}\n.sous{display:block;margin:10px 0 18px;opacity:.85}.sous::first-letter{text-transform:uppercase}\n.sv{min-height:220px;display:grid;place-items:center;color:var(--doux);font-size:.9rem;text-align:center;background:repeating-linear-gradient(-45deg,#e9eeec 0 14px,#f4f6f5 14px 28px)}\n.t-mout{background:var(--moutarde)}\nh2{font-size:1.15rem;margin-bottom:8px}.note{color:var(--doux);font-size:.82rem;margin-bottom:12px}\n.svc{display:grid;gap:10px}.svc div{border-left:4px solid var(--moutarde);padding-left:12px}.svc h3{font-size:1rem}.svc p{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:3px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:20px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:900px){nav{display:block}.grille{grid-template-columns:repeat(4,1fr)}.t-hero{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:center}.t-hero h1{font-size:3rem}.sv{grid-column:span 2;grid-row:span 2}.t-svc{grid-column:span 2}.svc{grid-template-columns:1fr 1fr}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><nav><a href=\"#svc\">Prestations<\/a><a href=\"#hor\">Horaires<\/a><a href=\"#s6\">Adresse<\/a><\/nav><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"grille\">\n<div class=\"tuile t-hero\"><h1>Tout sur [nom_commerce], en une page.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><div><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><\/div>\n<div class=\"tuile sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<div class=\"tuile t-svc\" id=\"svc\"><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"svc\"><div><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/div>\n<div class=\"tuile t-mout\" id=\"hor\"><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div>\n<div class=\"tuile\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div class=\"tuile\" id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:10px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div class=\"tuile t-svc\"><h2>Avis<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/div>\n<div class=\"tuile t-mout\" style=\"grid-column:1/-1;text-align:center\"><h2>Contact<\/h2><a class=\"btn l\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n"};
 (function(){
@@ -822,21 +864,22 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const f=fam(),sv=services(),nom=txt("nom")||"Votre commerce",ville=txt("ville")||"votre ville";
     const chip=s=>`<span style="display:inline-block;padding:.35em .8em;margin:0 .4em .4em 0;border:1px solid currentColor;border-radius:999px;opacity:.85">${esc(s)}</span>`;
     const ph=s=>`<div style="border:1px dashed currentColor;opacity:.7;border-radius:8px;padding:1.2em;text-align:center">${esc(s)}</div>`;
-    const gal=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${[1,2,3].map(()=>`<div style="aspect-ratio:4/3;border-radius:8px;background:rgba(127,127,127,.16);display:grid;place-items:center;font-size:.8em;opacity:.8">Votre photo</div>`).join("")}</div>`;
+    const galB=c=>`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${[1,2,3].map(()=>`<div class="${c}" style="aspect-ratio:4/3;border-radius:8px;background:rgba(127,127,127,.16);display:grid;place-items:center;font-size:.8em;opacity:.8">Votre photo</div>`).join("")}</div>`;
+    const gal=galB("hood-ph");
     const rows=a=>a.map(([x,y])=>`<div style="display:flex;justify-content:space-between;gap:1em;padding:.5em 0;border-bottom:1px dotted currentColor">${esc(x)}<span style="opacity:.7">${esc(y)}</span></div>`).join("");
     const btn=t=>`<span style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700">${esc(t)}</span>`;
     const S={
-      zone:["Zone d'intervention",chip(ville)+chip("Et alentours")],
+      zone:["Zone d'intervention",zoneLib()?chip(zoneLib())+liste(txt("af-communes")).map(chip).join(""):chip(ville)+chip("Et alentours")],
       assurance:["Assurance et qualifications",ph("Vos attestations, fournies par vous")],
       commandes:["Commandez par téléphone",btn("Passer commande")],
       occasions:["Pour vos occasions",chip("Anniversaires")+chip("Fêtes")+chip("Événements")],
       carte:["La carte",rows([["Entrées","…"],["Plats","…"],["Desserts","…"]])],
-      marques:["Nos marques",chip("Vos marques ici")],
+      marques:["Nos marques",liste(txt("af-marques")).length?liste(txt("af-marques")).map(chip).join(""):chip("Vos marques ici")],
       photos:["Nos chantiers",gal],galerie:[f===FAM.bouche?"Nos produits":f===FAM.beaute?"Nos réalisations":"En images",gal],
-      tarifs:["Tarifs",rows([[sv[0],"Votre prix"],[sv[1],"Votre prix"]])],
-      apropos:["À propos",`<p>${esc(nom)}, ${esc(metier()?metier().m:"commerce")} à ${esc(ville)}${txt("annee")?" depuis "+esc(txt("annee")):""}. Votre histoire ici.</p>`],
+      tarifs:["Tarifs",prixLignes().length?rows(prixLignes()):afVal("prix")==="photo"?ph("Vos tarifs, repris de la photo que vous nous avez envoyée"):rows([[sv[0],"Votre prix"],[sv[1],"Votre prix"]])],
+      apropos:["À propos",histoireTexte()?`<p>${esc(histoireTexte())}</p>`:`<p>${esc(nom)}, ${esc(metier()?metier().m:"commerce")} à ${esc(ville)}${txt("annee")?" depuis "+esc(txt("annee")):""}. Votre histoire ici.</p>`],
       avissite:["Vos avis",ph("Vos avis Google, affichés par Google")],
-      insta:["Sur Instagram",gal],
+      insta:["Sur Instagram",galB("")],
       rdv:["Prendre rendez-vous",btn("Réserver un créneau")],
       resa:["Réserver en ligne",btn("Réserver")],
       contact:[f===FAM.batiment?"Demander un devis":"Nous écrire",`<div style="display:grid;gap:8px;max-width:520px">${["Votre nom","Votre e-mail"].map(p=>`<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em">${p}</div>`).join("")}<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em;min-height:5em">Votre message</div><div>${btn("Envoyer")}</div></div>`]
@@ -846,8 +889,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     else{const b=svc||servicesGroup(doc);anchor=b?(b.g.closest("section")||b.g):null}
     if(!anchor)anchor=doc.querySelector("main")?doc.querySelector("main").lastElementChild:doc.body.lastElementChild;
     const parent=anchor.parentElement;const ref=anchor.nextSibling;
-    opts.filter(o=>S[o]).forEach(o=>{
-      const sec=doc.createElement("section");sec.className="hood-opt";
+    opts.filter(o=>S[o]&&!(o==="apropos"&&$("af-pas-histoire").checked)).forEach(o=>{
+      const sec=doc.createElement("section");sec.className="hood-opt";sec.dataset.hood=o;
       sec.innerHTML=`<div style="max-width:1100px;margin:0 auto"><h2>${S[o][0]}</h2>${S[o][1]}</div>`;parent.insertBefore(sec,ref);
       const cs=doc.defaultView.getComputedStyle(sec);
       if(parseFloat(cs.paddingLeft)<8){sec.style.paddingLeft="20px";sec.style.paddingRight="20px"}
@@ -855,6 +898,141 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       if(anchor.classList.contains("tuile")){sec.className="tuile hood-opt"}
     });
   }
+  /* ==== Affinage visible en direct, et retouches sur le site (demandes de Steve, 12 Nov. 2026) ==== */
+  let retouche=false,rtSel=null;
+  const JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+  const hfmt=v=>{const m=/^(\d{1,2}):(\d{2})/.exec(v||"");if(!m)return "";return (+m[1])+" h"+(m[2]!=="00"?" "+m[2]:"")};
+  function heuresLignes(){
+    const d=JOURS.map((j,i)=>{if(!$("af-h-"+i).checked)return "Fermé";
+      const a=hfmt(txt(`af-h-${i}-a`)),b=hfmt(txt(`af-h-${i}-b`)),c=hfmt(txt(`af-h-${i}-c`)),e=hfmt(txt(`af-h-${i}-d`));
+      const p1=a&&b?a+" – "+b:"",p2=c&&e?c+" – "+e:"";return [p1,p2].filter(Boolean).join(", ")||"Ouvert"});
+    const out=[];for(let i=0;i<7;){let j=i;while(j+1<7&&d[j+1]===d[i])j++;out.push([j>i?JOURS[i]+" – "+JOURS[j].toLowerCase():JOURS[i],d[i]]);i=j+1}
+    return out}
+  const prixLignes=()=>{if(afVal("prix")!=="write")return [];const r=[];for(let i=0;i<12;i++)if(txt("af-pn-"+i)&&txt("af-pp-"+i))r.push([txt("af-pn-"+i),txt("af-pp-"+i)]);return r};
+  const zoneLib=()=>({ville:"Dans "+(txt("ville")||"votre ville"),"15":"Jusqu'à 15 km","30":"Jusqu'à 30 km",dept:"Tout le département"})[afVal("zone")]||"";
+  const liste=s=>(s||"").split(/[,;\n]/).map(x=>x.trim()).filter(Boolean).slice(0,10);
+  const histoireTexte=()=>{if(!afList().includes("histoire")||$("af-pas-histoire").checked)return "";
+    const touche=afVal("eq")||afVal("depuis")||[...Array(NV).keys()].some(i=>$("af-v-"+i).checked);return touche?$("af-say").textContent.trim():""};
+  const photosUrls=()=>/^(mine|mix)$/.test(afVal("photos"))?upListe("photos").map(n=>apercus[n]).filter(Boolean):[];
+  /* Les photos des modèles sont des images de fond : on les repère dans l'ordre du document. */
+  function photoEls(doc){if(doc._hoodPh)return doc._hoodPh;const w=doc.defaultView;
+    doc._hoodPh=[...doc.body.querySelectorAll("*")].filter(el=>!el.closest("nav")&&/url\((?!["']?data:)/.test(w.getComputedStyle(el).backgroundImage||""));return doc._hoodPh}
+  function mettrePhoto(doc,el,url){const b=doc.defaultView.getComputedStyle(el).backgroundImage||"";
+    el.style.backgroundImage=/url\(/.test(b)?b.replace(/url\([^)]*\)/,`url("${url}")`):`url("${url}")`;el.style.backgroundSize="cover";el.style.backgroundPosition="center"}
+  function heroSub(doc){const h=doc.querySelector("h1");if(!h)return null;let a=h.parentElement;
+    for(let n=0;a&&n<4;n++,a=a.parentElement){const p=[...a.querySelectorAll("p")].find(p=>(p.compareDocumentPosition(h)&2)&&p.textContent.trim().length>15&&!p.closest("nav"));if(p)return p}
+    return null}
+  function ajoutSection(doc,cle,titre,html){
+    const sec=doc.createElement("section");sec.className="hood-opt";sec.dataset.hood=cle;
+    sec.innerHTML=`<div style="max-width:1100px;margin:0 auto"><h2>${esc(titre)}</h2>${html}</div>`;
+    const ft=doc.querySelector("footer");if(ft&&ft.parentElement)ft.parentElement.insertBefore(sec,ft);else doc.body.append(sec);
+    const cs=doc.defaultView.getComputedStyle(sec);if(parseFloat(cs.paddingLeft)<8){sec.style.paddingLeft="20px";sec.style.paddingRight="20px"}
+    if(parseFloat(cs.paddingTop)<8){sec.style.paddingTop="36px";sec.style.paddingBottom="36px"}}
+  function affinageVisible(doc){
+    const A=afm(),ti=["chaleureux","serieux","chic"].indexOf(afVal("ton"));
+    if(ti>=0&&A.t&&A.t[ti]){const p=heroSub(doc);if(p)p.textContent=A.t[ti].replace("{ville}",txt("ville")||"votre ville").replace("{nom}",txt("nom")||"votre commerce")}
+    const u=photosUrls();
+    if(u.length){let k=0;const mix=afVal("photos")==="mix";
+      photoEls(doc).forEach((el,i)=>{if(mix&&i%2)return;mettrePhoto(doc,el,u[k++%u.length])});
+      doc.querySelectorAll(".hood-ph").forEach(el=>{mettrePhoto(doc,el,u[k++%u.length]);el.textContent=""})}
+    const h=afVal("horaires");
+    if(h==="write"||h==="google"){
+      const L=h==="write"?heuresLignes():[["Vos horaires","comme sur votre fiche Google"]];
+      const rows=L.map(([j,t])=>`<tr${t==="Fermé"?' class="off"':""}><td>${esc(j)}</td><td>${esc(t)}</td></tr>`).join("");
+      const hd=[...doc.querySelectorAll("h2,h3,h4,.lbl,dt,strong")].find(x=>/^\s*(nos\s+)?horaires/i.test(x.textContent)&&x.textContent.trim().length<40&&!x.closest("nav"));
+      const tb=hd&&hd.parentElement.querySelector("table");
+      if(tb){tb.innerHTML=rows;(tb.closest("section")||tb.parentElement).setAttribute("data-hood","horaires")}
+      else if(hd&&hd.nextElementSibling){hd.nextElementSibling.innerHTML=L.map(([j,t])=>esc(j)+" : "+esc(t)).join("<br>");(hd.closest("section")||hd.parentElement).setAttribute("data-hood","horaires")}
+      else ajoutSection(doc,"horaires","Horaires",`<table style="border-collapse:collapse">${rows.replace(/<td>/g,'<td style="padding:.35em 1.4em .35em 0">')}</table>`)}
+  }
+
+  /* ---- Retouches directement sur le site (comme le prototype) ----
+     Chaque endroit modifiable a une clé stable (type:rang) ; la retouche garde le texte d'avant,
+     et ne s'applique que si l'endroit a toujours ce texte (sinon elle est ignorée, rien ne casse). */
+  const RT_MAX=30;
+  const norm1=s=>(s||"").replace(/\s+/g," ").trim();
+  const mots=s=>norm1(s)?norm1(s).split(" ").length:0;
+  const rtListe=()=>{try{const l=JSON.parse(txt("af-retouches")||"[]");return Array.isArray(l)?l.filter(r=>r&&typeof r.k==="string").slice(0,RT_MAX):[]}catch(e){return []}};
+  const RT_LAB={titre:"Le grand titre",section:"Un titre de partie",sous:"Un petit titre",texte:"Un texte",photo:"Une photo"};
+  function rtMax(type,avant){return type==="titre"?6:type==="section"?8:type==="sous"?6:Math.max(25,Math.min(120,Math.ceil(mots(avant)*1.6)))}
+  function rtCibles(doc){
+    if(doc._hoodRt)return doc._hoodRt;
+    const out=[],cnt={},add=(el,type)=>{cnt[type]=cnt[type]||0;out.push({el,type,k:type+":"+(cnt[type]++)})};
+    const BLOC="h1,h2,h3,h4,p,li,div,ul,ol,table,section,blockquote,form";
+    doc.body.querySelectorAll("h1,h2,h3,p,li,blockquote").forEach(el=>{
+      if(el.closest("nav,form,footer,button,a,[data-hood],.demo")||el.querySelector(BLOC))return;
+      const t=norm1(el.textContent);if(t.length<2||t.length>900)return;
+      const tag=el.tagName;if(tag==="LI"&&t.length<15)return;
+      add(el,tag==="H1"?"titre":tag==="H2"?"section":tag==="H3"?"sous":"texte")});
+    photoEls(doc).forEach(el=>add(el,"photo"));
+    doc._hoodRt=out;return out}
+  function retouchesSurLeSite(doc){
+    const c=rtCibles(doc);
+    c.forEach(x=>{x.avant=x.type==="photo"?"":norm1(x.el.textContent)});
+    rtListe().forEach(r=>{
+      let t=c.find(x=>x.k===r.k&&(r.photo||x.avant===r.avant));
+      if(!t&&!r.photo)t=c.find(x=>x.type===r.k.split(":")[0]&&x.avant===r.avant&&!x.fait);
+      if(!t)return;
+      if(r.photo){if(apercus[r.photo])mettrePhoto(doc,t.el,apercus[r.photo])}else t.el.textContent=r.apres;
+      t.fait=true;t.r=r});
+    if(!retouche)return;
+    const st=doc.createElement("style");
+    st.textContent=`[data-hood-edit]{cursor:pointer!important;outline:2px dashed rgba(10,80,255,.6)!important;outline-offset:3px;border-radius:3px}
+[data-hood-edit]:hover{outline:2px solid #0a50ff!important}[data-hood-edit].hood-fait{outline-color:#137a3b!important}
+[data-hood-edit].hood-sel{outline:3px solid #0a50ff!important}[data-hood-edit^="photo"]{outline-offset:-5px}[data-hood-edit^="q:"]{outline-offset:-6px}`;
+    doc.head.append(st);
+    c.forEach(x=>{x.el.setAttribute("data-hood-edit",x.k);if(x.fait)x.el.classList.add("hood-fait");if(rtSel&&rtSel.k===x.k)x.el.classList.add("hood-sel")});
+    doc.querySelectorAll("[data-hood]").forEach(s=>{if(RT_Q[s.dataset.hood])s.setAttribute("data-hood-edit","q:"+s.dataset.hood)});
+    doc.addEventListener("click",e=>{const t=e.target.closest("[data-hood-edit]");if(!t)return;e.preventDefault();e.stopPropagation();rtChoisir(t.getAttribute("data-hood-edit"))},true);
+  }
+  const RT_Q={tarifs:"prix",horaires:"horaires",zone:"zone",marques:"marques",apropos:"histoire"};
+  function rtChoisir(k){
+    const d=frame.contentDocument;if(!d)return;
+    if(k.startsWith("q:")){const q=RT_Q[k.slice(2)],i=afList().indexOf(q);
+      if(i>=0){afShow(i);$("err").textContent="";note("Changez votre réponse ici : l'aperçu suit. Puis « Continuer » jusqu'à « Votre site est prêt ».");return}
+      $("rt-msg").textContent="Cette partie se règle par vos réponses aux questions.";return}
+    const x=rtCibles(d).find(y=>y.k===k);if(!x)return;
+    const r=rtListe().find(y=>y.k===k);
+    rtSel={k,type:x.type,avant:r&&!r.photo?r.avant:x.avant,max:rtMax(x.type,r&&!r.photo?r.avant:x.avant)};
+    d.querySelectorAll(".hood-sel").forEach(e=>e.classList.remove("hood-sel"));x.el.classList.add("hood-sel");
+    $("rt-ed").hidden=false;$("rt-lab").textContent=RT_LAB[x.type];$("rt-msg").textContent="";
+    const ph=x.type==="photo";$("rt-zone-txt").hidden=ph;$("rt-zone-photo").hidden=!ph;$("rt-ok").hidden=ph;$("rt-orig").hidden=!r;
+    $("rt-regles").innerHTML=(ph?["Une photo à vous, nette et bien éclairée","Au moins 1 000 pixels ; en largeur de préférence","JPG, PNG ou WebP"]
+      :[`${rtSel.max} mots au maximum`,x.type==="texte"?"Écrivez simplement : on relit l'orthographe avec vous si besoin":"Une phrase courte, qui se lit d'un coup d'œil","Pas de lien internet ni de numéro de carte"]).map(t=>`<li>${esc(t)}</li>`).join("");
+    if(ph){$("rt-photo").disabled=!COMPTE.actif;$("rt-photo-hint").textContent=COMPTE.actif?"Au moins 1 000 pixels, en largeur de préférence.":"Vous nous l'enverrez juste après votre paiement."}
+    else{$("rt-txt").value=r&&!r.photo?r.apres:norm1(x.el.textContent);rtCompte();$("rt-txt").focus({preventScroll:true})}
+    $("rt-ed").scrollIntoView({block:"nearest",behavior:"smooth"});
+  }
+  function rtCompte(){const n=mots($("rt-txt").value),m=rtSel?rtSel.max:0;$("rt-wc").textContent=`${n} / ${m} mots`;
+    $("rt-wc").classList.toggle("over",n>m);$("rt-txt").classList.toggle("bad",n>m)}
+  function rtEnregistrer(l){$("af-retouches").value=l.length?JSON.stringify(l.slice(0,RT_MAX)):"";modifie=true;sauver();rtListeDraw();render()}
+  function rtFermer(){rtSel=null;$("rt-ed").hidden=true;try{frame.contentDocument.querySelectorAll(".hood-sel").forEach(e=>e.classList.remove("hood-sel"))}catch(e){}}
+  function rtValider(){
+    if(!rtSel)return;const v=norm1($("rt-txt").value);
+    if(!v){$("rt-msg").textContent="Ce texte ne peut pas être vide. Pour revenir au texte d'origine : « Remettre l'original ».";return}
+    if(mots(v)>rtSel.max){$("rt-msg").textContent=`Trop long pour cet endroit : ${mots(v)} mots, ${rtSel.max} au maximum.`;return}
+    if(/https?:\/\/|www\.|\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{4}\b/i.test(v)){$("rt-msg").textContent="Pas de lien internet ni de numéro de carte dans les textes du site.";return}
+    const l=rtListe().filter(r=>r.k!==rtSel.k);
+    if(v!==rtSel.avant){if(l.length>=RT_MAX){$("rt-msg").textContent=`${RT_MAX} retouches au maximum. Pour le reste, posez-nous la question.`;return}
+      l.push({k:rtSel.k,avant:rtSel.avant,apres:v})}
+    rtFermer();rtEnregistrer(l)}
+  async function rtPhoto(f0){
+    if(!rtSel||!f0)return;const msg=t=>{$("rt-msg").textContent=t};
+    if(!UP.photos.types.includes(f0.type)){msg("Ce format n'est pas accepté : JPG, PNG ou WebP.");return}
+    if(f0.size>25*1048576){msg("Cette photo est trop lourde.");return}
+    const d=await taille(f0).catch(()=>null);if(!d){msg("Cette photo n'a pas pu être lue.");return}
+    if(Math.max(d.w,d.h)<1000){URL.revokeObjectURL(d.u);msg(`Cette photo est trop petite (${d.w} × ${d.h} pixels) : il faut au moins 1 000 pixels.`);return}
+    const f=await alleger(f0,d).catch(()=>null);if(!f){msg("Cette photo n'a pas pu être allégée. Essayez-en une autre.");return}
+    msg("Envoi en cours…");
+    const r=await COMPTE.deposerPhoto(f,"photo").catch(()=>({motif:"reseau"}));
+    if(!r||!r.fichier){msg(MOTIF[r&&r.motif]||"La photo n'a pas pu être envoyée. Réessayez.");return}
+    apercus[r.fichier]=d.u;
+    const l=rtListe().filter(x=>x.k!==rtSel.k);if(l.length>=RT_MAX){msg(`${RT_MAX} retouches au maximum.`);return}
+    l.push({k:rtSel.k,photo:r.fichier});msg("");rtFermer();rtEnregistrer(l)}
+  function rtListeDraw(){const l=rtListe(),box=$("rt-liste");
+    if(!l.length){box.innerHTML="";return}
+    box.innerHTML=`<div class="rt-l"><b>Vos retouches (${l.length})</b><ul>${l.map((r,i)=>`<li><span>${esc(RT_LAB[r.k.split(":")[0]]||"Retouche")}${r.photo?" : photo changée":" : « "+esc(r.apres)+" »"}</span><button type="button" class="linkbtn" data-rt-annule="${i}">Annuler</button></li>`).join("")}</ul></div>`;
+    box.querySelectorAll("[data-rt-annule]").forEach(b=>b.addEventListener("click",()=>{const m=rtListe();m.splice(+b.dataset.rtAnnule,1);rtFermer();rtEnregistrer(m)}))}
   function decorate(doc){
     doc.addEventListener("click",e=>{if(e.target.closest("a,button"))e.preventDefault()},true);
     const svc=applyServices(doc);
@@ -862,8 +1040,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(b&&!isEquipe(tplKey())&&txt("nom")&&!b.querySelector("img")){b.textContent=txt("nom")}
     if(logoURL&&b){const img=doc.createElement("img");img.src=logoURL;img.alt="Logo";img.style.cssText="height:1.9em;width:auto;max-width:150px;object-fit:contain;vertical-align:middle;margin-right:.5em;display:inline-block";b.prepend(img)}
     if(!isEquipe(tplKey())&&txt("nom"))renameH1(doc,txt("nom"));
+    if(prixLignes().length)sansPrix(doc);  /* vos prix remplacent ceux de l'exemple */
     optionSections(doc,svc);
     if(!opt("tarifs"))sansPrix(doc);
+    affinageVisible(doc);
+    retouchesSurLeSite(doc);
   }
   /* Demande de Steve (12 Nov. 2026) : sans « Vos tarifs affichés », aucun prix ne s'affiche sur le site. */
   function sansPrix(doc){
@@ -871,6 +1052,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const w=doc.createTreeWalker(doc.body,4);const ns=[];let n;
     while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE)$/.test(p.tagName))continue;P.lastIndex=0;if(P.test(n.nodeValue))ns.push(n)}
     ns.forEach(n=>{P.lastIndex=0;n.nodeValue=n.nodeValue.replace(P,"").replace(/\s*[—–·|:-]\s*$/,"").replace(/^\s*[—–·|:-]\s*/,"")});
+    /* Prix écrits sans « € » à côté d'un plat ou d'une prestation (ex. : « Cacio e pepe … 16 ») */
+    doc.body.querySelectorAll("*").forEach(el=>{if(el.children.length||el.closest("h1,h2,footer,nav,.hood-opt,table.hours"))return;
+      if(/^\s*\d{1,3}(?:[.,]\d{1,2})?\s*$/.test(el.textContent)&&el.parentElement&&el.parentElement.querySelector("h3,h4,b,strong"))el.textContent=""});
   }
   function renameH1(doc,nom){
     const h=doc.querySelector("h1");if(!h)return;const old=h.textContent.replace(/\s+/g," ").replace(/- /g,"-").trim();
@@ -889,6 +1073,14 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   new ResizeObserver(size).observe(vp);
   frame.addEventListener("load",()=>{try{const d=frame.contentDocument;decorate(d);frame.contentWindow.scrollTo(0,lastScroll)}catch(e){}});
+  /* Pendant l'affinage, l'aperçu montre la partie du site dont parle la question. */
+  const CIBLE={prix:"tarifs",horaires:"horaires",zone:"zone",marques:"marques",histoire:"apropos"};
+  function scrollCible(k){try{const d=frame.contentDocument,w=frame.contentWindow;if(!d||!d.body)return;
+    const sm=matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth";
+    if(k==="ton"||k==="fin"){w.scrollTo({top:0,behavior:sm});return}
+    let el=CIBLE[k]&&d.querySelector(`[data-hood="${CIBLE[k]}"]`);
+    if(!el&&k==="photos")el=photoEls(d)[1]||null;
+    if(el)w.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+w.scrollY-30),behavior:sm})}catch(e){}}
   async function render(){
     buildFamilySteps();famDuChoix();const id=++renderId;
     try{lastScroll=frame.contentWindow?frame.contentWindow.scrollY:0}catch(e){lastScroll=0}
@@ -898,7 +1090,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     let html;try{html=await buildHTML()}catch(e){html='<!doctype html><meta charset="utf-8"><body style="font:16px system-ui;padding:40px;color:#555">Le modèle n\'a pas pu se charger. Rechargez la page.</body>'}
     if(id===renderId)frame.srcdoc=html;
   }
-  function onChange(){clearTimeout(timer);timer=setTimeout(render,180)}
+  function onChange(lent){clearTimeout(timer);timer=setTimeout(render,lent?450:180)}
+  /* Affinage en direct (demande de Steve, 12 Nov. 2026) : chaque réponse de la partie 2 redessine l'aperçu. */
+  const EN_DIRECT=id=>/^af-/.test(id)&&!/^af-(tit-|dom-|contact|i$|up-|retouches)/.test(id);
   function setDevice(d){device=d;$("d-phone").setAttribute("aria-pressed",d==="phone");$("d-desk").setAttribute("aria-pressed",d==="desk");$("browser").classList.toggle("phone",d==="phone");requestAnimationFrame(size)}
   $("d-phone").addEventListener("click",()=>setDevice("phone"));$("d-desk").addEventListener("click",()=>setDevice("desk"));
 
@@ -1072,7 +1266,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     ["zone","marques"].forEach(k=>opt(k)&&l.push(k));
     if(opt("apropos"))l.push("histoire");
     if(opt("contact"))l.push("contact");
-    l.push("valider");return l}
+    l.push("fin","valider");return l}
   const afVal=n=>{const r=form.querySelector(`input[name="af-${n}"]:checked`);return r?r.value:""};
   function afTexts(){
     const k=famKey(),nom=txt("nom")||"votre commerce",ville=txt("ville")||"votre ville";
@@ -1198,7 +1392,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const apercus={};
   const upListe=k=>{try{const l=JSON.parse(txt("af-"+k+"-liste")||"[]");return Array.isArray(l)?l.filter(x=>typeof x==="string").slice(0,UP[k].max):[]}catch(e){return []}};
   const upMsg=(k,t)=>{$("af-msg-"+k).textContent=t||""};
-  function upSet(k,l){$("af-"+k+"-liste").value=l.length?JSON.stringify(l):"";modifie=true;sauver()}
+  function upSet(k,l){$("af-"+k+"-liste").value=l.length?JSON.stringify(l):"";modifie=true;sauver();onChange()}
   function upDraw(k){
     const l=upListe(k),box=$("af-th-"+k);box.innerHTML="";
     l.forEach((nom,i)=>{const d=document.createElement("div");d.className="th";
@@ -1250,9 +1444,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function afShow(i){
     const l=afList();i=Math.min(Math.max(i,0),l.length-1);$("af-i").value=i;const k=l[i],nq=l.length-1;
     form.querySelectorAll(".aq").forEach(el=>el.hidden=el.dataset.aq!==k);
-    $("meta").textContent=k==="valider"?"Dernière étape":`Finalisation · question ${i+1} sur ${nq}`;
+    $("meta").textContent=k==="valider"?"Dernière étape":k==="fin"?"Votre site est prêt":`Finalisation · question ${i+1} sur ${nq-1}`;
+    if(k!=="fin"&&retouche){retouche=false;rtSel=null;$("rt").hidden=true;$("fin-choix").hidden=false;render()}
+    if(k==="fin"){$("rt").hidden=!retouche;$("fin-choix").hidden=retouche;rtListeDraw()}
+    scrollCible(k);
     [...$("progress").children].forEach(b=>b.classList.add("on"));
-    $("af-next").hidden=$("af-skip").hidden=k==="valider";
+    $("af-next").hidden=$("af-skip").hidden=k==="valider"||k==="fin";
     $("af-back").textContent=i===0?"← Revoir mon site":"← Retour";
     if(k==="contact"&&!txt("af-contact")&&txt("email"))$("af-contact").value=txt("email");
     afTexts();afMore();afRows();upDraw("photos");upDraw("tarifs");if(k==="valider")afValider();
@@ -1265,6 +1462,16 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const q=form.querySelector(".aq:not([hidden])");if(q)q.focus({preventScroll:true});
     window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
   $("af-next").addEventListener("click",()=>afGo(1));
+  $("fin-payer").addEventListener("click",()=>afGo(1));
+  $("fin-question").addEventListener("click",()=>openMail("question"));$("rt-question").addEventListener("click",()=>openMail("question"));
+  $("fin-retouche").addEventListener("click",()=>{retouche=true;$("fin-choix").hidden=true;$("rt").hidden=false;$("fin-lead").textContent="Touchez votre site pour changer un titre, un texte ou une photo. Chaque endroit a ses règles, pour que le site reste beau.";rtListeDraw();render();
+    if(matchMedia("(max-width:900px)").matches)$("vp").scrollIntoView({behavior:"smooth",block:"start"})});
+  $("rt-fini").addEventListener("click",()=>{rtFermer();retouche=false;$("fin-lead").textContent="Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez.";render();afGo(1)});
+  $("rt-ok").addEventListener("click",rtValider);$("rt-annuler").addEventListener("click",rtFermer);
+  $("rt-orig").addEventListener("click",()=>{if(!rtSel)return;const l=rtListe().filter(r=>r.k!==rtSel.k);rtFermer();rtEnregistrer(l)});
+  $("rt-txt").addEventListener("input",()=>{rtCompte();$("rt-msg").textContent=""});
+  $("rt-txt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();rtValider()}});
+  $("rt-photo").addEventListener("change",()=>{const f=$("rt-photo").files[0];$("rt-photo").value="";rtPhoto(f)});
   $("af-skip").addEventListener("click",()=>afGo(1));
   $("af-back").addEventListener("click",()=>afGo(-1));
   $("af-addrow").addEventListener("click",()=>{const r=form.querySelector(".prow[hidden]");if(r){r.hidden=false;r.querySelector("input").focus()}$("af-addrow").hidden=!form.querySelector(".prow[hidden]")});
@@ -1283,6 +1490,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(afList().includes("contact")&&txt("af-contact"))L.push("Messages du formulaire à : "+txt("af-contact"));
     if(txt("af-tit-nom"))L.push("Titulaire du nom de domaine : "+txt("af-tit-nom")+", SIREN "+fmtSiren(txt("af-tit-siren"))+", "+txt("af-tit-adresse")+" ; gérant : "+txt("af-tit-gerant")+", "+txt("af-tit-tel")+", "+txt("af-tit-email"));
     if(afList().includes("prix")&&afVal("prix")==="photo"&&upListe("tarifs").length)L.push(`Tarifs : ${upListe("tarifs").length} fichier(s) reçu(s)`);
+    rtListe().forEach(r=>L.push("Retouche ("+(RT_LAB[r.k.split(":")[0]]||r.k)+") : "+(r.photo?"photo changée":"« "+r.avant.slice(0,60)+" » → « "+r.apres+" »")));
     return L}
   $("af-dom-ext").addEventListener("change",()=>{modifie=true;sauver();domVerifier()});
   $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;domUrl();
@@ -1291,6 +1499,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!domValide(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     if($("af-dom-dispo").value==="pris"){$("err").textContent="Cette adresse est déjà prise : choisissez-en une libre.";$("domaine").classList.add("bad");$("domaine").focus();return}
     if(!titValide()){const [m,el]=titManque();$("err").textContent=m;el.focus();return}
+    if(/\bgreen\s*rock\b/i.test(txt("af-tit-nom"))||/^hood\b/i.test(txt("af-tit-nom"))){$("err").textContent="Le nom de domaine doit être au nom de votre entreprise : HOOD et GreenRock, le prestataire, ne peuvent pas en être titulaires. Choisissez votre entreprise dans « Le titulaire ».";return}
     $("domaine").classList.remove("bad");
     if(LIEN_PAIEMENT&&!$("cgv-ok").checked){$("err").textContent="Cochez la case d'acceptation des CGV pour continuer.";$("cgv-ok").focus();return}
     if(LIEN_PAIEMENT){const go=()=>{location.href=LIEN_PAIEMENT+(LIEN_PAIEMENT.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
@@ -1304,6 +1513,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       const MSG={titulaire:"Vérifiez le titulaire du nom de domaine : nom, SIREN, téléphone et e-mail.",domaine:"Vérifiez l'adresse de votre site.",
         plafond_projet:"Trop de tentatives de paiement aujourd'hui pour ce site. Réessayez demain ou écrivez-nous.",plafond_site:"Le paiement est momentanément indisponible. Réessayez un peu plus tard.",
         projet:"Ce site est déjà commandé, ou la session a expiré : rechargez la page.",
+        titulaire_prestataire:"Le nom de domaine doit être au nom de votre entreprise : HOOD et GreenRock, le prestataire, ne peuvent pas en être titulaires. Choisissez votre entreprise dans « Le titulaire ».",
         sans_projet:"Nous n'avons pas pu enregistrer votre site avec cette adresse e-mail : plus de 3 sites commencés en 24 heures avec la même adresse (protection contre les robots), ou coupure de réseau. Écrivez-nous à contact@hood-web.com, on finalise avec vous.",stripe:"Le service de paiement ne répond pas. Réessayez dans un instant."};
       modifie=true;Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))]).catch(()=>{})
         .then(()=>COMPTE.payer?COMPTE.payer(etat()):{motif:"non_configure"})
@@ -1328,7 +1538,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
 
     $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":"Paiement sécurisé par Stripe, en mode essai pour le moment : rien n'est débité (carte de test 4242 4242 4242 4242, date future, code 123). TVA non applicable, article 293 B du CGI."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
-  form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange()});
+  form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange();
+    else if(EN_DIRECT(id)&&e.target.type!=="radio"&&e.target.type!=="checkbox")onChange(true)});
+  form.addEventListener("change",e=>{const id=e.target.id||"";if(EN_DIRECT(id)&&(e.target.type==="radio"||e.target.type==="checkbox"||e.target.type==="time"))onChange()});
   form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
 
   /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ----
