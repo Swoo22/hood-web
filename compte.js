@@ -104,6 +104,23 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return "non";
   };
 
+  /* Fin de l'affinage : le visiteur valide son site (statut « commande »,
+     alerte à Steve). Par le compte connecté, sinon par le jeton. Rien n'est
+     encaissé ici. Renvoie true si c'est enregistré. */
+  C.valider = async function (etat) {
+    const sb = await charger(); if (!sb) return false;
+    if (projetConnecte) {
+      const r = await sb.rpc("hood_projet_valider", { p_jeton: null, p_projet: projetConnecte, p_reponses: etat });
+      if (!r.error && r.data) { projetConnecte = null; return true; }
+    }
+    const j = lire(CLE_JETON);
+    if (j) {
+      const r = await sb.rpc("hood_projet_valider", { p_jeton: j, p_projet: null, p_reponses: etat });
+      if (!r.error && r.data) { C.oublierJeton(); return true; }
+    }
+    return false;
+  };
+
   C.session = async function () {
     const sb = await charger(); if (!sb) return null;
     const { data } = await sb.auth.getSession();

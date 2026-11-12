@@ -198,6 +198,33 @@ input.bad{border-color:var(--danger)}
 @media (prefers-reduced-motion:reduce){.viewport iframe,.veil-msg{transition:none}}
 .viewport.veil{pointer-events:none}
 .paybar{display:none}
+/* Affinage (étape 7) */
+.checks.c1{grid-template-columns:minmax(0,1fr)}
+.checks.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ck small i{font-style:italic}
+.aq{display:grid;gap:16px}
+.aq h1{margin-bottom:0}
+.aq .lead{margin-bottom:4px}
+.more{display:grid;gap:10px}
+.rowhead,.prow{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px}
+.rowhead span{font-size:12px;font-weight:700;color:var(--muted)}
+.rows{display:grid;gap:8px}
+.hours{display:grid;gap:8px}
+.hrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:14px}
+.hday{display:flex;align-items:center;gap:8px;font-weight:700;width:110px}
+.hday input{width:18px;height:18px;accent-color:var(--accent)}
+.hr{display:flex;flex-wrap:wrap;align-items:center;gap:6px;color:var(--muted)}
+.hr input{width:auto;padding:6px 8px;font-size:14px}
+.hrow:not(:has(.hday input:checked)) .hr{display:none}
+.hrow:not(:has(.hday input:checked))::after{content:"Fermé";color:var(--muted);font-size:13px}
+.qgroup{display:grid;gap:8px;border:0;margin:0;padding:0;min-width:0}
+.qgroup .t{font-weight:700;font-size:14px;padding:0;margin-bottom:8px}
+.qgroup .t small{font-weight:500;color:var(--muted)}
+.say{border-left:3px solid var(--accent);padding:8px 12px;background:var(--bg-soft);border-radius:0 8px 8px 0;font-size:14px;display:grid;gap:2px}
+.say small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.aq[data-aq="histoire"]:has(#af-pas-histoire:checked) .qgroup,.aq[data-aq="histoire"]:has(#af-pas-histoire:checked) .say{opacity:.4;pointer-events:none}
+.anav{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.anav .skip{margin-left:auto}
 /* Révélation (étape 6) : titre en grand, site au centre, un seul bouton */
 body.s6 .wrap.final{grid-template-columns:minmax(0,1fr);max-width:1120px;gap:18px}
 body.s6 .progress,body.s6 .meta,body.s6 .tplname,body.s6 .note{display:none}
@@ -207,6 +234,8 @@ body.s6 .step[data-step="6"] .lead{margin:0 auto}
 body.s6 .side{position:static;order:1}
 body.s6 .side-head{justify-content:center}
 body.s6 .side-head b{display:none}
+body.s6 #compte-note,body.after #compte-note{display:none!important}
+body.deja-valide .side{display:none}body.deja-valide .wrap.final{grid-template-columns:minmax(0,560px)}
 body.s6 .viewport{height:clamp(380px,calc(100vh - 400px),720px)}
 body.s6 #err{display:none}
 body.s6 .step[data-step="6"] .lead{margin-bottom:0}
@@ -343,22 +372,89 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
         <p class="lead" id="ready-lead">Votre site, construit avec vos réponses.</p>
       </div>
 
-      <!-- 7. Commande -->
+      <!-- 7. Affinage, puis validation (décision de Steve, 12 Nov. 2026 : rien ne part avant) -->
       <div class="step" data-step="7" hidden>
-        <h1>On finalise <em>votre site</em>.</h1>
-        <p class="lead" id="cmd-lead">Choisissez l'adresse de votre site et envoyez-nous votre demande. On le finalise avec vous, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
-        <div class="fields">
-          <label class="f">L'adresse de votre site
-            <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine"><span>.fr</span></div>
-            <span class="hint">On vérifie qu'elle est libre, puis on la réserve à votre nom après le paiement.</span>
-          </label>
-          <div class="sum" id="sum"></div>
-          <button type="button" class="btn primary wide" id="pay">Finaliser mon site</button>
-          <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
-          <div class="doubt"><b>Pas sûr ? Des questions ?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
-            <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
-          <button type="button" class="alt" id="back-ready">← Revoir mon site</button>
+        <input type="hidden" id="af-i" value="0">
+        <div class="aq" tabindex="-1" data-aq="photos" hidden>
+          <h1>Quelles <em>photos</em> sur votre site&#8239;?</h1>
+          <p class="lead">Pour montrer votre commerce sous son meilleur jour.</p>
+          <div class="checks c1"><label class="ck"><input type="radio" name="af-photos" id="af-photos-mine" value="mine"><span>Mes propres photos<small>On vous envoie un lien pour les déposer, juste après votre validation</small></span></label><label class="ck"><input type="radio" name="af-photos" id="af-photos-ours" value="ours"><span>Celles que vous proposez<small>Choisies pour votre métier</small></span></label><label class="ck"><input type="radio" name="af-photos" id="af-photos-mix" value="mix"><span>Un peu des deux<small>Vos photos, complétées par les nôtres</small></span></label></div>
         </div>
+        <div class="aq" tabindex="-1" data-aq="ton" hidden>
+          <h1>Comment parler à <em>vos clients</em>&#8239;?</h1>
+          <p class="lead">On écrit tous les textes de votre site dans ce ton.</p>
+          <div class="checks c1"><label class="ck"><input type="radio" name="af-ton" id="af-ton-chaleureux" value="chaleureux"><span>Chaleureux et simple<small><i id="af-ex-chaleureux"></i></small></span></label><label class="ck"><input type="radio" name="af-ton" id="af-ton-serieux" value="serieux"><span>Sérieux et rassurant<small><i id="af-ex-serieux"></i></small></span></label><label class="ck"><input type="radio" name="af-ton" id="af-ton-chic" value="chic"><span>Élégant<small><i id="af-ex-chic"></i></small></span></label></div>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="prix" hidden>
+          <h1>Vos <em>prix</em>.</h1>
+          <p class="lead">Comment préférez-vous nous les donner&#8239;?</p>
+          <div class="checks c1"><label class="ck"><input type="radio" name="af-prix" id="af-prix-write" value="write"><span>Je les écris ici<small>Quelques lignes suffisent</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-photo" value="photo"><span>J'envoie une photo de ma carte ou de mes tarifs<small>Même écrite à la main : on vous envoie un lien après votre validation, et on recopie tout</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-none" value="none"><span>Pas de prix sur mon site</span></label></div>
+          <div class="more" data-more="prix-write" hidden>
+            <div class="rowhead"><span>Prestation ou produit</span><span>Prix</span></div>
+            <div class="rows"><div class="prow" data-row="0"><input type="text" id="af-pn-0" maxlength="48" aria-label="Prestation ou produit 1" placeholder="Ex. : Plat du jour"><input type="text" id="af-pp-0" maxlength="18" aria-label="Prix 1" placeholder="14,50 €"></div><div class="prow" data-row="1"><input type="text" id="af-pn-1" maxlength="48" aria-label="Prestation ou produit 2" placeholder="Ex. : Menu du midi"><input type="text" id="af-pp-1" maxlength="18" aria-label="Prix 2" placeholder="19 €"></div><div class="prow" data-row="2"><input type="text" id="af-pn-2" maxlength="48" aria-label="Prestation ou produit 3" placeholder="Ex. : Dessert maison"><input type="text" id="af-pp-2" maxlength="18" aria-label="Prix 3" placeholder="à partir de 6 €"></div><div class="prow" data-row="3"><input type="text" id="af-pn-3" maxlength="48" aria-label="Prestation ou produit 4" placeholder=""><input type="text" id="af-pp-3" maxlength="18" aria-label="Prix 4" placeholder=""></div><div class="prow" data-row="4" hidden><input type="text" id="af-pn-4" maxlength="48" aria-label="Prestation ou produit 5" placeholder=""><input type="text" id="af-pp-4" maxlength="18" aria-label="Prix 5" placeholder=""></div><div class="prow" data-row="5" hidden><input type="text" id="af-pn-5" maxlength="48" aria-label="Prestation ou produit 6" placeholder=""><input type="text" id="af-pp-5" maxlength="18" aria-label="Prix 6" placeholder=""></div><div class="prow" data-row="6" hidden><input type="text" id="af-pn-6" maxlength="48" aria-label="Prestation ou produit 7" placeholder=""><input type="text" id="af-pp-6" maxlength="18" aria-label="Prix 7" placeholder=""></div><div class="prow" data-row="7" hidden><input type="text" id="af-pn-7" maxlength="48" aria-label="Prestation ou produit 8" placeholder=""><input type="text" id="af-pp-7" maxlength="18" aria-label="Prix 8" placeholder=""></div><div class="prow" data-row="8" hidden><input type="text" id="af-pn-8" maxlength="48" aria-label="Prestation ou produit 9" placeholder=""><input type="text" id="af-pp-8" maxlength="18" aria-label="Prix 9" placeholder=""></div><div class="prow" data-row="9" hidden><input type="text" id="af-pn-9" maxlength="48" aria-label="Prestation ou produit 10" placeholder=""><input type="text" id="af-pp-9" maxlength="18" aria-label="Prix 10" placeholder=""></div><div class="prow" data-row="10" hidden><input type="text" id="af-pn-10" maxlength="48" aria-label="Prestation ou produit 11" placeholder=""><input type="text" id="af-pp-10" maxlength="18" aria-label="Prix 11" placeholder=""></div><div class="prow" data-row="11" hidden><input type="text" id="af-pn-11" maxlength="48" aria-label="Prestation ou produit 12" placeholder=""><input type="text" id="af-pp-11" maxlength="18" aria-label="Prix 12" placeholder=""></div></div>
+            <button type="button" class="linkbtn" id="af-addrow">+ Ajouter une ligne</button>
+            <span class="hint">Si le prix varie, écrivez « à partir de ».</span>
+          </div>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="horaires" hidden>
+          <h1>Vos <em>horaires</em>.</h1>
+          <p class="lead">Les jours et les heures où vos clients peuvent venir ou vous appeler.</p>
+          <div class="checks c1"><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-google" value="google"><span>Comme sur ma fiche Google<small>On les reprend tels quels</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-write" value="write"><span>Je les indique<small>Jour par jour, en quelques clics</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-none" value="none"><span>Pas d'horaires sur le site<small>Sur rendez-vous, par exemple</small></span></label></div>
+          <div class="more" data-more="horaires-write" hidden><span class="hint">Cochez vos jours d'ouverture. La 2ᵉ plage est facultative.</span><div class="hours"><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-0" checked>Lundi</label><span class="hr"><input type="time" id="af-h-0-a" value="09:00" aria-label="Lundi, ouverture"> à <input type="time" id="af-h-0-b" value="12:00" aria-label="Lundi, fermeture"> <span class="h2">et <input type="time" id="af-h-0-c" value="14:00" aria-label="Lundi, réouverture"> à <input type="time" id="af-h-0-d" value="18:00" aria-label="Lundi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-1" checked>Mardi</label><span class="hr"><input type="time" id="af-h-1-a" value="09:00" aria-label="Mardi, ouverture"> à <input type="time" id="af-h-1-b" value="12:00" aria-label="Mardi, fermeture"> <span class="h2">et <input type="time" id="af-h-1-c" value="14:00" aria-label="Mardi, réouverture"> à <input type="time" id="af-h-1-d" value="18:00" aria-label="Mardi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-2" checked>Mercredi</label><span class="hr"><input type="time" id="af-h-2-a" value="09:00" aria-label="Mercredi, ouverture"> à <input type="time" id="af-h-2-b" value="12:00" aria-label="Mercredi, fermeture"> <span class="h2">et <input type="time" id="af-h-2-c" value="14:00" aria-label="Mercredi, réouverture"> à <input type="time" id="af-h-2-d" value="18:00" aria-label="Mercredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-3" checked>Jeudi</label><span class="hr"><input type="time" id="af-h-3-a" value="09:00" aria-label="Jeudi, ouverture"> à <input type="time" id="af-h-3-b" value="12:00" aria-label="Jeudi, fermeture"> <span class="h2">et <input type="time" id="af-h-3-c" value="14:00" aria-label="Jeudi, réouverture"> à <input type="time" id="af-h-3-d" value="18:00" aria-label="Jeudi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-4" checked>Vendredi</label><span class="hr"><input type="time" id="af-h-4-a" value="09:00" aria-label="Vendredi, ouverture"> à <input type="time" id="af-h-4-b" value="12:00" aria-label="Vendredi, fermeture"> <span class="h2">et <input type="time" id="af-h-4-c" value="14:00" aria-label="Vendredi, réouverture"> à <input type="time" id="af-h-4-d" value="18:00" aria-label="Vendredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-5" checked>Samedi</label><span class="hr"><input type="time" id="af-h-5-a" value="09:00" aria-label="Samedi, ouverture"> à <input type="time" id="af-h-5-b" value="12:00" aria-label="Samedi, fermeture"> <span class="h2">et <input type="time" id="af-h-5-c" value="" aria-label="Samedi, réouverture"> à <input type="time" id="af-h-5-d" value="" aria-label="Samedi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-6">Dimanche</label><span class="hr"><input type="time" id="af-h-6-a" value="" aria-label="Dimanche, ouverture"> à <input type="time" id="af-h-6-b" value="" aria-label="Dimanche, fermeture"> <span class="h2">et <input type="time" id="af-h-6-c" value="" aria-label="Dimanche, réouverture"> à <input type="time" id="af-h-6-d" value="" aria-label="Dimanche, fermeture du soir"></span></span></div></div></div>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="zone" hidden>
+          <h1>Où <em>intervenez-vous</em>&#8239;?</h1>
+          <p class="lead">Pour que vos clients sachent tout de suite si vous venez chez eux.</p>
+          <div class="checks c2"><label class="ck"><input type="radio" name="af-zone" id="af-zone-ville" value="ville"><span>Dans ma ville</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-15" value="15"><span>Jusqu'à 15 km</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-30" value="30"><span>Jusqu'à 30 km</span></label><label class="ck"><input type="radio" name="af-zone" id="af-zone-dept" value="dept"><span>Tout le département</span></label></div>
+          <label class="f">Des communes à citer&#8239;? <small>facultatif, 10 au maximum</small><input type="text" id="af-communes" maxlength="140" placeholder="Ex. : Voiron, Coublevie, Saint-Jean-de-Moirans"></label>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="marques" hidden>
+          <h1>Les <em>marques</em> que vous proposez.</h1>
+          <p class="lead">Celles que vous vendez ou que vous utilisez, si vous voulez les afficher.</p>
+          <label class="f">Vos marques <small>10 au maximum, séparées par des virgules</small><input type="text" id="af-marques" maxlength="150" placeholder="Ex. : Saphir, Famaco"></label>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="histoire" hidden>
+          <h1>Votre <em>histoire</em>.</h1>
+          <p class="lead">Trois petites questions, et on écrit le texte pour vous.</p>
+          <fieldset class="qgroup"><legend class="t">Depuis quand êtes-vous là&#8239;?</legend><div class="chips"><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-2" value="2"><span>Moins de 2 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-10" value="10"><span>2 à 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-plus" value="plus"><span>Plus de 10 ans</span></label><label class="chip"><input type="radio" name="af-depuis" id="af-depuis-30" value="30"><span>Plus de 30 ans</span></label></div></fieldset>
+          <fieldset class="qgroup"><legend class="t">Vous êtes combien&#8239;?</legend><div class="chips"><label class="chip"><input type="radio" name="af-eq" id="af-eq-seul" value="seul"><span>Seul ou seule</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-petit" value="petit"><span>2 ou 3 personnes</span></label><label class="chip"><input type="radio" name="af-eq" id="af-eq-grand" value="grand"><span>4 ou plus</span></label></div></fieldset>
+          <fieldset class="qgroup"><legend class="t">Ce qui compte pour vous <small>3 au maximum</small></legend><div class="chips" id="af-vals"><label class="chip"><input type="checkbox" id="af-v-0"><span id="af-vl-0"></span></label><label class="chip"><input type="checkbox" id="af-v-1"><span id="af-vl-1"></span></label><label class="chip"><input type="checkbox" id="af-v-2"><span id="af-vl-2"></span></label><label class="chip"><input type="checkbox" id="af-v-3"><span id="af-vl-3"></span></label><label class="chip"><input type="checkbox" id="af-v-4"><span id="af-vl-4"></span></label><label class="chip"><input type="checkbox" id="af-v-5"><span id="af-vl-5"></span></label></div></fieldset>
+          <div class="say"><small>Ce qu'on écrira</small><span id="af-say"></span></div>
+          <label class="ck" style="margin-top:6px"><input type="checkbox" id="af-pas-histoire"><span>Pas de partie « Notre histoire » sur mon site</span></label>
+        </div>
+        <div class="aq" tabindex="-1" data-aq="valider" hidden>
+          <h1>Validez <em>votre site</em>.</h1>
+          <p class="lead" id="cmd-lead">On le finalise avec vos réponses, puis vous payez quand il vous plaît, juste avant la mise en ligne.</p>
+          <div class="fields">
+            <label class="f">L'adresse de votre site
+              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine"><span>.fr</span></div>
+              <span class="hint">On vérifie qu'elle est libre, puis on la réserve à votre nom après le paiement.</span>
+            </label>
+            <div class="sum" id="sum"></div>
+            <button type="button" class="btn primary wide" id="pay">Je valide mon site</button>
+            <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
+            <div class="doubt"><b>Pas sûr&#8239;? Des questions&#8239;?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
+              <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
+          </div>
+        </div>
+        <div class="anav" id="anav">
+          <button type="button" class="btn ghost" id="af-back">← Retour</button>
+          <button type="button" class="btn primary" id="af-next">Continuer</button>
+          <button type="button" class="skip" id="af-skip">Passer, faites au mieux</button>
+        </div>
+      </div>
+
+      <!-- 9. Site validé -->
+      <div class="step" data-step="9" hidden>
+        <h1>C'est validé&#8239;!</h1>
+        <p class="lead">Merci. On prépare votre site avec vos réponses et on vous écrit très vite pour la suite.</p>
+        <ol class="next">
+          <li><span><b>Vos photos et vos tarifs</b>Si vous voulez nous en envoyer, on vous écrit avec un lien pour les déposer.</span></li>
+          <li><span><b>L'adresse de votre site</b>On vérifie que <b id="ok-dom" style="display:inline"></b> est libre.</span></li>
+          <li><span><b>Le paiement</b>Vous payez juste avant la mise en ligne, quand votre site vous plaît.</span></li>
+        </ol>
+        <a class="btn line" href="espace.html" id="ok-espace">Retrouver mon site dans mon espace</a>
+        <button type="button" class="alt" id="ok-nouveau" style="margin-top:12px">Créer le site d'un autre commerce</button>
       </div>
 
       <!-- 8. Message prêt -->
@@ -403,7 +499,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
 </main>
 <div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Je finalise mon site</button></div>
 
-<script src="compte.js?v=20261112b"></script>
+<script src="compte.js?v=20261112c"></script>
 <script>
 const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fffdf9;--encre:#1f2a24;--doux:#6b746e;--rose:#c8566b;--vert:#e4efe7}\n*{box-sizing:border-box;margin:0}body{font-family:\"Palatino Linotype\",Palatino,\"Book Antiqua\",\"URW Palladio L\",serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--encre);color:#fff;font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eadfd3}\n.nom{font-size:1.2rem;letter-spacing:.04em}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--rose);color:#fff;text-decoration:none;padding:11px 20px;border-radius:2px;border:0}\n.btn.l{background:none;color:var(--rose);border:1px solid var(--rose)}\n.s2{background:var(--vert);padding:48px 16px 96px;text-align:center}\n.s2 h1{font-size:2.3rem;font-weight:normal;line-height:1.15;max-width:760px;margin:auto}.s2 h1 em{color:var(--rose)}\n.sous{display:block;margin:12px 0 22px;color:var(--doux);font-style:italic}.sous::first-letter{text-transform:uppercase}\n.wrap{max-width:1040px;margin:-64px auto 0;padding:0 16px}\n.sv{background:#fff;border:1px solid #eadfd3;box-shadow:0 10px 30px rgba(0,0,0,.08);min-height:240px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:40px 0}h2{font-weight:normal;font-size:1.7rem;margin-bottom:4px}\n.note{color:var(--doux);font-style:italic;margin-bottom:18px}\n.cartes{display:grid;gap:18px}.carte-s3{border-top:2px solid var(--rose);padding-top:10px}.carte-s3 h3{font-size:1.15rem;font-weight:normal}.carte-s3 p{color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:6px 0;border-bottom:1px solid #eadfd3}\n.duo>div+div{margin-top:36px}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:1px solid #eadfd3}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.4rem}.cartes{grid-template-columns:repeat(4,1fr)}.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px}.duo>div+div{margin-top:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<div class=\"s2\"><h1>Votre <em>[métier]<\/em> à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div>\n<main class=\"wrap\"><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<section><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"cartes\"><div class=\"carte-s3\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<section class=\"duo\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"duo\"><div><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div><h2>Avis<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "ardoise2": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--ardoise:#24362f;--craie:#f4f1e8;--doux:#b9c4bc;--jaune:#f2d06b;--bois:#8a6a4a}\n*{box-sizing:border-box;margin:0}body{font-family:Georgia,\"DejaVu Serif\",serif;background:var(--ardoise);color:var(--craie);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--jaune);color:var(--ardoise);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:22px 16px;border-bottom:8px solid var(--bois)}\n.nom{font-size:1.6rem;font-style:italic;display:block;margin-bottom:10px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--jaune);color:var(--ardoise);text-decoration:none;padding:11px 20px;border-radius:24px;border:0}\n.btn.l{background:none;color:var(--jaune);border:2px dashed var(--jaune)}\n.wrap{max-width:900px;margin:auto;padding:0 16px}\n.s2{text-align:center;padding:40px 0}.s2 h1{font-size:2.1rem;font-style:italic;font-weight:normal;line-height:1.2}\n.sous{display:block;color:var(--doux);margin:10px 0 22px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:28px;border:2px dashed rgba(244,241,232,.5);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:32px 0;border-top:2px dashed rgba(244,241,232,.25)}\nh2{font-size:1.5rem;font-style:italic;font-weight:normal;color:var(--jaune);text-align:center;margin-bottom:6px}\n.note{color:var(--doux);text-align:center;font-size:.9rem;margin-bottom:18px}\n.menu{list-style:none;padding:0;max-width:620px;margin:auto}.menu li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px dotted rgba(244,241,232,.35)}\n.menu b{font-weight:normal;font-size:1.1rem}.menu span{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0;text-align:center}.horaires li{padding:4px 0}\n.centre{text-align:center}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:8px solid var(--bois)}footer a{color:var(--craie)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.2rem}.paire{display:grid;grid-template-columns:1fr 1fr;gap:40px}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><h1>[nom_commerce], [métier] près de chez vous.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><h2>Ce que nous proposons<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><ul class=\"menu\"><li><b>Exemple de prestation 1<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 2<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 3<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 4<\/b><span>À fournir (David), selon le métier.<\/span><\/li><\/ul><\/section>\n<section class=\"paire\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div class=\"centre\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"centre\"><h2>Nous trouver<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section class=\"centre\"><h2>Ils en parlent<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<section class=\"centre\"><h2>Nous appeler<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "etiquette": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fff6f2;--encre:#3a2b33;--doux:#7d6b74;--corail:#ef7b62;--menthe:#bfe6d8;--lilas:#e6dcf5}\n*{box-sizing:border-box;margin:0}body{font-family:\"Century Gothic\",\"Avenir Next\",Avenir,\"URW Gothic\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{background:var(--lilas);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}\n.nom{font-weight:bold;background:var(--menthe);padding:6px 14px;border-radius:999px}\n.btn{display:inline-block;font-weight:bold;background:var(--corail);color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;border:0}\n.btn.l{background:#fff;color:var(--corail);border:2px solid var(--corail)}\n.wrap{max-width:1000px;margin:auto;padding:0 16px}\n.s2{padding:32px 0 24px}.s2 h1{font-size:2.2rem;line-height:1.15}.s2 h1::first-letter{text-transform:uppercase}\n.sous{display:inline-block;margin:12px 0 20px;color:var(--doux)}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:24px;background:var(--menthe);border-radius:28px;min-height:220px;display:grid;place-items:center;color:var(--encre);font-size:.9rem;text-align:center;padding:16px}\nsection{margin:28px 0;background:#fff;border-radius:24px;padding:28px 20px;box-shadow:0 2px 0 rgba(58,43,51,.08)}\n.tag{display:inline-block;background:var(--corail);color:#fff;font-size:.8rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;transform:rotate(-3deg);margin-bottom:10px}\nh2{font-size:1.4rem;margin-bottom:6px}.note{color:var(--doux);font-size:.85rem;margin-bottom:16px}\n.pilules{display:grid;gap:12px}.pilule{background:var(--lilas);border-radius:20px;padding:14px 18px}.pilule h3{font-size:1rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:5px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:24px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:56px 0 24px}.s2 h1{font-size:3rem}.sv{margin:0;min-height:320px}.pilules{grid-template-columns:1fr 1fr}.bas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.bas section{margin:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><div><h1>[métier] à [ville] : appelez [nom_commerce].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><br><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><span class=\"tag\">Prestations<\/span><h2>Au comptoir<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"pilules\"><div class=\"pilule\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<div class=\"bas\">\n<section><span class=\"tag\">Horaires<\/span><h2>Quand venir<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/section>\n<section id=\"s6\"><span class=\"tag\">Adresse<\/span><h2>Venir nous voir<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section><span class=\"tag\">Contact<\/span><h2>Nous joindre<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/p><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<\/div>\n<section><span class=\"tag\">À propos<\/span><h2>Le commerce<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "registre": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--papier:#fbfaf7;--encre:#111;--doux:#555;--rouge:#b3261e;--filet:#cfcac0}\n*{box-sizing:border-box;margin:0}body{font-family:\"Times New Roman\",Times,\"Liberation Serif\",serif;background:var(--papier);color:var(--encre);line-height:1.55;font-size:17px}\n.s0{font-family:Arial,sans-serif;background:var(--rouge);color:#fff;font-size:.78rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:20px 16px 12px;border-bottom:4px double var(--encre);max-width:1100px;margin:0 16px}\n.nom{font-size:2rem;font-weight:bold;letter-spacing:.02em;display:block}\n.date{font-family:Arial,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--doux);margin-top:6px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;font-size:.9rem;background:var(--encre);color:#fff;text-decoration:none;padding:10px 18px;border:0}\n.btn.l{background:none;color:var(--encre);border:1px solid var(--encre)}.btn.r{background:var(--rouge)}\n.wrap{max-width:1100px;margin:auto;padding:0 16px}\n.une{padding:24px 0;border-bottom:1px solid var(--encre)}\n.une h1{font-size:2.3rem;line-height:1.1}\n.sous{display:block;font-style:italic;color:var(--doux);margin:8px 0 16px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:20px;border:1px solid var(--encre);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:16px;background:#efede8}\n.cols>div{padding:20px 0;border-bottom:1px solid var(--filet)}\nh2{font-family:Arial,sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;color:var(--rouge);margin-bottom:8px}\n.note{font-style:italic;color:var(--doux);font-size:.9rem;margin-bottom:8px}\ndl dt{font-weight:bold;margin-top:8px}dl dd{margin:0;color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:2px 0}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.78rem;color:var(--doux);padding:20px 16px;border-top:4px double var(--encre);margin-top:24px}footer a{color:var(--encre)}\nbutton.btn{font-size:.9rem;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:860px){header{margin:0 auto}.une{display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:end}.une h1{font-size:3.6rem}.sv{margin:0}.cols{display:grid;grid-template-columns:repeat(3,1fr)}.cols>div{padding:20px;border-bottom:0;border-left:1px solid var(--filet)}.cols>div:first-child{border-left:0;padding-left:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><div class=\"date\">[métier] · [ville]<\/div><p style=\"margin-top:12px\"><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a><\/p><\/header>\n<main class=\"wrap\">\n<div class=\"une\"><div><h1>[nom_commerce], près de chez vous, à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<div class=\"cols\">\n<div><h2>Nos services<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><dl><dt>Exemple de prestation 1<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 2<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 3<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 4<\/dt><dd>À fournir (David), selon le métier.<\/dd><\/dl><\/div>\n<div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><h2 style=\"margin-top:20px\">À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin:10px 0 20px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><h2>Avis<\/h2><p style=\"margin-bottom:20px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "mosaique": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#f4f6f5;--encre:#18322f;--doux:#5d706d;--sarcelle:#1f7a72;--moutarde:#e7b53c;--blanc:#fff}\n*{box-sizing:border-box;margin:0}body{font-family:Tahoma,\"Segoe UI\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.55}\n.s0{background:var(--moutarde);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{position:sticky;top:0;z-index:2;background:var(--sarcelle);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}\n.nom{font-weight:bold}nav{display:none}nav a{color:#fff;text-decoration:none;margin-right:16px;font-size:.9rem}\n.btn{display:inline-block;font-weight:bold;background:var(--moutarde);color:var(--encre);text-decoration:none;padding:10px 18px;border-radius:10px;border:0}\n.btn.l{background:var(--blanc);color:var(--sarcelle);border:2px solid var(--sarcelle)}\n.grille{max-width:1160px;margin:auto;padding:16px;display:grid;gap:14px}\n.tuile{background:var(--blanc);border-radius:16px;padding:22px}\n.t-hero{background:var(--sarcelle);color:#fff}.t-hero h1{font-size:2rem;line-height:1.15}\n.sous{display:block;margin:10px 0 18px;opacity:.85}.sous::first-letter{text-transform:uppercase}\n.sv{min-height:220px;display:grid;place-items:center;color:var(--doux);font-size:.9rem;text-align:center;background:repeating-linear-gradient(-45deg,#e9eeec 0 14px,#f4f6f5 14px 28px)}\n.t-mout{background:var(--moutarde)}\nh2{font-size:1.15rem;margin-bottom:8px}.note{color:var(--doux);font-size:.82rem;margin-bottom:12px}\n.svc{display:grid;gap:10px}.svc div{border-left:4px solid var(--moutarde);padding-left:12px}.svc h3{font-size:1rem}.svc p{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:3px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:20px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:900px){nav{display:block}.grille{grid-template-columns:repeat(4,1fr)}.t-hero{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:center}.t-hero h1{font-size:3rem}.sv{grid-column:span 2;grid-row:span 2}.t-svc{grid-column:span 2}.svc{grid-template-columns:1fr 1fr}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><nav><a href=\"#svc\">Prestations<\/a><a href=\"#hor\">Horaires<\/a><a href=\"#s6\">Adresse<\/a><\/nav><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"grille\">\n<div class=\"tuile t-hero\"><h1>Tout sur [nom_commerce], en une page.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><div><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><\/div>\n<div class=\"tuile sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<div class=\"tuile t-svc\" id=\"svc\"><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"svc\"><div><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/div>\n<div class=\"tuile t-mout\" id=\"hor\"><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div>\n<div class=\"tuile\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div class=\"tuile\" id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:10px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div class=\"tuile t-svc\"><h2>Avis<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/div>\n<div class=\"tuile t-mout\" style=\"grid-column:1/-1;text-align:center\"><h2>Contact<\/h2><a class=\"btn l\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n"};
 (function(){
@@ -730,7 +826,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     L.push("Modèle : "+tplName(k)+" ("+fam().lab+")");
     const inc=incChecked();if(inc.length)L.push("Sur le site : "+inc.join(", "));
     const dev=devChecked();if(dev.length)L.push("Demandé en plus, sur devis : "+dev.join(", "));
-    if(kind==="commande")L.push("Adresse du site souhaitée : "+txt("domaine")+".fr");
+    if(kind==="commande"){L.push("Adresse du site souhaitée : "+txt("domaine")+".fr");L.push("");afResume().forEach(x=>L.push(x));L.push("")}
     L.push("Logo : "+(logoURL?"je le joins à ce message":"pas de logo"));
     return L.join("\n");
   }
@@ -742,13 +838,13 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     show(8);
     const a=document.createElement("a");a.href="mailto:"+MAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);document.body.appendChild(a);a.click();a.remove();
   }
-  let revealed=false;
+  let revealed=false,revealOnce=false;
   const VEIL=["","Votre site prend forme…","Votre site prend forme…","Vos services s'installent…","Votre style se dessine…","Encore une étape…"];
   function veil(n){if(n>TOTAL)revealed=true;const v=$("vp");v.classList.toggle("veil",!revealed);const B=document.body.classList;B.toggle("veiled",!revealed);B.toggle("revealed",revealed);B.toggle("s6",n===6);B.toggle("after",n>6);if(!revealed){v.style.setProperty("--blur",([0,18,15,12,9,7][n]||7)+"px");$("veil-t").textContent=VEIL[n]||VEIL[1];const pc=Math.round(Math.min(Math.max(n,1),TOTAL)/(TOTAL+1)*100);$("veil-bar").style.width=pc+"%";$("veil-pc").textContent=pc+" %";$("veil-prog").setAttribute("aria-valuenow",pc)}}
   function show(n){
     step=n;veil(n);sauver();form.querySelectorAll(".step").forEach(s=>s.hidden=+s.dataset.step!==n);
     [...$("progress").children].forEach((b,i)=>b.classList.toggle("on",i<Math.min(n,TOTAL)));
-    $("meta").textContent=n<=TOTAL?`Étape ${n} sur ${TOTAL}${n<=2?" · environ 2 minutes":""}`:n===6?"Votre site":n===7?"Finalisation":"Dernière étape";
+    $("meta").textContent=n<=TOTAL?`Étape ${n} sur ${TOTAL}${n<=2?" · environ 2 minutes":""}`:n===6?"Votre site":n===7?"Finalisation":n===9?"C'est validé":"Dernière étape";
     const end=n>TOTAL;$("wrap").classList.toggle("final",end);$("nav").hidden=end;$("reassure").hidden=end;
     $("back").hidden=n===1;$("skip").hidden=!(n===3||n===5);
     $("next").innerHTML=n===TOTAL?"Montrez-moi mon site":"Continuer";
@@ -756,35 +852,113 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const nom=txt("nom");
     $("reveal-cta").hidden=n!==6;
     if(n===6){$("ready-lead").textContent=nom?`Le site de ${nom}, construit avec vos réponses.`:"Votre site, construit avec vos réponses.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
-    if(n===7){if(!txt("domaine"))$("domaine").value=slug(nom)||"votrecommerce";
-      const dev=devChecked();
-      $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
-        (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
+    if(n===7){afShow(+$("af-i").value||0);if(!revealOnce){revealOnce=true;setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}}
+    if(n===6)revealOnce=true;
     window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
   }
   form.addEventListener("submit",e=>{e.preventDefault();if(step<=TOTAL&&check()){if(step===2)commencerCompte();show(step+1)}});
   $("back").addEventListener("click",()=>show(Math.max(1,step-1)));
   $("skip").addEventListener("click",()=>show(step+1));
   $("go-pay").addEventListener("click",()=>show(7));
-  $("back-ready").addEventListener("click",()=>show(6));
   $("back-site").addEventListener("click",()=>show(6));
   $("back-q").addEventListener("click",()=>show(1));
   const prendreRdv=()=>{if(CALENDLY){window.open(CALENDLY,"_blank","noopener")}else{openMail("rdv")}};
   $("rdv").addEventListener("click",prendreRdv);$("ask").addEventListener("click",()=>openMail("question"));
   $("pay-sticky").addEventListener("click",()=>$("go-pay").click());
 
+
+  /* ---- Affinage (étape 7) : une question à la fois, puis la validation ----
+     Lot 1 (12 Nov. 2026) : les réponses sont enregistrées avec le projet et
+     appliquées par l'équipe à la finalisation. Elles ne modifient pas encore
+     l'aperçu en direct (lot 2 : marquage des modèles). */
+  const TON={bouche:["Une cuisine maison, servie avec le sourire","Produits frais et fait maison, midi et soir","Une table de caractère au cœur de {ville}"],
+    beaute:["Un salon où l'on prend le temps","Coupe, couleur et soins, avec ou sans rendez-vous","La beauté sur mesure, à {ville}"],
+    batiment:["Votre artisan de quartier, toujours joignable","Dépannage et travaux à {ville} et alentours","Des travaux pensés et réalisés avec soin"],
+    proximite:["Votre commerce de quartier, avec le sourire","Le conseil et le service, depuis des années","Le savoir-faire d'un artisan, à {ville}"],
+    autre:["Bienvenue chez {nom}","Un service sérieux et fiable, à {ville}","L'exigence, au service de vos clients"]};
+  const VALS={bouche:["Le fait maison","Les produits locaux","L'accueil","Des prix justes","La rapidité","La tradition"],
+    beaute:["L'écoute","Le travail soigné","Les produits naturels","Des prix justes","La ponctualité","Les tendances du moment"],
+    batiment:["La réactivité","Le travail propre","Des devis clairs","La ponctualité","Le conseil","Le respect des délais"],
+    proximite:["Le travail à la main","Le conseil","La rapidité","Des prix justes","Les produits de qualité","La tradition"],
+    autre:["L'écoute","Le sérieux","La réactivité","Des prix justes","Le conseil","La qualité"]};
+  const famKey=()=>{const m=metier();return m&&TON[m.f]?m.f:"autre"};
+  function afList(){const l=["photos","ton","prix","horaires"];
+    if(famKey()==="batiment")l.push("zone");
+    if($("o-marques")&&$("o-marques").checked)l.push("marques");
+    l.push("histoire","valider");return l}
+  const afVal=n=>{const r=form.querySelector(`input[name="af-${n}"]:checked`);return r?r.value:""};
+  function afTexts(){
+    const k=famKey(),nom=txt("nom")||"votre commerce",ville=txt("ville")||"votre ville";
+    ["chaleureux","serieux","chic"].forEach((t,i)=>{$("af-ex-"+t).textContent="« "+TON[k][i].replace("{ville}",ville).replace("{nom}",nom)+" »"});
+    VALS[k].forEach((v,i)=>{$("af-vl-"+i).textContent=v});
+    const dep={"2":"depuis peu","10":"depuis quelques années","plus":"depuis plus de dix ans","30":"depuis plus de trente ans"}[afVal("depuis")||"10"];
+    const eq=afVal("eq")||"petit";
+    const first=eq==="seul"?`Chez ${nom}, je vous accueille ${dep}.`:eq==="petit"?`Chez ${nom}, notre petite équipe vous accueille ${dep}.`:`Chez ${nom}, toute notre équipe vous accueille ${dep}.`;
+    let v=[0,1,2,3,4,5].filter(i=>$("af-v-"+i).checked).map(i=>VALS[k][i]);if(!v.length)v=VALS[k].slice(0,2);
+    v=v.map(x=>x.charAt(0).toLowerCase()+x.slice(1));
+    $("af-say").textContent=`${first} Ce qui compte ${eq==="seul"?"pour moi":"pour nous"} : ${v.length>1?v.slice(0,-1).join(", ")+" et "+v[v.length-1]:v[0]}.`;
+  }
+  function afMore(){form.querySelectorAll("[data-more]").forEach(el=>{const [n,v]=el.dataset.more.split("-");el.hidden=afVal(n)!==v})}
+  function afRows(){let last=3;for(let i=0;i<12;i++)if(txt("af-pn-"+i)||txt("af-pp-"+i))last=Math.max(last,i);
+    form.querySelectorAll(".prow").forEach(r=>{if(+r.dataset.row<=last)r.hidden=false});
+    $("af-addrow").hidden=!form.querySelector(".prow[hidden]")}
+  function afValider(){
+    if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
+    $("p-url").textContent=txt("domaine")+".fr";
+    const dev=devChecked();
+    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, une fois votre site finalisé et accepté par vous<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
+      (dev.length?`<div class="dev"><span>Sur devis, prix annoncé avant : ${esc(dev.join(", "))}</span><b>à part</b></div>`:"")}
+  function afShow(i){
+    const l=afList();i=Math.min(Math.max(i,0),l.length-1);$("af-i").value=i;const k=l[i],nq=l.length-1;
+    form.querySelectorAll(".aq").forEach(el=>el.hidden=el.dataset.aq!==k);
+    $("meta").textContent=k==="valider"?"Dernière étape":`Finalisation · question ${i+1} sur ${nq}`;
+    [...$("progress").children].forEach(b=>b.classList.add("on"));
+    $("af-next").hidden=$("af-skip").hidden=k==="valider";
+    $("af-back").textContent=i===0?"← Revoir mon site":"← Retour";
+    afTexts();afMore();afRows();if(k==="valider")afValider();
+  }
+  function afGo(d){const i=+$("af-i").value+d;if(i<0){show(6);return}afShow(i);modifie=true;sauver();
+    const q=form.querySelector(".aq:not([hidden])");if(q)q.focus({preventScroll:true});
+    window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+  $("af-next").addEventListener("click",()=>afGo(1));
+  $("af-skip").addEventListener("click",()=>afGo(1));
+  $("af-back").addEventListener("click",()=>afGo(-1));
+  $("af-addrow").addEventListener("click",()=>{const r=form.querySelector(".prow[hidden]");if(r){r.hidden=false;r.querySelector("input").focus()}$("af-addrow").hidden=!form.querySelector(".prow[hidden]")});
+  form.addEventListener("change",e=>{const id=e.target.id||"";if(!id.startsWith("af-"))return;
+    if(/^af-v-\d$/.test(id)&&e.target.checked&&[0,1,2,3,4,5].filter(i=>$("af-v-"+i).checked).length>3)e.target.checked=false;
+    afMore();afTexts()});
+  function afResume(){const L=[],v=afVal,lab=(n)=>{const r=form.querySelector(`input[name="af-${n}"]:checked`);return r?r.closest("label").querySelector("span").firstChild.textContent.trim():"au mieux"};
+    L.push("Photos : "+lab("photos"));L.push("Ton : "+lab("ton"));
+    const pr=[];for(let i=0;i<12;i++)if(txt("af-pn-"+i))pr.push(txt("af-pn-"+i)+" : "+txt("af-pp-"+i));
+    L.push("Prix : "+(v("prix")==="write"&&pr.length?pr.join(" ; "):lab("prix")));
+    const hs=[];if(v("horaires")==="write")["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"].forEach((d,i)=>{if($("af-h-"+i).checked)hs.push(d+" "+txt(`af-h-${i}-a`)+"-"+txt(`af-h-${i}-b`)+(txt(`af-h-${i}-c`)?", "+txt(`af-h-${i}-c`)+"-"+txt(`af-h-${i}-d`):""))});
+    L.push("Horaires : "+(hs.length?hs.join(" ; "):lab("horaires")));
+    if(afList().includes("zone"))L.push("Zone : "+lab("zone")+(txt("af-communes")?" ("+txt("af-communes")+")":""));
+    if(afList().includes("marques")&&txt("af-marques"))L.push("Marques : "+txt("af-marques"));
+    L.push("Histoire : "+($("af-pas-histoire").checked?"pas de partie histoire":$("af-say").textContent));
+    return L}
   $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr"});
   $("pay").addEventListener("click",()=>{
     if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
     $("domaine").classList.remove("bad");
     if(STRIPE_LINK){const go=()=>{location.href=STRIPE_LINK+(STRIPE_LINK.includes("?")?"&":"?")+"client_reference_id="+encodeURIComponent(orderRef())};
-      Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,800))]).then(go,go);return}
-    openMail("commande")});
+      if(!COMPTE.actif){go();return}
+      Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))]).then(()=>COMPTE.valider(etat())).catch(()=>false)
+        .then(ok=>{if(ok){valide=true;marquerValide()}go()});return}
+    if(!COMPTE.actif){openMail("commande");return}
+    $("pay").disabled=true;$("pay").textContent="Validation…";
+    Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))])
+      .then(()=>COMPTE.valider(etat())).catch(()=>false)
+      /* Réponse perdue (réserve R3 de Justine) : un second essai ; la base répond « oui » sans nouvelle alerte si c'est déjà validé */
+      .then(ok=>ok||new Promise(r=>setTimeout(r,800)).then(()=>COMPTE.valider(etat())).catch(()=>false))
+      .then(ok=>{$("pay").disabled=false;$("pay").textContent="Je valide mon site";
+        if(ok){valide=true;marquerValide();note("");show(9)}else openMail("commande")})});
+  function marquerValide(){$("ok-dom").textContent=txt("domaine")+".fr";try{localStorage.setItem("hood_valide",JSON.stringify({dom:txt("domaine")+".fr"}))}catch(e){}}
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),txt("domaine").slice(0,63),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
-  if(STRIPE_LINK){$("pay").innerHTML="Payer 290 € et mettre en ligne";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
+  if(STRIPE_LINK){$("pay").innerHTML="Je valide et je paie 290 €";$("cmd-lead").textContent="Choisissez l'adresse de votre site, puis payez en ligne. Le paiement est sécurisé par Stripe.";$("cmd-secure").textContent="Paiement sécurisé par Stripe. Vous acceptez nos CGV sur la page de paiement."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
-  form.addEventListener("input",e=>{if(!["q","domaine","remarques"].includes(e.target.id))onChange()});
-  form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if(e.target.type==="radio"||e.target.type==="checkbox")render()});
+  form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-"))onChange()});
+  form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
 
   /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ----
      Corrigé après le contrôle de Justine (11 Nov. 2026) : rien n'est enregistré tant
@@ -794,13 +968,13 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       if(!el.id||el.type==="file"||["q","email","recap"].includes(el.id))return;
       if(el.type==="radio"||el.type==="checkbox"){if(el.checked)c[el.id]=true}else if(el.value)c[el.id]=String(el.value).slice(0,2000)});
     return {v:1,etape:step,champs:c}}
-  let modifie=false,repriseEnCours=false,relie=false,compteDemande=false,saveTimer;
+  let modifie=false,repriseEnCours=false,relie=false,compteDemande=false,valide=false,saveTimer;
   ["input","change"].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.id!=="q")modifie=true},true));
   function enregistrerMaintenant(){clearTimeout(saveTimer);
-    if(!COMPTE.actif||!modifie||repriseEnCours)return Promise.resolve();
+    if(!COMPTE.actif||!modifie||repriseEnCours||valide)return Promise.resolve();
     return COMPTE.enregistrer(etat(),Math.min(step,8)).then(r=>{
       if(r==="relier")note("Votre site est maintenant dans votre espace : ouvrez le lien reçu par mail pour continuer à l'enregistrer.")}).catch(()=>{})}
-  function sauver(){if(!COMPTE.actif||!modifie||repriseEnCours)return;clearTimeout(saveTimer);saveTimer=setTimeout(enregistrerMaintenant,400)}
+  function sauver(){if(!COMPTE.actif||!modifie||repriseEnCours||valide)return;clearTimeout(saveTimer);saveTimer=setTimeout(enregistrerMaintenant,400)}
   function note(t,recommencer){const el=$("compte-note");el.textContent=t||"";
     if(t&&recommencer){const b=document.createElement("button");b.type="button";b.className="alt";b.textContent="Recommencer à zéro";
       b.addEventListener("click",()=>{COMPTE.oublierJeton();location.href="maquette.html"});el.append(" ",b)}
@@ -823,7 +997,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       if(el.type==="radio"||el.type==="checkbox"){if(el.name!=="metier")el.checked=!!c[el.id]}else if(c[el.id]!==undefined)el.value=c[el.id]});
     if(email&&!$("email").value)$("email").value=email;
     $("autre-wrap").hidden=val("metier")!=="autre";
-    render();show(Math.min(Math.max(p.etape||1,1),6));
+    render();show(Math.min(Math.max(p.etape||1,1),7));
     modifie=false;
     note("Bon retour : votre site est là où vous l'aviez laissé.",!relie);
   }
@@ -843,6 +1017,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
 
   render();show(1);setDevice("phone");
+  /* Site déjà validé dans ce navigateur (réserve R6 de Justine) : on réaffiche « C'est validé ! » */
+  try{const v=JSON.parse(localStorage.getItem("hood_valide")||"null");
+    if(v&&v.dom&&!/[?&]reprendre=1\b/.test(location.search)){valide=true;$("ok-dom").textContent=String(v.dom).slice(0,70);document.body.classList.add("deja-valide");show(9)}}catch(e){}
+  $("ok-nouveau").addEventListener("click",()=>{try{localStorage.removeItem("hood_valide")}catch(e){}COMPTE.oublierJeton&&COMPTE.oublierJeton();location.href="maquette.html"});
 })();
 </script>
 </body></html>
