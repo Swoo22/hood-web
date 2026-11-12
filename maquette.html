@@ -326,19 +326,7 @@ input.bad{border-color:var(--danger)}
       <div class="step" data-step="6" hidden>
         <h1 id="ready-title">Voici votre site.</h1>
         <p class="lead" id="ready-lead">Voici une première version de votre site.</p>
-        <div class="offer">
-          <div class="top"><span class="name">L'Essentiel</span><span class="price">290 € <small>HT, une fois</small></span></div>
-          <div class="then">Puis <b>10 € HT par mois</b>, à partir de la validation de votre site : hébergement, nom de domaine, sécurité. Sans engagement, résiliable chaque mois.</div>
-          <ul>
-            <li>Ce site, finalisé avec vos photos et vos textes</li>
-            <li>Votre nom de domaine, à votre nom</li>
-            <li>2 allers-retours avec notre équipe avant la mise en ligne</li>
-            <li>Mise en ligne en 48 heures environ, après réception de vos contenus</li>
-          </ul>
-          <button type="button" class="btn primary wide" id="go-pay">Ça me plaît, on continue</button>
-          <div class="doubt"><b>Pas sûr ? Des questions ?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
-            <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
-        </div>
+        <button type="button" class="btn primary wide" id="go-pay">Personnaliser mon site</button>
         <button type="button" class="alt" id="back-q" style="margin-top:14px">← Modifier mes réponses</button>
       </div>
 
@@ -354,7 +342,8 @@ input.bad{border-color:var(--danger)}
           <div class="sum" id="sum"></div>
           <button type="button" class="btn primary wide" id="pay">Finaliser mon site</button>
           <p class="secure" id="cmd-secure">Rien à payer maintenant. Prix hors taxes.</p>
-          <button type="button" class="alt" id="rdv2">Une question ? Prendre un rendez-vous</button>
+          <div class="doubt"><b>Pas sûr ? Des questions ?</b><span class="hint">On en parle avant que vous payiez, par téléphone ou en visio.</span>
+            <div class="doubt-btns"><button type="button" class="btn line" id="rdv">Prendre un rendez-vous</button><button type="button" class="btn line" id="ask">Poser une question</button></div></div>
           <button type="button" class="alt" id="back-ready">← Revoir mon site</button>
         </div>
       </div>
@@ -389,13 +378,13 @@ input.bad{border-color:var(--danger)}
     </div>
     <div class="browser phone" id="browser">
       <div class="bar"><i></i><i></i><i></i><div class="url" id="p-url">votrecommerce.fr</div></div>
-      <div class="viewport veil" id="vp"><iframe id="frame" title="Votre maquette" tabindex="-1"></iframe><div class="veil-msg" aria-hidden="true"><b id="veil-t">Votre site prend forme…</b><div class="veil-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="veil-prog"><div class="veil-bar"><i id="veil-bar"></i></div><span id="veil-pc">0 %</span></div><small>Révélation à la fin du questionnaire</small></div></div>
+      <div class="viewport veil" id="vp"><iframe id="frame" title="Votre maquette" tabindex="-1"></iframe><div class="veil-msg" aria-hidden="true"><b id="veil-t">Votre site prend forme…</b><div class="veil-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="veil-prog"><div class="veil-bar"><i id="veil-bar"></i></div><span id="veil-pc">0 %</span></div></div></div>
     </div>
     <div class="tplname"><span>Modèle : <b id="p-tpl">à choisir</b></span><span id="p-fam"></span></div>
     <p class="note"><span data-compte="off">Vos réponses et votre logo restent dans votre navigateur. Ils ne nous sont envoyés que si vous nous écrivez.</span><!-- Texte validé par Simone le 12 Nov. 2026 (RGPD art. 13) --><span data-compte="on" hidden>Dès que vous donnez votre email, vos réponses sont enregistrées par HOOD pour que vous puissiez reprendre votre site, et effacées 180 jours après votre dernière visite. Votre logo reste dans votre navigateur.</span> <a href="mentions-legales.html" style="color:inherit">Mentions légales et confidentialité</a></p>
   </aside>
 </main>
-<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Ça me plaît, on continue</button><button type="button" class="alt" id="doubt-sticky">Pas sûr ? Des questions ?</button></div>
+<div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Personnaliser mon site</button></div>
 
 <script src="compte.js?v=20261112b"></script>
 <script>
@@ -705,7 +694,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("err").textContent="";$("side-title").textContent=end?"Votre site":"Votre futur site";
     const nom=txt("nom");
     if(n===6){$("ready-title").textContent=`Voici le site de ${nom}.`;
-      $("ready-lead").textContent="C'est une première version. On la finalise ensemble : vos photos, vos textes, vos horaires. Vous ne payez qu'à la fin, quand votre site vous plaît.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
+      $("ready-lead").textContent="C'est une première version. Ajoutez vos photos, vos textes, vos horaires : on en fait votre site.";setDevice(matchMedia("(max-width:960px)").matches?"phone":"desk")}
     if(n===7){if(!txt("domaine"))$("domaine").value=slug(nom)||"votrecommerce";
       const dev=devChecked();
       $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 € HT</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € HT / mois</b></div>`+
@@ -720,9 +709,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("back-site").addEventListener("click",()=>show(6));
   $("back-q").addEventListener("click",()=>show(1));
   const prendreRdv=()=>{if(CALENDLY){window.open(CALENDLY,"_blank","noopener")}else{openMail("rdv")}};
-  $("rdv").addEventListener("click",prendreRdv);$("rdv2").addEventListener("click",prendreRdv);$("ask").addEventListener("click",()=>openMail("question"));
+  $("rdv").addEventListener("click",prendreRdv);$("ask").addEventListener("click",()=>openMail("question"));
   $("pay-sticky").addEventListener("click",()=>$("go-pay").click());
-  $("doubt-sticky").addEventListener("click",()=>{const d=document.querySelector(".doubt");d.scrollIntoView({behavior:"smooth",block:"center"})});
+
   $("domaine").addEventListener("input",e=>{const v=slug(e.target.value);if(v!==e.target.value)e.target.value=v;$("p-url").textContent=(v||"votrecommerce")+".fr"});
   $("pay").addEventListener("click",()=>{
     if(!/^[a-z0-9-]{2,63}$/.test(txt("domaine"))){$("err").textContent="Choisissez une adresse de site avec des lettres, des chiffres ou des tirets.";$("domaine").classList.add("bad");return}
