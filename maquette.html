@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Voir mon site web, HOOD</title>
-<meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 €, puis 10 € par mois.">
+<meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 €, premier mois compris, puis 10 € par mois.">
 <meta name="theme-color" content="#f8f9fc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -931,7 +931,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const incChecked=()=>[...form.querySelectorAll('#opts-inc input:checked')].map(i=>i.dataset.lab);
   function recap(kind){
     const m=metier(),k=tplKey(),L=[];
-    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 €, payés à la validation, puis 10 € par mois à partir de la validation.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
+    L.push(kind==="commande"?"Bonjour, ce site me plaît : je veux le finaliser avec vous. Offre L'Essentiel : 290 €, payés à la validation, premier mois compris, puis 10 € par mois.":kind==="rdv"?"Bonjour, j'aimerais en parler avec vous par téléphone ou en visio avant de commander.\nMes disponibilités : \nMon numéro : ":kind==="question"?"Bonjour, j'ai une question avant de commander : ":"Bonjour, voici ma maquette HOOD, avec ce que j'aimerais changer.");
     L.push("");
     if(kind==="remarques"&&txt("remarques")){L.push("Ce que j'aimerais changer : "+txt("remarques"));L.push("")}
     L.push("Entreprise : "+txt("nom"));L.push("Métier : "+(m?m.lab:""));L.push("Ville : "+txt("ville"));
@@ -1186,7 +1186,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
     domVerifier();titInit();
     const dev=devChecked();
-    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir de la validation de votre site<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
+    $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir du 2e mois : le 1er mois est compris dans les 290 €<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
       (dev.length?`<div><span>Aussi dans votre site : ${esc(dev.join(", "))}</span><b>inclus</b></div>`:"")+
       `<div><small class="hint">Prix nets. TVA non applicable, article 293 B du CGI.</small></div>`}
 
