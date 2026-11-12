@@ -502,10 +502,10 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
         </div>
         <!-- Fin de l'affinage (demande de Steve, 12 Nov. 2026) : je paie, je retouche sur le site, ou je pose une question -->
         <div class="aq" tabindex="-1" data-aq="fin" hidden>
-          <h1>Votre site est <em>prêt</em>.</h1>
+          <h1 id="fin-h1">Votre site est <em>prêt</em>.</h1>
           <p class="lead" id="fin-lead">Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez.</p>
           <div class="fin-choix" id="fin-choix">
-            <button type="button" class="fin-c main" id="fin-payer"><b>Il me plaît : je finalise et je paie</b><small>Votre adresse, le titulaire, puis le paiement. Le site part en ligne aussitôt.</small></button>
+            <button type="button" class="fin-c" id="fin-payer"><b>Il me plaît : je finalise et je paie</b><small>Votre adresse, le titulaire, puis le paiement. Le site part en ligne aussitôt.</small></button>
             <button type="button" class="fin-c" id="fin-retouche"><b>Je retouche directement sur le site</b><small>Un titre, un texte, une photo : cliquez dessus et changez-le.</small></button>
             <button type="button" class="fin-c" id="fin-question"><b>J'ai une question</b><small>On vous répond avant que vous payiez.</small></button>
           </div>
@@ -950,11 +950,17 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
      Chaque endroit modifiable a une clé stable (type:rang) ; la retouche garde le texte d'avant,
      et ne s'applique que si l'endroit a toujours ce texte (sinon elle est ignorée, rien ne casse). */
   const RT_MAX=30;
+  function finTitres(){$("rt").hidden=!retouche;$("fin-choix").hidden=retouche;
+    $("fin-h1").innerHTML=retouche?"Retouchez <em>votre site</em>.":"Votre site est <em>prêt</em>.";
+    $("fin-lead").textContent=retouche?"Cliquez dans votre site sur un titre, un texte, un onglet du menu ou une photo, et changez-le. Chaque endroit a quelques règles, pour que le site reste beau.":"Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez ce que vous voulez faire.";
+    if(step===7&&afList()[+$("af-i").value]==="fin")$("meta").textContent=retouche?"Retouches":"Votre site est prêt"}
   const norm1=s=>(s||"").replace(/\s+/g," ").trim();
   const mots=s=>norm1(s)?norm1(s).split(" ").length:0;
   const rtListe=()=>{try{const l=JSON.parse(txt("af-retouches")||"[]");return Array.isArray(l)?l.filter(r=>r&&typeof r.k==="string").slice(0,RT_MAX):[]}catch(e){return []}};
-  const RT_LAB={titre:"Le grand titre",section:"Un titre de partie",sous:"Un petit titre",texte:"Un texte",photo:"Une photo"};
-  function rtMax(type,avant){return type==="titre"?6:type==="section"?8:type==="sous"?6:Math.max(25,Math.min(120,Math.ceil(mots(avant)*1.6)))}
+  const RT_LAB={titre:"Le grand titre",section:"Un titre de partie",sous:"Un petit titre",texte:"Un texte",menu:"Un onglet du menu",photo:"Une photo"};
+  /* Jamais moins que le texte d'origine : au moins une fois et demie sa longueur, avec un plancher par endroit (retour de Steve, 12 Nov. 2026). */
+  function rtMax(type,avant){const n=mots(avant),base={titre:6,section:10,sous:8,menu:3,texte:25}[type]||10;
+    return Math.min(type==="texte"?150:30,Math.max(base,Math.ceil(n*1.5)+2))}
   function rtCibles(doc){
     if(doc._hoodRt)return doc._hoodRt;
     const out=[],cnt={},add=(el,type)=>{cnt[type]=cnt[type]||0;out.push({el,type,k:type+":"+(cnt[type]++)})};
@@ -964,6 +970,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       const t=norm1(el.textContent);if(t.length<2||t.length>900)return;
       const tag=el.tagName;if(tag==="LI"&&t.length<15)return;
       add(el,tag==="H1"?"titre":tag==="H2"?"section":tag==="H3"?"sous":"texte")});
+    doc.body.querySelectorAll("nav a").forEach(el=>{const t=norm1(el.textContent);if(t.length>=2&&t.length<=30&&!el.querySelector("img,svg"))add(el,"menu")});
     photoEls(doc).forEach(el=>add(el,"photo"));
     doc._hoodRt=out;return out}
   function retouchesSurLeSite(doc){
@@ -998,7 +1005,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("rt-ed").hidden=false;$("rt-lab").textContent=RT_LAB[x.type];$("rt-msg").textContent="";
     const ph=x.type==="photo";$("rt-zone-txt").hidden=ph;$("rt-zone-photo").hidden=!ph;$("rt-ok").hidden=ph;$("rt-orig").hidden=!r;
     $("rt-regles").innerHTML=(ph?["Une photo à vous, nette et bien éclairée","Au moins 1 000 pixels ; en largeur de préférence","JPG, PNG ou WebP"]
-      :[`${rtSel.max} mots au maximum`,x.type==="texte"?"Écrivez simplement : on relit l'orthographe avec vous si besoin":"Une phrase courte, qui se lit d'un coup d'œil","Pas de lien internet ni de numéro de carte"]).map(t=>`<li>${esc(t)}</li>`).join("");
+      :[`${rtSel.max} mots au maximum`,x.type==="menu"?"Le menu mène toujours à la même partie du site ; seul le nom de l'onglet change":x.type==="texte"?"Écrivez simplement : on relit l'orthographe avec vous si besoin":"Une phrase courte, qui se lit d'un coup d'œil","Pas de lien internet ni de numéro de carte"]).map(t=>`<li>${esc(t)}</li>`).join("");
     if(ph){$("rt-photo").disabled=!COMPTE.actif;$("rt-photo-hint").textContent=COMPTE.actif?"Au moins 1 000 pixels, en largeur de préférence.":"Vous nous l'enverrez juste après votre paiement."}
     else{$("rt-txt").value=r&&!r.photo?r.apres:norm1(x.el.textContent);rtCompte();$("rt-txt").focus({preventScroll:true})}
     $("rt-ed").scrollIntoView({block:"nearest",behavior:"smooth"});
@@ -1034,7 +1041,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     box.innerHTML=`<div class="rt-l"><b>Vos retouches (${l.length})</b><ul>${l.map((r,i)=>`<li><span>${esc(RT_LAB[r.k.split(":")[0]]||"Retouche")}${r.photo?" : photo changée":" : « "+esc(r.apres)+" »"}</span><button type="button" class="linkbtn" data-rt-annule="${i}">Annuler</button></li>`).join("")}</ul></div>`;
     box.querySelectorAll("[data-rt-annule]").forEach(b=>b.addEventListener("click",()=>{const m=rtListe();m.splice(+b.dataset.rtAnnule,1);rtFermer();rtEnregistrer(m)}))}
   function decorate(doc){
-    doc.addEventListener("click",e=>{if(e.target.closest("a,button"))e.preventDefault()},true);
+    /* Les liens de l'aperçu ne quittent pas la page ; les onglets du menu (#partie) y font défiler (retour de Steve, 12 Nov. 2026). */
+    doc.addEventListener("click",e=>{const a=e.target.closest("a,button");if(!a)return;e.preventDefault();
+      if(retouche&&e.target.closest("[data-hood-edit]"))return;
+      const h=a.getAttribute("href")||"";if(!/^#./.test(h))return;
+      let t=null;try{t=doc.getElementById(decodeURIComponent(h.slice(1)))}catch(x){}
+      if(t){const w=doc.defaultView;w.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+w.scrollY-10),behavior:"smooth"})}},true);
     const svc=applyServices(doc);
     const b=brandEl(doc);
     if(b&&!isEquipe(tplKey())&&txt("nom")&&!b.querySelector("img")){b.textContent=txt("nom")}
@@ -1445,8 +1457,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const l=afList();i=Math.min(Math.max(i,0),l.length-1);$("af-i").value=i;const k=l[i],nq=l.length-1;
     form.querySelectorAll(".aq").forEach(el=>el.hidden=el.dataset.aq!==k);
     $("meta").textContent=k==="valider"?"Dernière étape":k==="fin"?"Votre site est prêt":`Finalisation · question ${i+1} sur ${nq-1}`;
-    if(k!=="fin"&&retouche){retouche=false;rtSel=null;$("rt").hidden=true;$("fin-choix").hidden=false;render()}
-    if(k==="fin"){$("rt").hidden=!retouche;$("fin-choix").hidden=retouche;rtListeDraw()}
+    if(k!=="fin"&&retouche){retouche=false;rtSel=null;finTitres();render()}
+    if(k==="fin"){finTitres();rtListeDraw()}
     scrollCible(k);
     [...$("progress").children].forEach(b=>b.classList.add("on"));
     $("af-next").hidden=$("af-skip").hidden=k==="valider"||k==="fin";
@@ -1464,9 +1476,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("af-next").addEventListener("click",()=>afGo(1));
   $("fin-payer").addEventListener("click",()=>afGo(1));
   $("fin-question").addEventListener("click",()=>openMail("question"));$("rt-question").addEventListener("click",()=>openMail("question"));
-  $("fin-retouche").addEventListener("click",()=>{retouche=true;$("fin-choix").hidden=true;$("rt").hidden=false;$("fin-lead").textContent="Touchez votre site pour changer un titre, un texte ou une photo. Chaque endroit a ses règles, pour que le site reste beau.";rtListeDraw();render();
+  $("fin-retouche").addEventListener("click",()=>{retouche=true;finTitres();rtListeDraw();render();
     if(matchMedia("(max-width:900px)").matches)$("vp").scrollIntoView({behavior:"smooth",block:"start"})});
-  $("rt-fini").addEventListener("click",()=>{rtFermer();retouche=false;$("fin-lead").textContent="Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez.";render();afGo(1)});
+  $("rt-fini").addEventListener("click",()=>{rtFermer();retouche=false;finTitres();render();afGo(1)});
   $("rt-ok").addEventListener("click",rtValider);$("rt-annuler").addEventListener("click",rtFermer);
   $("rt-orig").addEventListener("click",()=>{if(!rtSel)return;const l=rtListe().filter(r=>r.k!==rtSel.k);rtFermer();rtEnregistrer(l)});
   $("rt-txt").addEventListener("input",()=>{rtCompte();$("rt-msg").textContent=""});
