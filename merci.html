@@ -32,7 +32,8 @@ a{color:var(--accent)}
   <h1>Merci, votre commande <em>est enregistrée</em>.</h1>
   <p class="lead" id="merci-paiement">Votre paiement a bien été reçu. Stripe vous envoie un reçu par e-mail.</p>
   <script>/* Contrôle de Justine (17 Nov. 2026) : un paiement d'essai Stripe (cs_test_) est dit comme tel. */
-  if(/[?&]session_id=cs_test_/.test(location.search)||!/[?&]session_id=cs_live_/.test(location.search))document.getElementById("merci-paiement").textContent="Paiement d'essai : rien n'a été débité. Le paiement en ligne n'est pas encore ouvert.";</script>
+  const PAIEMENT_REEL=false; /* à passer à true avec le paiement réel (comme dans maquette.html) */
+  if(/[?&]session_id=cs_test_/.test(location.search)||(!PAIEMENT_REEL&&!/[?&]session_id=cs_live_/.test(location.search)))document.getElementById("merci-paiement").textContent="Paiement d'essai : rien n'a été débité. Le paiement en ligne n'est pas encore ouvert.";</script>
   <ol>
     <li>On vous écrit pour les informations qui manquent encore à votre site (horaires, avis, photos…).</li>
     <li>On réserve votre nom de domaine au nom de votre entreprise, et votre site est en ligne sous 72 heures après réception de ces informations. Si l'adresse choisie n'est plus libre, on vous en propose d'autres ; si aucune ne vous convient, on vous rembourse.</li>

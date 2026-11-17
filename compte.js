@@ -56,6 +56,10 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
   /* Le jeton du navigateur, seulement s'il a été pris pour cette adresse. */
   C.jeton = email => { const j = lire(CLE_JETON); return j && (email === undefined || lire(CLE_EMAIL) === norm(email)) ? j : null; };
   C.oublierJeton = () => { ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); };
+  /* Second contrôle de Justine (17 Nov. 2026) : oublier aussi le projet du compte relu par l'espace,
+     quand le visiteur a commencé un autre site entre-temps. */
+  let projetConnecte = null;
+  C.oublierProjet = () => { projetConnecte = null; };
 
   async function envoyerLien(sb, email, creer) {
     let jetonCaptcha;
@@ -88,7 +92,6 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
   /* Sauvegarde d'une étape : par le compte connecté, sinon par le jeton.
      Renvoie "ok", "relier" (le projet a été rattaché à un compte : il faut
      ouvrir le lien du mail) ou "non". */
-  let projetConnecte = null;
   C.enregistrer = async function (etat, etape) {
     const sb = await charger(); if (!sb) return "non";
     if (projetConnecte) {
