@@ -57,7 +57,7 @@ a{color:var(--accent)}
       <button class="btn" type="submit">Recevoir mon lien</button>
       <p class="small" id="lien-msg" role="status"></p>
     </form>
-    <p class="small">Pas encore de site ? <a href="/maquette">Voir mon site web</a></p>
+    <p class="small">Pas encore de site ? <a href="/maquette">Montrez-moi mon site</a></p>
   </div>
 
   <!-- Connecté -->
@@ -104,7 +104,7 @@ a{color:var(--accent)}
     $("bonjour").textContent="Connecté avec "+(d.email||"votre email")+".";
     const p=d.projet;
     if(!p){
-      $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="/maquette">Voir mon site web</a>';
+      $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="/maquette">Montrez-moi mon site</a>';
     }else{
       const c=(p.reponses&&p.reponses.champs)||{};
       const nom=c.nom?esc(c.nom):"Votre site";

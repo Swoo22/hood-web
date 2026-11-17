@@ -121,10 +121,9 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return false;
   };
 
-  /* Paiement en deux temps (étape 2, 12 Nov. 2026) : la fonction serveur
-     « paiement-creer » fait vérifier le projet par la base, puis crée la page
-     de paiement Stripe (carte autorisée, débitée seulement après l'achat du
-     domaine). Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
+  /* Paiement (étape 2, 12 Nov. 2026 ; débit au paiement depuis le 17 Nov.) : la
+     fonction serveur « paiement-creer » fait vérifier le projet par la base, puis
+     crée la page de paiement Stripe. Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
      sur le lien d'essai : non_configure, cle_reelle_refusee, reseau, eteint. */
   C.payer = async function (etat) {
     const sb = await charger(); if (!sb) return { motif: "eteint" };

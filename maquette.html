@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Voir mon site web, HOOD</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="HOOD"><meta property="og:title" content="Montrez-moi mon site, HOOD"><meta property="og:description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Gratuit et sans engagement."><meta property="og:url" content="https://hood-web.com/maquette"><meta property="og:image" content="https://hood-web.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="fr_FR"><meta name="twitter:card" content="summary_large_image">
+<title>Montrez-moi mon site, HOOD</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="HOOD"><meta property="og:title" content="Montrez-moi mon site, HOOD"><meta property="og:description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Gratuit et sans engagement."><meta property="og:url" content="https://hood-web.com/maquette"><meta property="og:image" content="https://hood-web.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="fr_FR"><meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Répondez à quelques questions et voyez tout de suite le site de votre commerce. Une seule offre : 290 €, premier mois compris, puis 10 € par mois.">
 <meta name="theme-color" content="#f8f9fc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -506,7 +506,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <h1 id="fin-h1">Votre site est <em>prêt</em>.</h1>
           <p class="lead" id="fin-lead">Regardez-le en entier, sur téléphone et sur ordinateur. Puis choisissez.</p>
           <div class="fin-choix" id="fin-choix">
-            <button type="button" class="fin-c" id="fin-payer"><b>Il me plaît : je finalise et je paie</b><small>Votre adresse, le titulaire, puis le paiement. Votre site est en ligne sous 72 h.</small></button>
+            <button type="button" class="fin-c" id="fin-payer"><b>Il me plaît : je finalise et je paie</b><small>Votre adresse, le titulaire, puis le paiement. En ligne sous 72 h après vos dernières informations.</small></button>
             <button type="button" class="fin-c" id="fin-retouche"><b>Je retouche directement sur le site</b><small>Un titre, un texte, une photo : cliquez dessus et changez-le.</small></button>
             <button type="button" class="fin-c" id="fin-question"><b>J'ai une question</b><small>On vous répond avant que vous payiez.</small></button>
           </div>
@@ -529,7 +529,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
         </div>
         <div class="aq" tabindex="-1" data-aq="valider" hidden>
           <h1>Validez <em>votre site</em>.</h1>
-          <p class="lead" id="cmd-lead">Choisissez votre adresse, puis payez : votre site est en ligne sous 72 h.</p>
+          <p class="lead" id="cmd-lead">Choisissez votre adresse, puis payez : votre site est en ligne sous 72 h après réception de vos dernières informations.</p>
           <div class="fields">
             <label class="f">L'adresse de votre site
               <div class="domain"><input type="text" id="domaine" maxlength="63" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><select id="af-dom-ext" aria-label="Extension"><option value="fr">.fr</option><option value="com">.com</option></select></div>
@@ -643,6 +643,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
      de l'environnement de test Stripe « Hood-Web » (aucun débit, carte 4242 4242 4242 4242) et les CGV provisoires.
      Depuis le 12 Nov. 2026, tous les visiteurs paient (voir plus bas) ; ?essai=1 ne sert plus qu'à repérer nos propres essais. */
   const STRIPE_ESSAI="https://buy.stripe.com/test_5kQ14o1Di4lA1OC4m22Ji00";
+  /* Contrôle de Justine (17 Nov. 2026) : tant que le paiement réel n'est pas branché (clé Stripe réelle dans
+     paiement-creer, feu vert de Steve, Backlog N° 149), la page de paiement dit à tous qu'il s'agit d'un essai.
+     À passer à true dans la même modification que le branchement du paiement réel. */
+  const PAIEMENT_REEL=false;
   const ESSAI=(()=>{const q=/[?&]essai=1\b/.test(location.search);try{if(q)sessionStorage.setItem("hood_essai","1");return q||sessionStorage.getItem("hood_essai")==="1"}catch(e){return q}})();
   /* Demande de Steve (12 Nov. 2026) : le client paie dès que son site est fait, sans attendre.
      Tant que le paiement réel n'est pas branché, tout le monde passe par le paiement d'essai (rien n'est débité). */
@@ -940,13 +944,15 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       doc.querySelectorAll(".hood-ph").forEach(el=>{mettrePhoto(doc,el,u[k++%u.length]);el.textContent=""})}
     const h=afVal("horaires");
     if(h==="write"||h==="google"){
-      const L=h==="write"?heuresLignes():[["Vos horaires","comme sur votre fiche Google"]];
+      const L=h==="write"?heuresLignes():[["Nos horaires","comme sur notre fiche Google"]];
       const rows=L.map(([j,t])=>`<tr${t==="Fermé"?' class="off"':""}><td>${esc(j)}</td><td>${esc(t)}</td></tr>`).join("");
       const hd=[...doc.querySelectorAll("h2,h3,h4,.lbl,dt,strong")].find(x=>/^\s*(nos\s+)?horaires/i.test(x.textContent)&&x.textContent.trim().length<40&&!x.closest("nav"));
       const tb=hd&&hd.parentElement.querySelector("table");
       if(tb){tb.innerHTML=rows;(tb.closest("section")||tb.parentElement).setAttribute("data-hood","horaires")}
       else if(hd&&hd.nextElementSibling){hd.nextElementSibling.innerHTML=L.map(([j,t])=>esc(j)+" : "+esc(t)).join("<br>");(hd.closest("section")||hd.parentElement).setAttribute("data-hood","horaires")}
-      else ajoutSection(doc,"horaires","Horaires",`<table style="border-collapse:collapse">${rows.replace(/<td>/g,'<td style="padding:.35em 1.4em .35em 0">')}</table>`)}
+      else ajoutSection(doc,"horaires","Horaires",`<table style="border-collapse:collapse">${rows.replace(/<td>/g,'<td style="padding:.35em 1.4em .35em 0">')}</table>`);
+      /* Contrôle de Justine (17 Nov. 2026) : horaires donnés, plus aucune case « vos horaires » ailleurs (ex. : bloc « Aujourd'hui ») */
+      doc.querySelectorAll('[data-hood-a-completer="vos horaires"]').forEach(x=>x.replaceWith(doc.createTextNode(h==="write"?"voir nos horaires":"comme sur Google")))}
   }
 
   /* ---- Retouches directement sur le site (comme le prototype) ----
@@ -1068,7 +1074,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
      deviennent des cases « à compléter », marquées data-hood-a-completer. La liste part avec le projet
      (champ af-a-completer) : la mise en ligne doit refuser un site où il en reste. */
   function caseACompleter(doc,label,texte){const s=doc.createElement("span");s.setAttribute("data-hood-a-completer",label);
-    s.style.cssText="border-bottom:1.5px dashed currentColor;opacity:.75";s.textContent=texte||label;return s}
+    s.style.cssText="border-bottom:1.5px dashed currentColor;opacity:.75";s.textContent=texte||(label.charAt(0).toUpperCase()+label.slice(1));return s}
   function remplacerDans(doc,node,re,fait){
     const v=node.nodeValue;re.lastIndex=0;if(!re.test(v))return false;re.lastIndex=0;
     const frag=doc.createDocumentFragment();let last=0,m;
@@ -1078,24 +1084,46 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const an=/^(1[89]\d{2}|20\d{2})$/.test(txt("annee"))&&+txt("annee")<=new Date().getFullYear()?txt("annee"):"";
     /* Témoignages de l'exemple : remplacés en entier */
     doc.querySelectorAll("blockquote").forEach(b=>{if(b.closest("[data-hood]"))return;const t=b.textContent.trim();
-      if(/^«|avis|google/i.test(t)){b.textContent="";b.append(caseACompleter(doc,"Vos avis clients","Vos vrais avis clients s'afficheront ici."))}});
-    const H="\\d{1,2}\\s?h(?:\\s?\\d{2})?\\s?[–-]\\s?\\d{1,2}\\s?h(?:\\s?\\d{2})?";
+      if(/^«|avis|google/i.test(t)){b.textContent="";b.append(caseACompleter(doc,"vos avis clients","Vos vrais avis clients s'afficheront ici."))}});
+    /* Zone d'intervention de l'exemple (ex. : « Lyon, Villeurbanne et Ouest lyonnais ») : celle du client, ou à compléter */
+    [...doc.querySelectorAll("div,span,p,h2,h3,h4,dt,strong,b")].filter(x=>/^\s*zone d['’]intervention\s*$/i.test(x.textContent)&&!x.closest("[data-hood]")).forEach(x=>{
+      const v=x.nextElementSibling;if(!v||v.closest("[data-hood]"))return;v.textContent="";
+      if(zoneLib())v.textContent=zoneLib()+(liste(txt("af-communes")).length?" : "+liste(txt("af-communes")).join(", "):"");else v.append(caseACompleter(doc,"votre zone d'intervention"))});
+    const T="(?:\\d{1,2}\\s?h(?:\\s?\\d{2})?|minuit|midi)",H=T+"\\s?[–-]\\s?"+T;
     const R=[
-      [/(?:★\s*){1,5}(?:Vos avis Google)?(?:\d[,.]\d)?(?:\s*(?:\/\s*5|sur\s*5))?(?:\s*sur\s*Google)?(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis(?:\s+Google)?)?|\b\d[,.]\d\s*(?:\/\s*5|sur\s*5|★)(?:\s*sur\s*Google)?(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis(?:\s+Google)?)?|\b\d[,.]\d\s*sur\s*Google(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis)?|\b\d[\d\s]{0,6}\s+avis(?:\s+(?:Google|clients|vérifiés))?\b/g,()=>caseACompleter(doc,"Vos avis Google")],
-      [new RegExp(H+"(?:\\s*(?:[·,/]|et)\\s*"+H+")*","g"),()=>caseACompleter(doc,"Vos horaires")],
-      [/\b0[1-9](?:[\s.]?00){4}\b/g,()=>caseACompleter(doc,"Votre téléphone")],
-      [/\b([Dd]epuis|[Ff]ondée?\s+en|[Cc]réée?\s+en|[Oo]uverte?\s+en|[Ee]st\.)\s+(1[5-9]\d{2}|20[0-2]\d)\b/g,m=>an?m[1]+" "+an:(()=>{const f=doc.createDocumentFragment();f.append(m[1]+" ",caseACompleter(doc,"votre année"));return f})()]
+      [/(?:★\s*){1,5}(?:Vos avis Google)?(?:\d[,.]\d)?(?:\s*(?:\/\s*5|sur\s*5))?(?:\s*sur\s*Google)?(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis(?:\s+Google)?)?|\b\d[,.]\d\s*(?:\/\s*5|sur\s*5|★)(?:\s*sur\s*Google)?(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis(?:\s+Google)?)?|\b\d[,.]\d\s*sur\s*Google(?:\s*[·•|–-]\s*\d[\d\s]{0,6}\s*avis)?|\b\d[\d\s]{0,6}\s+avis(?:\s+(?:Google|clients|vérifiés))?\b/g,()=>caseACompleter(doc,"vos avis Google")],
+      [new RegExp(H+"(?:\\s*(?:[·,/]|et)\\s*"+H+")*","gi"),()=>caseACompleter(doc,"vos horaires")],
+      [/Fermée?(?!\p{L})/gu,()=>caseACompleter(doc,"vos horaires")],
+      [/\b24\s?h\s?\/\s?24\b|\b7\s?j(?:ours)?\s?\/\s?7\b|\ben\s+\d{1,3}\s?min(?:utes)?\b|\bsous\s+\d{1,3}\s?h(?:eures)?\b/gi,()=>caseACompleter(doc,"vos disponibilités")],
+      [/\b0[1-9](?:[\s.]?00){4}\b/g,()=>caseACompleter(doc,"votre téléphone")],
+      [/\b(?:Métro|Tram|RER|Gare|Station|Arrêt)\s+\p{Lu}[^·,;\n]{1,40}/gu,()=>caseACompleter(doc,"votre accès")],
+      [/\b\d{5}\s+(?=\p{Lu})/gu,()=>""],
+      [/[^.·!?\n]*?(?:crédit d['’]impôt|MaPrimeRénov['’]?|\bCEE\b|\d+\s?%\s*d['’]économies|label rouge|diplômée?s?|offerte?s?\b|décennale)[^.·!?\n]*/gi,()=>caseACompleter(doc,"vos engagements et offres","À confirmer avec vous")],
+      [/\b([Dd]epuis|[Ff]ondée?\s+en|[Cc]réée?\s+en|[Oo]uverte?\s+en|[Ee]st\.)\s+(1[5-9]\d{2}|20[0-2]\d)\b/g,m=>an?m[1]+" "+an:(()=>{const f=doc.createDocumentFragment();f.append(m[1]+" ",caseACompleter(doc,"votre année","votre année"));return f})()]
     ];
     const w=doc.createTreeWalker(doc.body,4);const ns=[];let n;
     while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE|TITLE)$/.test(p.tagName)||p.closest("[data-hood],[data-hood-a-completer]"))continue;ns.push(n)}
     ns.forEach(node=>{let cur=[node];R.forEach(([re,fait])=>{const next=[];cur.forEach(x=>{if(!x.isConnected){return}
       const parent=x.parentNode,avant=x.previousSibling,apres=x.nextSibling;
       if(remplacerDans(doc,x,re,fait)){let y=avant?avant.nextSibling:parent.firstChild;while(y&&y!==apres){if(y.nodeType===3)next.push(y);y=y.nextSibling}}else next.push(x)});cur=next})});
-    doc.querySelectorAll('a[href^="tel:"]').forEach(a=>{if(/^tel:\+?0?[1-9]0{8}$/.test(a.getAttribute("href").replace(/[\s.]/g,"")))a.setAttribute("href","#")});
+    doc.querySelectorAll('a[href^="tel:"]').forEach(a=>{const h=a.getAttribute("href").replace(/[\s.]/g,"");if(/^tel:\+?0?[1-9]0{8}$/.test(h)||!/\d{6}/.test(h))a.setAttribute("href","#")});
   }
-  function aCompleterNoter(doc){const l=[...new Set([...doc.querySelectorAll("[data-hood-a-completer]")].map(x=>x.getAttribute("data-hood-a-completer")))];
+  /* Contrôle de Justine (17 Nov. 2026) : un texte d'attente qui reste (champ facultatif vide, modèle polyvalent, ou
+     retouche qui garde « votre année ») est toujours marqué « à compléter ». */
+  const TEMOINS=[[/Vos vrais avis clients s'afficheront ici\.?/g,"vos avis clients"],[/Vos avis Google/g,"vos avis Google"],[/Vos horaires/gi,"vos horaires"],
+    [/Votre (?:numéro|téléphone)/gi,"votre téléphone"],[/Votre adresse/gi,"votre adresse"],[/Votre e-mail/gi,"votre e-mail"],[/votre année/gi,"votre année"],
+    [/À confirmer avec vous/g,"vos engagements et offres"],[/Votre zone d'intervention/gi,"votre zone d'intervention"],[/Votre accès/gi,"votre accès"],
+    [/Vos disponibilités/gi,"vos disponibilités"],[/Votre prix/gi,"vos prix"]];
+  function marquerTemoins(doc){
+    const w=doc.createTreeWalker(doc.body,4);const ns=[];let n;
+    while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE|TITLE)$/.test(p.tagName)||p.closest("[data-hood-a-completer]"))continue;ns.push(n)}
+    ns.forEach(node=>{let cur=[node];TEMOINS.forEach(([re,label])=>{const next=[];cur.forEach(x=>{if(!x.isConnected)return;
+      const parent=x.parentNode,avant=x.previousSibling,apres=x.nextSibling;
+      if(remplacerDans(doc,x,re,m=>caseACompleter(doc,label,m[0]))){let y=avant?avant.nextSibling:parent.firstChild;while(y&&y!==apres){if(y.nodeType===3)next.push(y);y=y.nextSibling}}else next.push(x)});cur=next})})}
+
+  function aCompleterNoter(doc){marquerTemoins(doc);const l=[...new Set([...doc.querySelectorAll("[data-hood-a-completer]")].map(x=>x.getAttribute("data-hood-a-completer")))];
     const el=$("af-a-completer");if(el)el.value=l.join(" | ");const box=$("a-completer");
-    if(box){box.hidden=!l.length;box.querySelector("span").textContent=l.map(x=>x.charAt(0).toLowerCase()+x.slice(1)).join(", ")}}
+    if(box){box.hidden=!l.length;box.querySelector("span").textContent=l.join(", ")}}
   /* Demande de Steve (12 Nov. 2026) : sans « Vos tarifs affichés », aucun prix ne s'affiche sur le site. */
   function sansPrix(doc){
     const P=/(?:à partir de\s*|dès\s*|de\s+)?\d{1,4}(?:[ .,]\d{1,3})*(?:[.,]\d{1,2})?\s?(?:€|eur(?:os)?\b)(?:\s*(?:\/|par)\s*[a-zéèû]+)?(?:\s*(?:HT|TTC))?/gi;
@@ -1403,12 +1431,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(ok&&auto){$("tit-ok").innerHTML="";const b=document.createElement("b");b.textContent="✓ "+txt("af-tit-nom");
       const sm=document.createElement("small");sm.textContent="SIREN "+fmtSiren(txt("af-tit-siren"))+" · "+txt("af-tit-adresse");
       const ch=document.createElement("button");ch.type="button";ch.className="linkbtn";ch.textContent="Changer d'entreprise";ch.style.justifySelf="start";
-      ch.addEventListener("click",()=>{["af-tit-nom","af-tit-siren","af-tit-adresse","af-tit-source"].forEach(i=>$(i).value="");modifie=true;sauver();titAfficher();$("tit-q").focus()});
+      ch.addEventListener("click",()=>{["af-tit-nom","af-tit-siren","af-tit-adresse","af-tit-source"].forEach(i=>$(i).value="");$("af-tit-atteste").checked=false;modifie=true;sauver();titAfficher();$("tit-q").focus()});
       $("tit-ok").append(b,sm,ch)}
     payPret();
   }
   function titChoisir(e){
-    $("af-tit-nom").value=e.nom;$("af-tit-siren").value=e.siren;$("af-tit-adresse").value=e.adresse;$("af-tit-source").value="annuaire";
+    $("af-tit-nom").value=e.nom;$("af-tit-siren").value=e.siren;$("af-tit-adresse").value=e.adresse;$("af-tit-source").value="annuaire";$("af-tit-atteste").checked=false;
     if(e.gerant&&!txt("af-tit-gerant"))$("af-tit-gerant").value=e.gerant;
     modifie=true;sauver();titAfficher();$("err").textContent="";
   }
@@ -1433,7 +1461,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   $("tit-q").addEventListener("input",()=>{clearTimeout(titTimer);titTimer=setTimeout(titChercher,500)});
   $("tit-manuel").addEventListener("click",()=>{$("af-tit-source").value="manuel";titAfficher();$("af-tit-nom").focus()});
-  ["af-tit-nom","af-tit-siren","af-tit-adresse"].forEach(i=>$(i).addEventListener("input",()=>{if(txt("af-tit-source")!=="annuaire")$("af-tit-source").value="manuel"}));
+  ["af-tit-nom","af-tit-siren","af-tit-adresse"].forEach(i=>$(i).addEventListener("input",()=>{if(txt("af-tit-source")!=="annuaire")$("af-tit-source").value="manuel";$("af-tit-atteste").checked=false}));
   function titInit(){titAfficher();if(!(txt("af-tit-nom")&&txt("af-tit-source"))&&!txt("tit-q")){$("tit-q").value=[txt("nom"),txt("ville")].filter(Boolean).join(" ");titChercher()}}
   function titValide(){return !!(txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse")&&txt("af-tit-gerant")&&telOk(txt("af-tit-tel"))&&C_EMAIL(txt("af-tit-email"))&&$("af-tit-atteste").checked)}
   const C_EMAIL=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(e||"").trim());
@@ -1450,7 +1478,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const a=mots(txt("nom")),b=mots(txt("af-tit-nom")),v=norm(txt("ville"));
     return !a.length||a.some(x=>b.includes(x))||(v.length>2&&norm(txt("af-tit-adresse")).includes(v))}
   function afValider(){
-    if(!txt("domaine"))$("domaine").value=slug(txt("nom"))||"votrecommerce";
+    if(!txt("domaine"))$("domaine").value=(slug(txt("nom")).slice(0,63).replace(/-+$/,""))||"votrecommerce";
     domVerifier();titInit();
     const dev=devChecked();
     $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir du 2e mois : le 1er mois est compris dans les 290 €<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
@@ -1582,7 +1610,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
          La commande est validée côté serveur, une fois le paiement confirmé par Stripe (étape 3). */
       if(!COMPTE.actif){go();return}
       $("pay").disabled=true;$("pay").textContent="Un instant…";
-      /* Étape 2 : page de paiement créée par le serveur (carte autorisée, débitée après l'achat du domaine).
+      /* Étape 2 : page de paiement créée par le serveur (carte débitée au paiement depuis le 17 Nov. 2026).
          Tant que le serveur n'est pas configuré, on retombe sur le lien de paiement d'essai. */
       const REPLI=["non_configure","cle_reelle_refusee","reseau","eteint","methode","origine"];
       const MSG={titulaire:"Vérifiez le titulaire du nom de domaine : nom, SIREN, téléphone, e-mail, et la case qui confirme que vous représentez cette entreprise.",domaine:"Vérifiez l'adresse de votre site.",
@@ -1611,7 +1639,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function orderRef(){const k=tplKey();return [slug(txt("nom")).slice(0,50),domFull().slice(0,68),val("metier")||"autre",String(k).replace(/\.html$/,"")].join("__").replace(/[^A-Za-z0-9_-]/g,"-").slice(0,200)}
   if(LIEN_PAIEMENT){$("cgv-wrap").hidden=false;$("pay").innerHTML="Payer 290 €";
 
-    $("cmd-secure").textContent=STRIPE_LINK?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":(ESSAI?"Mode essai (équipe HOOD) : rien n'est débité, carte de test 4242 4242 4242 4242, date future, code 123. ":"")+"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI."}
+    $("cmd-secure").textContent=(STRIPE_LINK||PAIEMENT_REEL)?"Paiement sécurisé par Stripe. TVA non applicable, article 293 B du CGI.":(ESSAI?"Mode essai (équipe HOOD) : rien n'est débité, carte de test 4242 4242 4242 4242, date future, code 123. ":"Le paiement en ligne n'est pas encore ouvert : cette page est un essai, rien n'est débité. ")+"Paiement par Stripe. TVA non applicable, article 293 B du CGI."}
   $("copy").addEventListener("click",()=>{const t=$("recap");try{navigator.clipboard.writeText(t.value).then(()=>{$("copy").textContent="Copié"},()=>{t.select()})}catch(e){t.select()}});
   form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange();
     else if(EN_DIRECT(id)&&e.target.type!=="radio"&&e.target.type!=="checkbox")onChange(true)});
@@ -1650,14 +1678,17 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     /* Audit d'Aymeric (13 Nov. 2026, métier qui change) : un projet relu après la fin de l'attente
        arrivait en plein parcours et écrasait le métier choisi. Passé ce délai, on ne restaure plus rien :
        le visiteur retrouve son ancien site depuis son espace. */
-    if(!repriseEnCours)return;
+    /* Contrôle de Justine (17 Nov. 2026) : si le visiteur n'a encore rien touché, on restaure quand même ;
+       s'il a commencé un autre site, on oublie l'ancien jeton pour ne pas l'écraser, et on le lui dit. */
+    if(!repriseEnCours&&modifie){COMPTE.oublierJeton&&COMPTE.oublierJeton();
+      note("Un site commencé plus tôt dans ce navigateur n'a pas été repris, pour ne pas le mélanger avec celui-ci. Il reste dans votre espace si vous aviez ouvert le lien reçu par mail.");return}
     const c=(p&&p.reponses&&p.reponses.champs)||{};
     const m=Object.keys(c).find(id=>/^m-/.test(id));
     if(m&&$(m)){$(m).checked=true;$(m).dispatchEvent(new Event("change",{bubbles:true}))}
     buildFamilySteps();
     form.querySelectorAll("input,textarea,select").forEach(el=>{
       if(!el.id||el.type==="file"||["q","email","recap"].includes(el.id))return;
-      if(el.type==="radio"||el.type==="checkbox"){if(el.name!=="metier")el.checked=!!c[el.id]}else if(c[el.id]!==undefined)el.value=c[el.id]});
+      if(el.type==="radio"||el.type==="checkbox"){if(el.name!=="metier"&&el.id!=="af-tit-atteste")el.checked=!!c[el.id]}else if(c[el.id]!==undefined)el.value=c[el.id]});
     if(email&&!$("email").value)$("email").value=email;
     $("autre-wrap").hidden=val("metier")!=="autre";
     render();show(Math.min(Math.max(p.etape||1,1),7));
