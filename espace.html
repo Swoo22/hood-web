@@ -90,7 +90,7 @@ a{color:var(--accent)}
   </div>
 </div>
 
-<script src="compte.js?v=20261112h"></script>
+<script src="compte.js?v=20261119a"></script>
 <script>
 (function(){
   const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
@@ -102,9 +102,16 @@ a{color:var(--accent)}
   function afficher(d){
     $("sortir").hidden=false;
     $("bonjour").textContent="Connecté avec "+(d.email||"votre email")+".";
-    const p=d.projet;
+    const p=d.projet,liste=d.projets||[];
     if(!p){
       $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="/maquette">Montrez-moi mon site</a>';
+    }else if(liste.length>1){
+      /* 19 Nov. 2026 : plusieurs sites avec la même adresse, un par commerce */
+      $("projet").innerHTML='<ul class="f">'+liste.map(x=>{const e=Math.min(Math.max(x.etape||1,1),6);
+        const etat=x.statut==="commande"?"Site validé":e>=6?"Première version prête":`Questionnaire : étape ${e} sur 5`;
+        return `<li><span><b>${esc(x.nom||"Site sans nom")}</b><br><span class="small">${etat} · modifié le ${esc(jour(x.maj_le))}</span></span>`+
+          (x.statut==="commande"?"":`<a href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(x.id)}">${e>=6?"Revoir et finaliser":"Reprendre"}</a>`)+`</li>`}).join("")+
+        '</ul><p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d\'un autre commerce</a></p>';
     }else{
       const c=(p.reponses&&p.reponses.champs)||{};
       const nom=c.nom?esc(c.nom):"Votre site";
@@ -115,7 +122,8 @@ a{color:var(--accent)}
         const ou=e>=6?"Votre première version est prête.":`Questionnaire : étape ${e} sur 5.`;
         $("projet").innerHTML=`<p><b>${nom}</b></p><div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
           <p class="small">${ou} Dernière modification le ${esc(jour(p.maj_le))}.</p>
-          <a class="btn" href="/maquette?reprendre=1">${e>=6?"Revoir et finaliser mon site":"Reprendre mon site"}</a>`;
+          <a class="btn" href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(p.id)}">${e>=6?"Revoir et finaliser mon site":"Reprendre mon site"}</a>
+          <p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d'un autre commerce</a></p>`;
       }
     }
     const f=d.factures||[];
