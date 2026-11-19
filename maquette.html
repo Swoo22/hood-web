@@ -58,7 +58,7 @@ header.top{max-width:1240px;margin:0 auto;padding-block:14px 8px;display:flex;ju
 label.f{display:grid;gap:6px;font-weight:700;font-size:14px}
 label.f small,.lbl small{font-weight:500;color:var(--muted)}
 .lbl{font-weight:700;font-size:14px}
-input[type=text],input[type=email],input[type=search],input[type=number],input[type=tel],textarea{width:100%;font:inherit;font-size:16px;padding:14px 15px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+input[type=text],input[type=url],input[type=email],input[type=search],input[type=number],input[type=tel],textarea{width:100%;font:inherit;font-size:16px;padding:14px 15px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);transition:border-color .2s,box-shadow .2s}
 textarea{min-height:110px;resize:vertical}
 input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 input.bad{border-color:var(--danger)}
@@ -69,16 +69,17 @@ input.bad{border-color:var(--danger)}
 .search{position:relative;display:block;margin-bottom:18px}
 .search input{padding-left:42px}
 .search::before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-52%);font-size:20px;color:var(--muted)}
-#metiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+/* Étape 1 (19 Nov. 2026, demande de Steve) : le secteur dans un menu déroulant, ses métiers juste en dessous */
+.secteur{margin-bottom:16px}
+.secteur select{width:100%;font:inherit;font-size:16px;font-weight:700;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 42px 14px 15px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+.secteur select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+#metiers{display:grid;gap:14px;margin-bottom:6px}
 .fam{display:grid;gap:10px;min-width:0}
-.fam.open,.fam-autre{grid-column:1/-1}
-.fam-t{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
-.fam-t:hover,.fam-t:focus-visible{border-color:var(--accent)}
-.fam.open .fam-t{border-color:var(--accent);background:var(--accent-soft)}
-.fam-i{font-size:24px;line-height:1}
-.fam-l{display:grid;gap:2px;flex:1;min-width:0}.fam-l b{font-size:14.5px;line-height:1.25}.fam-l small{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fam-n{font-size:12px;font-weight:700;color:var(--muted);background:var(--bg-soft);border-radius:999px;padding:2px 8px}
-@media (max-width:560px){#metiers{grid-template-columns:minmax(0,1fr)}}
+.fam-h{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.search-ou{font-size:13.5px;color:var(--muted);font-weight:600;margin:18px 0 8px}
+.reprise{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:12px 14px;border:1.5px solid var(--accent);background:var(--accent-soft);border-radius:12px;font-size:14px}
+.reprise-btns{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.reprise .btn{padding:9px 14px;font-size:14px}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{position:relative}
 .chip input{position:absolute;opacity:0;pointer-events:none}
@@ -215,6 +216,18 @@ input.bad{border-color:var(--danger)}
 .aq h1{margin-bottom:0}
 .aq .lead{margin-bottom:4px}
 .more{display:grid;gap:10px}
+.af-mention{margin:0 0 14px;padding:8px 12px;border-radius:10px;background:var(--bg-soft);font-size:13.5px;font-weight:600;color:var(--muted)}
+.prix-opts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:4px}
+.ck.mini{padding:9px 12px;font-size:14px}
+.chips.mini .chip span{padding:8px 12px;font-size:14px}
+.places{display:grid;gap:8px;margin-top:6px}
+.places>b{font-size:14.5px}
+.place{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card)}
+.place span{font-size:14px;font-weight:600}.place small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+.place select{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 8px;max-width:190px}
+.btns-liste{display:grid;gap:8px;margin-bottom:6px}
+.btn-dest{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);font-size:14px}
+.btn-dest b{white-space:nowrap}.btn-dest span{color:var(--muted)}.btn-dest.manque{border-color:#e0a100}
 .rowhead,.prow{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px}
 .rowhead span{font-size:12px;font-weight:700;color:var(--muted)}
 .rows{display:grid;gap:8px}
@@ -257,6 +270,7 @@ input.bad{border-color:var(--danger)}
 .drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .drop .plus{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:900;font-size:20px}
 .thumbs{display:flex;flex-wrap:wrap;gap:8px}
+.th .th-n{position:absolute;left:4px;bottom:4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#101114;color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
 .th{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--bg-soft);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
 .th img{width:100%;height:100%;object-fit:cover}
 .th button{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
@@ -322,15 +336,21 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
     <div class="progress" id="progress"></div>
     <div class="meta" id="meta"></div>
     <p class="hint compte-note" id="compte-note" role="status" hidden></p>
+    <div class="reprise" id="reprise" role="status" hidden></div>
 
     <form id="form" novalidate>
       <!-- 1. Métier -->
       <div class="step" data-step="1">
         <h1>Quel est votre <em>métier</em> ?</h1>
         <p class="lead">Chaque métier a ses modèles de site. Deux minutes de questions, et votre site s'affiche aussitôt. Gratuitement.</p>
-        <label class="search"><input type="search" id="q" placeholder="Cherchez votre métier : fleuriste, garage…" autocomplete="off" aria-label="Chercher un métier"></label>
-        <p class="nomatch" id="nomatch" hidden>Pas dans la liste ? Choisissez « Autre métier » et dites-nous lequel.</p>
+        <label class="f secteur">Votre secteur d'activité
+          <select id="secteur" aria-describedby="secteur-aide"></select>
+          <span class="hint" id="secteur-aide">Choisissez votre secteur : ses métiers s'affichent juste en dessous.</span>
+        </label>
         <div id="metiers"></div>
+        <p class="search-ou">Vous ne trouvez pas ? Cherchez votre métier :</p>
+        <label class="search"><input type="search" id="q" placeholder="Fleuriste, garage, plombier…" autocomplete="off" aria-label="Chercher un métier"></label>
+        <p class="nomatch" id="nomatch" hidden>Pas dans la liste ? Choisissez « Autre métier » et dites-nous lequel.</p>
         <label class="f" id="autre-wrap" hidden>Votre métier, en quelques mots
           <input type="text" id="metierAutre" placeholder="Ex. : photographe, toiletteur, serrurier…" autocomplete="off">
           <span class="hint">On part d'un modèle polyvalent, qu'on adapte à votre activité.</span>
@@ -428,6 +448,8 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
       <!-- 7. Affinage, puis validation (décision de Steve, 12 Nov. 2026 : rien ne part avant) -->
       <div class="step" data-step="7" hidden>
         <input type="hidden" id="af-i" value="0">
+        <!-- Demande de Steve (19 Nov. 2026) -->
+        <p class="af-mention" id="af-mention" hidden>Pas de panique : à la fin, vous pourrez modifier vous-même toutes les zones du site.</p>
         <div class="aq" tabindex="-1" data-aq="photos" hidden>
           <h1>Quelles <em>photos</em> sur votre site&#8239;?</h1>
           <p class="lead">Pour montrer votre commerce sous son meilleur jour.</p>
@@ -440,6 +462,10 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
             <div class="thumbs" id="af-th-photos"></div>
             <p class="hint" id="af-msg-photos" role="status" aria-live="polite"></p>
             <input type="hidden" id="af-photos-liste" value="">
+            <!-- 19 Nov. 2026 (retour de Steve : une photo d'ambiance arrivait dans les tarifs) : chaque modèle a ses
+                 emplacements ; le client voit où va chaque photo et peut la déplacer. -->
+            <div class="places" id="af-places" hidden></div>
+            <input type="hidden" id="af-photos-places" value="">
           </div>
           </div>
         </div>
@@ -451,12 +477,17 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
         <div class="aq" tabindex="-1" data-aq="prix" hidden>
           <h1>Vos <em>prix</em>.</h1>
           <p class="lead">Comment préférez-vous nous les donner&#8239;?</p>
-          <div class="checks c1"><label class="ck"><input type="radio" name="af-prix" id="af-prix-write" value="write"><span>Je les écris ici<small>Quelques lignes suffisent</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-photo" value="photo"><span>J'envoie une photo de ma carte ou de mes tarifs<small>Même écrite à la main : on recopie tout</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-none" value="none"><span>Pas de prix sur mon site</span></label></div>
+          <div class="checks c1"><label class="ck"><input type="radio" name="af-prix" id="af-prix-write" value="write"><span>Je les écris ici<small>Quelques lignes suffisent</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-photo" value="photo"><span>J'envoie une photo de ma carte ou de mes tarifs<small>Même écrite à la main : on les recopie sur votre site après le paiement, avant la mise en ligne</small></span></label><label class="ck"><input type="radio" name="af-prix" id="af-prix-none" value="none"><span>Pas de prix sur mon site</span></label></div>
           <div class="more" data-more="prix-write" hidden>
             <div class="rowhead"><span>Prestation ou produit</span><span>Prix</span></div>
-            <div class="rows"><div class="prow" data-row="0"><input type="text" id="af-pn-0" maxlength="48" aria-label="Prestation ou produit 1" placeholder="Ex. : Plat du jour"><input type="text" id="af-pp-0" maxlength="18" aria-label="Prix 1" placeholder="14,50 €"></div><div class="prow" data-row="1"><input type="text" id="af-pn-1" maxlength="48" aria-label="Prestation ou produit 2" placeholder="Ex. : Menu du midi"><input type="text" id="af-pp-1" maxlength="18" aria-label="Prix 2" placeholder="19 €"></div><div class="prow" data-row="2"><input type="text" id="af-pn-2" maxlength="48" aria-label="Prestation ou produit 3" placeholder="Ex. : Dessert maison"><input type="text" id="af-pp-2" maxlength="18" aria-label="Prix 3" placeholder="à partir de 6 €"></div><div class="prow" data-row="3"><input type="text" id="af-pn-3" maxlength="48" aria-label="Prestation ou produit 4" placeholder=""><input type="text" id="af-pp-3" maxlength="18" aria-label="Prix 4" placeholder=""></div><div class="prow" data-row="4" hidden><input type="text" id="af-pn-4" maxlength="48" aria-label="Prestation ou produit 5" placeholder=""><input type="text" id="af-pp-4" maxlength="18" aria-label="Prix 5" placeholder=""></div><div class="prow" data-row="5" hidden><input type="text" id="af-pn-5" maxlength="48" aria-label="Prestation ou produit 6" placeholder=""><input type="text" id="af-pp-5" maxlength="18" aria-label="Prix 6" placeholder=""></div><div class="prow" data-row="6" hidden><input type="text" id="af-pn-6" maxlength="48" aria-label="Prestation ou produit 7" placeholder=""><input type="text" id="af-pp-6" maxlength="18" aria-label="Prix 7" placeholder=""></div><div class="prow" data-row="7" hidden><input type="text" id="af-pn-7" maxlength="48" aria-label="Prestation ou produit 8" placeholder=""><input type="text" id="af-pp-7" maxlength="18" aria-label="Prix 8" placeholder=""></div><div class="prow" data-row="8" hidden><input type="text" id="af-pn-8" maxlength="48" aria-label="Prestation ou produit 9" placeholder=""><input type="text" id="af-pp-8" maxlength="18" aria-label="Prix 9" placeholder=""></div><div class="prow" data-row="9" hidden><input type="text" id="af-pn-9" maxlength="48" aria-label="Prestation ou produit 10" placeholder=""><input type="text" id="af-pp-9" maxlength="18" aria-label="Prix 10" placeholder=""></div><div class="prow" data-row="10" hidden><input type="text" id="af-pn-10" maxlength="48" aria-label="Prestation ou produit 11" placeholder=""><input type="text" id="af-pp-10" maxlength="18" aria-label="Prix 11" placeholder=""></div><div class="prow" data-row="11" hidden><input type="text" id="af-pn-11" maxlength="48" aria-label="Prestation ou produit 12" placeholder=""><input type="text" id="af-pp-11" maxlength="18" aria-label="Prix 12" placeholder=""></div></div>
+            <div class="rows"><div class="prow" data-row="0"><input type="text" id="af-pn-0" maxlength="48" aria-label="Prestation ou produit 1" placeholder="Ex. : Plat du jour"><input type="text" id="af-pp-0" maxlength="18" aria-label="Prix 1" placeholder="14,50"></div><div class="prow" data-row="1"><input type="text" id="af-pn-1" maxlength="48" aria-label="Prestation ou produit 2" placeholder="Ex. : Menu du midi"><input type="text" id="af-pp-1" maxlength="18" aria-label="Prix 2" placeholder="19"></div><div class="prow" data-row="2"><input type="text" id="af-pn-2" maxlength="48" aria-label="Prestation ou produit 3" placeholder="Ex. : Dessert maison"><input type="text" id="af-pp-2" maxlength="18" aria-label="Prix 3" placeholder="à partir de 6 €"></div><div class="prow" data-row="3"><input type="text" id="af-pn-3" maxlength="48" aria-label="Prestation ou produit 4" placeholder=""><input type="text" id="af-pp-3" maxlength="18" aria-label="Prix 4" placeholder=""></div><div class="prow" data-row="4" hidden><input type="text" id="af-pn-4" maxlength="48" aria-label="Prestation ou produit 5" placeholder=""><input type="text" id="af-pp-4" maxlength="18" aria-label="Prix 5" placeholder=""></div><div class="prow" data-row="5" hidden><input type="text" id="af-pn-5" maxlength="48" aria-label="Prestation ou produit 6" placeholder=""><input type="text" id="af-pp-5" maxlength="18" aria-label="Prix 6" placeholder=""></div><div class="prow" data-row="6" hidden><input type="text" id="af-pn-6" maxlength="48" aria-label="Prestation ou produit 7" placeholder=""><input type="text" id="af-pp-6" maxlength="18" aria-label="Prix 7" placeholder=""></div><div class="prow" data-row="7" hidden><input type="text" id="af-pn-7" maxlength="48" aria-label="Prestation ou produit 8" placeholder=""><input type="text" id="af-pp-7" maxlength="18" aria-label="Prix 8" placeholder=""></div><div class="prow" data-row="8" hidden><input type="text" id="af-pn-8" maxlength="48" aria-label="Prestation ou produit 9" placeholder=""><input type="text" id="af-pp-8" maxlength="18" aria-label="Prix 9" placeholder=""></div><div class="prow" data-row="9" hidden><input type="text" id="af-pn-9" maxlength="48" aria-label="Prestation ou produit 10" placeholder=""><input type="text" id="af-pp-9" maxlength="18" aria-label="Prix 10" placeholder=""></div><div class="prow" data-row="10" hidden><input type="text" id="af-pn-10" maxlength="48" aria-label="Prestation ou produit 11" placeholder=""><input type="text" id="af-pp-10" maxlength="18" aria-label="Prix 11" placeholder=""></div><div class="prow" data-row="11" hidden><input type="text" id="af-pn-11" maxlength="48" aria-label="Prestation ou produit 12" placeholder=""><input type="text" id="af-pp-11" maxlength="18" aria-label="Prix 12" placeholder=""></div></div>
             <button type="button" class="linkbtn" id="af-addrow">+ Ajouter une ligne</button>
             <span class="hint">Si le prix varie, écrivez « à partir de ».</span>
+            <!-- Demande de Steve (19 Nov. 2026) : €, TTC ou HT, en cases à cocher -->
+            <div class="prix-opts">
+              <label class="ck mini"><input type="checkbox" id="af-prix-euro" checked><span>Ajouter « € » après chaque prix</span></label>
+              <div class="chips mini" role="radiogroup" aria-label="Mention après le prix"><label class="chip"><input type="radio" name="af-taxe" id="af-taxe-rien" value="" checked><span>Sans mention</span></label><label class="chip"><input type="radio" name="af-taxe" id="af-taxe-ttc" value="TTC"><span>TTC</span></label><label class="chip"><input type="radio" name="af-taxe" id="af-taxe-ht" value="HT"><span>HT</span></label></div>
+            </div>
           </div>
           <div class="more" data-more="prix-photo" hidden>
           <div class="upz" data-up="tarifs">
@@ -473,6 +504,10 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <h1>Vos <em>horaires</em>.</h1>
           <p class="lead">Les jours et les heures où vos clients peuvent venir ou vous appeler.</p>
           <div class="checks c1"><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-google" value="google"><span>Comme sur ma fiche Google<small>On les reprend tels quels</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-write" value="write"><span>Je les indique<small>Jour par jour, en quelques clics</small></span></label><label class="ck"><input type="radio" name="af-horaires" id="af-horaires-none" value="none"><span>Pas d'horaires sur le site<small>Sur rendez-vous, par exemple</small></span></label></div>
+          <div class="more" data-more="horaires-google" hidden>
+            <label class="f">Le lien de votre fiche Google<input type="url" id="af-fiche-google" maxlength="300" autocomplete="url" inputmode="url" placeholder="Ex. : https://maps.app.goo.gl/…"></label>
+            <span class="hint">Pour reprendre les bons horaires, sans erreur. Sur Google Maps, ouvrez votre fiche, touchez « Partager », puis « Copier le lien ».</span>
+          </div>
           <div class="more" data-more="horaires-write" hidden><span class="hint">Cochez vos jours d'ouverture. La 2ᵉ plage est facultative.</span><div class="hours"><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-0" checked>Lundi</label><span class="hr"><input type="time" id="af-h-0-a" value="09:00" aria-label="Lundi, ouverture"> à <input type="time" id="af-h-0-b" value="12:00" aria-label="Lundi, fermeture"> <span class="h2">et <input type="time" id="af-h-0-c" value="14:00" aria-label="Lundi, réouverture"> à <input type="time" id="af-h-0-d" value="18:00" aria-label="Lundi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-1" checked>Mardi</label><span class="hr"><input type="time" id="af-h-1-a" value="09:00" aria-label="Mardi, ouverture"> à <input type="time" id="af-h-1-b" value="12:00" aria-label="Mardi, fermeture"> <span class="h2">et <input type="time" id="af-h-1-c" value="14:00" aria-label="Mardi, réouverture"> à <input type="time" id="af-h-1-d" value="18:00" aria-label="Mardi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-2" checked>Mercredi</label><span class="hr"><input type="time" id="af-h-2-a" value="09:00" aria-label="Mercredi, ouverture"> à <input type="time" id="af-h-2-b" value="12:00" aria-label="Mercredi, fermeture"> <span class="h2">et <input type="time" id="af-h-2-c" value="14:00" aria-label="Mercredi, réouverture"> à <input type="time" id="af-h-2-d" value="18:00" aria-label="Mercredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-3" checked>Jeudi</label><span class="hr"><input type="time" id="af-h-3-a" value="09:00" aria-label="Jeudi, ouverture"> à <input type="time" id="af-h-3-b" value="12:00" aria-label="Jeudi, fermeture"> <span class="h2">et <input type="time" id="af-h-3-c" value="14:00" aria-label="Jeudi, réouverture"> à <input type="time" id="af-h-3-d" value="18:00" aria-label="Jeudi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-4" checked>Vendredi</label><span class="hr"><input type="time" id="af-h-4-a" value="09:00" aria-label="Vendredi, ouverture"> à <input type="time" id="af-h-4-b" value="12:00" aria-label="Vendredi, fermeture"> <span class="h2">et <input type="time" id="af-h-4-c" value="14:00" aria-label="Vendredi, réouverture"> à <input type="time" id="af-h-4-d" value="18:00" aria-label="Vendredi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-5" checked>Samedi</label><span class="hr"><input type="time" id="af-h-5-a" value="09:00" aria-label="Samedi, ouverture"> à <input type="time" id="af-h-5-b" value="12:00" aria-label="Samedi, fermeture"> <span class="h2">et <input type="time" id="af-h-5-c" value="" aria-label="Samedi, réouverture"> à <input type="time" id="af-h-5-d" value="" aria-label="Samedi, fermeture du soir"></span></span></div><div class="hrow"><label class="hday"><input type="checkbox" id="af-h-6">Dimanche</label><span class="hr"><input type="time" id="af-h-6-a" value="" aria-label="Dimanche, ouverture"> à <input type="time" id="af-h-6-b" value="" aria-label="Dimanche, fermeture"> <span class="h2">et <input type="time" id="af-h-6-c" value="" aria-label="Dimanche, réouverture"> à <input type="time" id="af-h-6-d" value="" aria-label="Dimanche, fermeture du soir"></span></span></div></div></div>
         </div>
         <div class="aq" tabindex="-1" data-aq="zone" hidden>
@@ -494,6 +529,20 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <fieldset class="qgroup"><legend class="t">Ce qui compte pour vous <small>3 au maximum</small></legend><div class="chips" id="af-vals"><label class="chip"><input type="checkbox" id="af-v-0"><span id="af-vl-0"></span></label><label class="chip"><input type="checkbox" id="af-v-1"><span id="af-vl-1"></span></label><label class="chip"><input type="checkbox" id="af-v-2"><span id="af-vl-2"></span></label><label class="chip"><input type="checkbox" id="af-v-3"><span id="af-vl-3"></span></label><label class="chip"><input type="checkbox" id="af-v-4"><span id="af-vl-4"></span></label><label class="chip"><input type="checkbox" id="af-v-5"><span id="af-vl-5"></span></label><label class="chip"><input type="checkbox" id="af-v-6"><span id="af-vl-6"></span></label><label class="chip"><input type="checkbox" id="af-v-7"><span id="af-vl-7"></span></label><label class="chip"><input type="checkbox" id="af-v-8"><span id="af-vl-8"></span></label><label class="chip"><input type="checkbox" id="af-v-9"><span id="af-vl-9"></span></label></div></fieldset>
           <div class="say"><small>Ce qu'on écrira</small><span id="af-say"></span></div>
           <label class="ck" style="margin-top:6px"><input type="checkbox" id="af-pas-histoire"><span>Pas de partie « Notre histoire » sur mon site</span></label>
+        </div>
+        <!-- 19 Nov. 2026 (retour de Steve : « Prendre rendez-vous » ne menait nulle part) -->
+        <div class="aq" tabindex="-1" data-aq="boutons" hidden>
+          <h1>Où mènent <em>vos boutons</em>&#8239;?</h1>
+          <p class="lead">Chaque bouton de votre site mène quelque part. Vérifiez, et complétez ce qui manque.</p>
+          <div class="btns-liste" id="af-btns-liste"></div>
+          <div class="more" id="af-rdv-zone" hidden>
+            <label class="f">Votre lien de réservation ou de prise de rendez-vous <small>facultatif</small><input type="url" id="af-lien-rdv" maxlength="300" autocomplete="url" inputmode="url" placeholder="Ex. : https://www.planity.com/votre-salon"></label>
+            <span class="hint">Planity, Calendly, TheFork, Zenchef… l'outil que vous utilisez déjà. Pas d'outil&#8239;? Le bouton appelle votre téléphone, ou ouvre votre formulaire de contact s'il n'y a pas de numéro.</span>
+          </div>
+          <div class="more" id="af-insta-zone" hidden>
+            <label class="f">Votre compte Instagram <small>facultatif</small><input type="text" id="af-insta" maxlength="60" autocomplete="off" placeholder="Ex. : @barbierducanal"></label>
+            <span class="hint">Le bouton mène à votre compte. Pour afficher vos dernières publications sur le site, on vous envoie après le paiement un lien pour relier votre compte Instagram (une autorisation à donner, sans mot de passe à nous transmettre).</span>
+          </div>
         </div>
         <div class="aq" tabindex="-1" data-aq="contact" hidden>
           <h1>Où recevoir les <em>messages</em>&#8239;?</h1>
@@ -634,7 +683,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
 </main>
 <div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Je finalise mon site</button></div>
 
-<script src="compte.js?v=20261117a"></script>
+<script src="compte.js?v=20261119a"></script>
 <script>
 const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fffdf9;--encre:#1f2a24;--doux:#6b746e;--rose:#c8566b;--vert:#e4efe7}\n*{box-sizing:border-box;margin:0}body{font-family:\"Palatino Linotype\",Palatino,\"Book Antiqua\",\"URW Palladio L\",serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--encre);color:#fff;font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eadfd3}\n.nom{font-size:1.2rem;letter-spacing:.04em}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--rose);color:#fff;text-decoration:none;padding:11px 20px;border-radius:2px;border:0}\n.btn.l{background:none;color:var(--rose);border:1px solid var(--rose)}\n.s2{background:var(--vert);padding:48px 16px 96px;text-align:center}\n.s2 h1{font-size:2.3rem;font-weight:normal;line-height:1.15;max-width:760px;margin:auto}.s2 h1 em{color:var(--rose)}\n.sous{display:block;margin:12px 0 22px;color:var(--doux);font-style:italic}.sous::first-letter{text-transform:uppercase}\n.wrap{max-width:1040px;margin:-64px auto 0;padding:0 16px}\n.sv{background:#fff;border:1px solid #eadfd3;box-shadow:0 10px 30px rgba(0,0,0,.08);min-height:240px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:40px 0}h2{font-weight:normal;font-size:1.7rem;margin-bottom:4px}\n.note{color:var(--doux);font-style:italic;margin-bottom:18px}\n.cartes{display:grid;gap:18px}.carte-s3{border-top:2px solid var(--rose);padding-top:10px}.carte-s3 h3{font-size:1.15rem;font-weight:normal}.carte-s3 p{color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:6px 0;border-bottom:1px solid #eadfd3}\n.duo>div+div{margin-top:36px}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:1px solid #eadfd3}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.4rem}.cartes{grid-template-columns:repeat(4,1fr)}.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px}.duo>div+div{margin-top:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<div class=\"s2\"><h1>Votre <em>[métier]<\/em> à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div>\n<main class=\"wrap\"><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<section><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"cartes\"><div class=\"carte-s3\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"carte-s3\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<section class=\"duo\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"duo\"><div><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div><h2>Avis<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "ardoise2": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--ardoise:#24362f;--craie:#f4f1e8;--doux:#b9c4bc;--jaune:#f2d06b;--bois:#8a6a4a}\n*{box-sizing:border-box;margin:0}body{font-family:Georgia,\"DejaVu Serif\",serif;background:var(--ardoise);color:var(--craie);line-height:1.6}\n.s0{font-family:Arial,sans-serif;background:var(--jaune);color:var(--ardoise);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:22px 16px;border-bottom:8px solid var(--bois)}\n.nom{font-size:1.6rem;font-style:italic;display:block;margin-bottom:10px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;background:var(--jaune);color:var(--ardoise);text-decoration:none;padding:11px 20px;border-radius:24px;border:0}\n.btn.l{background:none;color:var(--jaune);border:2px dashed var(--jaune)}\n.wrap{max-width:900px;margin:auto;padding:0 16px}\n.s2{text-align:center;padding:40px 0}.s2 h1{font-size:2.1rem;font-style:italic;font-weight:normal;line-height:1.2}\n.sous{display:block;color:var(--doux);margin:10px 0 22px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:28px;border:2px dashed rgba(244,241,232,.5);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.9rem;text-align:center;padding:16px}\nsection{padding:32px 0;border-top:2px dashed rgba(244,241,232,.25)}\nh2{font-size:1.5rem;font-style:italic;font-weight:normal;color:var(--jaune);text-align:center;margin-bottom:6px}\n.note{color:var(--doux);text-align:center;font-size:.9rem;margin-bottom:18px}\n.menu{list-style:none;padding:0;max-width:620px;margin:auto}.menu li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px dotted rgba(244,241,232,.35)}\n.menu b{font-weight:normal;font-size:1.1rem}.menu span{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0;text-align:center}.horaires li{padding:4px 0}\n.centre{text-align:center}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.82rem;color:var(--doux);padding:24px 16px;border-top:8px solid var(--bois)}footer a{color:var(--craie)}\nbutton.btn{font:inherit;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2 h1{font-size:3.2rem}.paire{display:grid;grid-template-columns:1fr 1fr;gap:40px}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><h1>[nom_commerce], [métier] près de chez vous.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><h2>Ce que nous proposons<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><ul class=\"menu\"><li><b>Exemple de prestation 1<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 2<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 3<\/b><span>À fournir (David), selon le métier.<\/span><\/li><li><b>Exemple de prestation 4<\/b><span>À fournir (David), selon le métier.<\/span><\/li><\/ul><\/section>\n<section class=\"paire\"><div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div><div class=\"centre\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div><\/section>\n<section id=\"s6\" class=\"centre\"><h2>Nous trouver<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section class=\"centre\"><h2>Ils en parlent<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<section class=\"centre\"><h2>Nous appeler<\/h2><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "etiquette": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#fff6f2;--encre:#3a2b33;--doux:#7d6b74;--corail:#ef7b62;--menthe:#bfe6d8;--lilas:#e6dcf5}\n*{box-sizing:border-box;margin:0}body{font-family:\"Century Gothic\",\"Avenir Next\",Avenir,\"URW Gothic\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.6}\n.s0{background:var(--lilas);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}\n.nom{font-weight:bold;background:var(--menthe);padding:6px 14px;border-radius:999px}\n.btn{display:inline-block;font-weight:bold;background:var(--corail);color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;border:0}\n.btn.l{background:#fff;color:var(--corail);border:2px solid var(--corail)}\n.wrap{max-width:1000px;margin:auto;padding:0 16px}\n.s2{padding:32px 0 24px}.s2 h1{font-size:2.2rem;line-height:1.15}.s2 h1::first-letter{text-transform:uppercase}\n.sous{display:inline-block;margin:12px 0 20px;color:var(--doux)}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:24px;background:var(--menthe);border-radius:28px;min-height:220px;display:grid;place-items:center;color:var(--encre);font-size:.9rem;text-align:center;padding:16px}\nsection{margin:28px 0;background:#fff;border-radius:24px;padding:28px 20px;box-shadow:0 2px 0 rgba(58,43,51,.08)}\n.tag{display:inline-block;background:var(--corail);color:#fff;font-size:.8rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;transform:rotate(-3deg);margin-bottom:10px}\nh2{font-size:1.4rem;margin-bottom:6px}.note{color:var(--doux);font-size:.85rem;margin-bottom:16px}\n.pilules{display:grid;gap:12px}.pilule{background:var(--lilas);border-radius:20px;padding:14px 18px}.pilule h3{font-size:1rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:5px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:24px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:820px){.s2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:56px 0 24px}.s2 h1{font-size:3rem}.sv{margin:0;min-height:320px}.pilules{grid-template-columns:1fr 1fr}.bas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.bas section{margin:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"wrap\">\n<div class=\"s2\"><div><h1>[métier] à [ville] : appelez [nom_commerce].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><br><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<section><span class=\"tag\">Prestations<\/span><h2>Au comptoir<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p>\n<!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"pilules\"><div class=\"pilule\"><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div class=\"pilule\"><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/section>\n<div class=\"bas\">\n<section><span class=\"tag\">Horaires<\/span><h2>Quand venir<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/section>\n<section id=\"s6\"><span class=\"tag\">Adresse<\/span><h2>Venir nous voir<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:12px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/section>\n<section><span class=\"tag\">Contact<\/span><h2>Nous joindre<\/h2><p style=\"margin-bottom:12px\"><a class=\"btn\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/p><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/section>\n<\/div>\n<section><span class=\"tag\">À propos<\/span><h2>Le commerce<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/section>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "registre": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--papier:#fbfaf7;--encre:#111;--doux:#555;--rouge:#b3261e;--filet:#cfcac0}\n*{box-sizing:border-box;margin:0}body{font-family:\"Times New Roman\",Times,\"Liberation Serif\",serif;background:var(--papier);color:var(--encre);line-height:1.55;font-size:17px}\n.s0{font-family:Arial,sans-serif;background:var(--rouge);color:#fff;font-size:.78rem;text-align:center;padding:6px 16px}\nheader{text-align:center;padding:20px 16px 12px;border-bottom:4px double var(--encre);max-width:1100px;margin:0 16px}\n.nom{font-size:2rem;font-weight:bold;letter-spacing:.02em;display:block}\n.date{font-family:Arial,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--doux);margin-top:6px}\n.btn{display:inline-block;font-family:Arial,sans-serif;font-weight:700;font-size:.9rem;background:var(--encre);color:#fff;text-decoration:none;padding:10px 18px;border:0}\n.btn.l{background:none;color:var(--encre);border:1px solid var(--encre)}.btn.r{background:var(--rouge)}\n.wrap{max-width:1100px;margin:auto;padding:0 16px}\n.une{padding:24px 0;border-bottom:1px solid var(--encre)}\n.une h1{font-size:2.3rem;line-height:1.1}\n.sous{display:block;font-style:italic;color:var(--doux);margin:8px 0 16px}.sous::first-letter{text-transform:uppercase}\n.sv{margin-top:20px;border:1px solid var(--encre);min-height:220px;display:grid;place-items:center;color:var(--doux);font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:16px;background:#efede8}\n.cols>div{padding:20px 0;border-bottom:1px solid var(--filet)}\nh2{font-family:Arial,sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;color:var(--rouge);margin-bottom:8px}\n.note{font-style:italic;color:var(--doux);font-size:.9rem;margin-bottom:8px}\ndl dt{font-weight:bold;margin-top:8px}dl dd{margin:0;color:var(--doux)}\n.horaires{list-style:none;padding:0}.horaires li{padding:2px 0}\nfooter{text-align:center;font-family:Arial,sans-serif;font-size:.78rem;color:var(--doux);padding:20px 16px;border-top:4px double var(--encre);margin-top:24px}footer a{color:var(--encre)}\nbutton.btn{font-size:.9rem;font-family:Arial,sans-serif;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:860px){header{margin:0 auto}.une{display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:end}.une h1{font-size:3.6rem}.sv{margin:0}.cols{display:grid;grid-template-columns:repeat(3,1fr)}.cols>div{padding:20px;border-bottom:0;border-left:1px solid var(--filet)}.cols>div:first-child{border-left:0;padding-left:0}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><div class=\"date\">[métier] · [ville]<\/div><p style=\"margin-top:12px\"><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a><\/p><\/header>\n<main class=\"wrap\">\n<div class=\"une\"><div><h1>[nom_commerce], près de chez vous, à [ville].<\/h1><span class=\"sous\">[métier] à [ville]<\/span><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><div class=\"sv\">Vue de la devanture, affichée par Google (Street View)<\/div><\/div>\n<div class=\"cols\">\n<div><h2>Nos services<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><dl><dt>Exemple de prestation 1<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 2<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 3<\/dt><dd>À fournir (David), selon le métier.<\/dd><dt>Exemple de prestation 4<\/dt><dd>À fournir (David), selon le métier.<\/dd><\/dl><\/div>\n<div><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><h2 style=\"margin-top:20px\">À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin:10px 0 20px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button> <a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><h2>Avis<\/h2><p style=\"margin-bottom:20px\"><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/p><h2>Contact<\/h2><a class=\"btn r\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n", "mosaique": "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\"><title>[nom_commerce]<\/title>\n<style>\n:root{--fond:#f4f6f5;--encre:#18322f;--doux:#5d706d;--sarcelle:#1f7a72;--moutarde:#e7b53c;--blanc:#fff}\n*{box-sizing:border-box;margin:0}body{font-family:Tahoma,\"Segoe UI\",\"DejaVu Sans\",sans-serif;background:var(--fond);color:var(--encre);line-height:1.55}\n.s0{background:var(--moutarde);font-size:.82rem;text-align:center;padding:6px 16px}\nheader{position:sticky;top:0;z-index:2;background:var(--sarcelle);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}\n.nom{font-weight:bold}nav{display:none}nav a{color:#fff;text-decoration:none;margin-right:16px;font-size:.9rem}\n.btn{display:inline-block;font-weight:bold;background:var(--moutarde);color:var(--encre);text-decoration:none;padding:10px 18px;border-radius:10px;border:0}\n.btn.l{background:var(--blanc);color:var(--sarcelle);border:2px solid var(--sarcelle)}\n.grille{max-width:1160px;margin:auto;padding:16px;display:grid;gap:14px}\n.tuile{background:var(--blanc);border-radius:16px;padding:22px}\n.t-hero{background:var(--sarcelle);color:#fff}.t-hero h1{font-size:2rem;line-height:1.15}\n.sous{display:block;margin:10px 0 18px;opacity:.85}.sous::first-letter{text-transform:uppercase}\n.sv{min-height:220px;display:grid;place-items:center;color:var(--doux);font-size:.9rem;text-align:center;background:repeating-linear-gradient(-45deg,#e9eeec 0 14px,#f4f6f5 14px 28px)}\n.t-mout{background:var(--moutarde)}\nh2{font-size:1.15rem;margin-bottom:8px}.note{color:var(--doux);font-size:.82rem;margin-bottom:12px}\n.svc{display:grid;gap:10px}.svc div{border-left:4px solid var(--moutarde);padding-left:12px}.svc h3{font-size:1rem}.svc p{color:var(--doux);font-size:.95rem}\n.horaires{list-style:none;padding:0}.horaires li{padding:3px 0}\nfooter{text-align:center;font-size:.82rem;color:var(--doux);padding:20px 16px}footer a{color:var(--encre)}\nbutton.btn{font:inherit;font-weight:700;cursor:pointer}.ment{margin-top:8px}.j{display:inline-block;min-width:6.5em}\n@media(min-width:900px){nav{display:block}.grille{grid-template-columns:repeat(4,1fr)}.t-hero{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:center}.t-hero h1{font-size:3rem}.sv{grid-column:span 2;grid-row:span 2}.t-svc{grid-column:span 2}.svc{grid-template-columns:1fr 1fr}}\n<\/style><\/head><body>\n<div class=\"s0\">Maquette préparée par HOOD pour [nom_commerce], visible jusqu'au [date_fin].<\/div>\n<header><span class=\"nom\">[nom_commerce]<\/span><nav><a href=\"#svc\">Prestations<\/a><a href=\"#hor\">Horaires<\/a><a href=\"#s6\">Adresse<\/a><\/nav><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a><\/header>\n<main class=\"grille\">\n<div class=\"tuile t-hero\"><h1>Tout sur [nom_commerce], en une page.<\/h1><span class=\"sous\">[métier] à [ville]<\/span><div><a class=\"btn\" href=\"tel:[téléphone]\">Appeler<\/a> <a class=\"btn l\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/div><\/div>\n<div class=\"tuile sv\">Vue de la devanture, affichée par Google (Street View)<\/div>\n<div class=\"tuile t-svc\" id=\"svc\"><h2>Nos prestations<\/h2><p class=\"note\">Exemples de prestations, à ajuster avec vous.<\/p><!-- Cartes S3 : exemples de prestations du métier, à fournir par David (le N° 101 ne les écrit que pour plombier, électricien, salon ; service_n est réservé à la version 2 et au site final) --><div class=\"svc\"><div><h3>Exemple de prestation 1<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 2<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 3<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><div><h3>Exemple de prestation 4<\/h3><p>À fournir (David), selon le métier.<\/p><\/div><\/div><\/div>\n<div class=\"tuile t-mout\" id=\"hor\"><h2>Horaires<\/h2><ul class=\"horaires\"><li><span class=\"j\">Lundi<\/span> <span data-jour=\"lundi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mardi<\/span> <span data-jour=\"mardi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Mercredi<\/span> <span data-jour=\"mercredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Jeudi<\/span> <span data-jour=\"jeudi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Vendredi<\/span> <span data-jour=\"vendredi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Samedi<\/span> <span data-jour=\"samedi\">[horaires_jour]<\/span><\/li><li><span class=\"j\">Dimanche<\/span> <span data-jour=\"dimanche\">[horaires_jour]<\/span><\/li><\/ul><\/div>\n<div class=\"tuile\"><h2>À propos<\/h2><p>[nom_commerce], [métier] à [ville]. Horaires, adresse et téléphone : tout est sur cette page.<\/p><\/div>\n<div class=\"tuile\" id=\"s6\"><h2>Adresse<\/h2><p>[adresse], [ville]<\/p><p style=\"margin-top:10px\"><button class=\"btn l carte\" type=\"button\" data-carte=\"google\">Afficher la carte<\/button><\/p><p style=\"margin-top:8px\"><a class=\"btn\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=[adresse]\">Itinéraire<\/a><\/p><\/div>\n<div class=\"tuile t-svc\"><h2>Avis<\/h2><a class=\"btn l\" href=\"[lien_fiche_google]\">Voir nos avis sur Google<\/a><\/div>\n<div class=\"tuile t-mout\" style=\"grid-column:1/-1;text-align:center\"><h2>Contact<\/h2><a class=\"btn l\" href=\"tel:[téléphone]\">Appeler le [téléphone]<\/a><\/div>\n<\/main>\n<footer><a href=\"#mentions\">Mentions légales<\/a> · Site de démonstration, non référencé.<p id=\"mentions\" class=\"ment\">Mentions légales : maquette de démonstration préparée par HOOD pour [nom_commerce], non référencée, visible jusqu'au [date_fin].<\/p><\/footer>\n<\/body><\/html>\n"};
 (function(){
@@ -764,26 +813,27 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   /* Demande de Steve (12 Nov. 2026) : trop de métiers d'un coup. On choisit d'abord son univers (6 cartes),
      puis son métier dans cet univers ; la recherche reste possible et montre tout ce qui correspond. */
   const FICO={bouche:"🥖",beaute:"✂️",batiment:"🔧",proximite:"🛍️",creatifs:"🎨",sante:"💼"};
+  const FAMS=["bouche","beaute","batiment","proximite","creatifs","sante"];
+  $("secteur").innerHTML='<option value="">Choisissez votre secteur…</option>'+FAMS.map(fk=>`<option value="${fk}">${FICO[fk]}  ${esc(FAM[fk].lab)} (${METIERS.filter(m=>m.f===fk).length})</option>`).join("")+'<option value="autre">Autre métier</option>';
   let h="";
-  ["bouche","beaute","batiment","proximite","creatifs","sante"].forEach(fk=>{const f=FAM[fk],ms=METIERS.filter(m=>m.f===fk);
-    h+=`<div class="fam" data-fam="${fk}"><button type="button" class="fam-t" aria-expanded="false" aria-controls="fam-${fk}"><span class="fam-i" aria-hidden="true">${FICO[fk]}</span><span class="fam-l"><b>${f.lab}</b><small>${esc(ms.slice(0,3).map(m=>m.lab).join(", "))}…</small></span><span class="fam-n">${ms.length}</span></button><div class="chips" id="fam-${fk}" hidden>`;
-    ms.forEach(m=>{h+=`<label class="chip" data-q="${esc(norm(m.lab+" "+m.m))}"><input type="radio" name="metier" id="m-${m.id}" value="${m.id}"><span>${m.lab}</span></label>`});
-    h+=`</div></div>`;
-  });
-  h+=`<div class="fam fam-autre" data-fam="autre"><div class="chips"><label class="chip other" data-q="autre"><input type="radio" name="metier" id="m-autre" value="autre"><span>Autre métier…</span></label></div></div>`;
+  FAMS.forEach(fk=>{h+=`<div class="fam" data-fam="${fk}" hidden><div class="fam-h">${esc(FAM[fk].lab)}</div><div class="chips" role="radiogroup" aria-label="${esc(FAM[fk].lab)}">`;
+    METIERS.filter(m=>m.f===fk).forEach(m=>{h+=`<label class="chip" data-q="${esc(norm(m.lab+" "+m.m))}"><input type="radio" name="metier" id="m-${m.id}" value="${m.id}"><span>${m.lab}</span></label>`});
+    h+=`</div></div>`});
+  h+=`<div class="fam fam-autre" data-fam="autre" hidden><div class="chips"><label class="chip other" data-q="autre"><input type="radio" name="metier" id="m-autre" value="autre"><span>Autre métier…</span></label></div></div>`;
   $("metiers").innerHTML=h;
-  function famOuvrir(fk,seul){document.querySelectorAll("#metiers .fam[data-fam]:not(.fam-autre)").forEach(f=>{const on=f.dataset.fam===fk||(!seul&&f.classList.contains("open"));
-    f.classList.toggle("open",on);f.querySelector(".chips").hidden=!on;f.querySelector(".fam-t").setAttribute("aria-expanded",on)})}
-  document.querySelectorAll("#metiers .fam-t").forEach(b=>b.addEventListener("click",()=>{const f=b.closest(".fam");
-    if(f.classList.contains("open")&&!txt("q")){famOuvrir("",true);return}famOuvrir(f.dataset.fam,true);
-    const c=f.querySelector(".chips");if(c)c.querySelector("input")?.focus({preventScroll:true});f.scrollIntoView({block:"nearest",behavior:"smooth"})}));
-  function famDuChoix(){const r=form.querySelector('input[name="metier"]:checked');if(!r||r.value==="autre")return;const f=r.closest(".fam");if(f&&!f.classList.contains("open"))famOuvrir(f.dataset.fam,true)}
+  function secteurAfficher(fk){document.querySelectorAll("#metiers .fam").forEach(f=>{f.hidden=!fk||f.dataset.fam!==fk;f.querySelectorAll(".chip").forEach(c=>c.hidden=false)});$("nomatch").hidden=true}
+  /* Le secteur suit toujours le métier coché (reprise d'un site, recherche) */
+  function secteurDuChoix(){const r=form.querySelector('input[name="metier"]:checked');if(!r)return;const f=r.closest(".fam");if(!f)return;
+    if(!txt("q")){$("secteur").value=f.dataset.fam;secteurAfficher(f.dataset.fam)}}
+  $("secteur").addEventListener("change",()=>{const fk=$("secteur").value;$("q").value="";secteurAfficher(fk);
+    if(fk==="autre"){$("m-autre").checked=true;$("m-autre").dispatchEvent(new Event("change",{bubbles:true}));$("autre-wrap").hidden=false;$("metierAutre").focus();return}
+    const r=form.querySelector('input[name="metier"]:checked');if(r&&r.closest(".fam").dataset.fam!==fk){r.checked=false;builtFor="";$("autre-wrap").hidden=true}
+    const c=document.querySelector(`#metiers .fam[data-fam="${fk}"] input`);if(c)c.focus({preventScroll:true})});
   $("q").addEventListener("input",()=>{
     const q=norm($("q").value.trim());let any=0;
-    document.querySelectorAll("#metiers .chip").forEach(c=>{const show=!q||c.dataset.q.includes(q)||c.dataset.q==="autre";c.hidden=!show;if(show&&c.dataset.q!=="autre")any++});
-    document.querySelectorAll("#metiers .fam").forEach(f=>{const vis=f.dataset.fam==="autre"||[...f.querySelectorAll(".chip")].some(c=>!c.hidden);f.hidden=!vis;
-      if(f.dataset.fam!=="autre"){const on=!!q&&vis;f.classList.toggle("open",on||(!q&&f.contains(form.querySelector('input[name="metier"]:checked'))));
-        f.querySelector(".chips").hidden=!f.classList.contains("open");f.querySelector(".fam-t").setAttribute("aria-expanded",f.classList.contains("open"))}});
+    if(!q){secteurAfficher($("secteur").value);return}
+    document.querySelectorAll("#metiers .chip").forEach(c=>{const show=c.dataset.q.includes(q)||c.dataset.q==="autre";c.hidden=!show;if(show&&c.dataset.q!=="autre")any++});
+    document.querySelectorAll("#metiers .fam").forEach(f=>{f.hidden=!(f.dataset.fam==="autre"||[...f.querySelectorAll(".chip")].some(c=>!c.hidden))});
     $("nomatch").hidden=!(q&&!any);
     if(q&&!any){$("m-autre").checked=true;$("metierAutre").value=$("q").value.trim();onChange()}
   });
@@ -825,7 +875,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const m=metier();
     const nom=txt("nom")||"Votre commerce",ville=txt("ville")||"votre ville",adr=txt("adresse")||"Votre adresse",tel=txt("tel")||"Votre numéro";
     const sv=services();
-    const R={nom_commerce:nom,ville,adresse:adr,"téléphone":tel,horaires_jour:"Vos horaires",date_fin:fin,lien_fiche_google:txt("lien")||"#","métier":m?m.m:"commerce",email_affiché:"Votre e-mail"};
+    const R={nom_commerce:nom,ville,adresse:adr,"téléphone":tel,horaires_jour:"Vos horaires",date_fin:fin,lien_fiche_google:ficheGoogle()||txt("lien")||"#","métier":m?m.m:"commerce",email_affiché:"Votre e-mail"};
     sv.forEach((s,i)=>{R["service_"+(i+1)]=s;R["description_service_"+(i+1)]=""});
     html=html.replace(/, visible jusqu'au \[date_fin\]\./g,".");html=html.replace(/\[([a-zé_0-9]+)\]/g,(a,v)=>v in R?esc(R[v]):a);
     html=html.replace(/Exemple de prestation ([1-4])/g,(a,d)=>esc(sv[+d-1]));
@@ -871,6 +921,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const f=fam(),sv=services(),nom=txt("nom")||"Votre commerce",ville=txt("ville")||"votre ville";
     const chip=s=>`<span style="display:inline-block;padding:.35em .8em;margin:0 .4em .4em 0;border:1px solid currentColor;border-radius:999px;opacity:.85">${esc(s)}</span>`;
     const ph=s=>`<div style="border:1px dashed currentColor;opacity:.7;border-radius:8px;padding:1.2em;text-align:center">${esc(s)}</div>`;
+    const phAC=(s,l)=>`<div data-hood-a-completer="${esc(l)}" style="border:1px dashed currentColor;opacity:.7;border-radius:8px;padding:1.2em;text-align:center">${esc(s)}</div>`;
+    const ig=instaNom();
     const galB=c=>`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${[1,2,3].map(()=>`<div class="${c}" style="aspect-ratio:4/3;border-radius:8px;background:rgba(127,127,127,.16);display:grid;place-items:center;font-size:.8em;opacity:.8">Votre photo</div>`).join("")}</div>`;
     const gal=galB("hood-ph");
     const rows=a=>a.map(([x,y])=>`<div style="display:flex;justify-content:space-between;gap:1em;padding:.5em 0;border-bottom:1px dotted currentColor">${esc(x)}<span style="opacity:.7">${esc(y)}</span></div>`).join("");
@@ -883,12 +935,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       carte:["La carte",rows([["Entrées","…"],["Plats","…"],["Desserts","…"]])],
       marques:["Nos marques",liste(txt("af-marques")).length?liste(txt("af-marques")).map(chip).join(""):chip("Vos marques ici")],
       photos:["Nos chantiers",gal],galerie:[f===FAM.bouche?"Nos produits":f===FAM.beaute?"Nos réalisations":"En images",gal],
-      tarifs:["Tarifs",prixLignes().length?rows(prixLignes()):afVal("prix")==="photo"?ph("Vos tarifs, repris de la photo que vous nous avez envoyée"):rows([[sv[0],"Votre prix"],[sv[1],"Votre prix"]])],
+      tarifs:["Tarifs",prixLignes().length?rows(prixLignes()):afVal("prix")==="photo"?phAC("Vos tarifs seront recopiés depuis la photo que vous nous envoyez, après votre paiement et avant la mise en ligne. Vous les vérifierez.","vos tarifs (recopiés depuis votre photo)"):rows([[sv[0],"Votre prix"],[sv[1],"Votre prix"]])],
       apropos:["À propos",histoireTexte()?`<p>${esc(histoireTexte())}</p>`:`<p>${esc(nom)}, ${esc(metier()?metier().m:"commerce")} à ${esc(ville)}${txt("annee")?" depuis "+esc(txt("annee")):""}. Votre histoire ici.</p>`],
       avissite:["Vos avis",ph("Vos avis Google, affichés par Google")],
-      insta:["Sur Instagram",galB("")],
-      rdv:["Prendre rendez-vous",btn("Réserver un créneau")],
-      resa:["Réserver en ligne",btn("Réserver")],
+      insta:["Sur Instagram",(ig?`<p style="margin:0 0 12px"><a href="https://www.instagram.com/${esc(ig)}/" style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700;color:inherit;text-decoration:none">Suivez-nous : @${esc(ig)}</a></p>`:`<p style="margin:0 0 12px"><a href="#" style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700;color:inherit;text-decoration:none">Instagram</a></p>`)+galB("")+`<p data-hood-a-completer="la connexion de votre Instagram" style="opacity:.7;font-size:.9em;margin-top:10px">Vos dernières publications s'afficheront ici une fois votre compte Instagram relié (après le paiement).</p>`],
+      rdv:["Prendre rendez-vous",`<a href="#" style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700;color:inherit;text-decoration:none">Prendre rendez-vous</a>`],
+      resa:["Réserver ou commander",`<a href="#" style="display:inline-block;padding:.7em 1.2em;border:1.5px solid currentColor;border-radius:8px;font-weight:700;color:inherit;text-decoration:none">Réserver</a>`],
       contact:[f===FAM.batiment?"Demander un devis":"Nous écrire",`<div style="display:grid;gap:8px;max-width:520px">${["Votre nom","Votre e-mail"].map(p=>`<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em">${p}</div>`).join("")}<div style="border:1px solid currentColor;opacity:.5;border-radius:6px;padding:.7em;min-height:5em">Votre message</div><div>${btn("Envoyer")}</div></div>`]
     };
     let anchor=null;
@@ -896,7 +948,13 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     else{const b=svc||servicesGroup(doc);anchor=b?(b.g.closest("section")||b.g):null}
     if(!anchor)anchor=doc.querySelector("main")?doc.querySelector("main").lastElementChild:doc.body.lastElementChild;
     const parent=anchor.parentElement;const ref=anchor.nextSibling;
-    opts.filter(o=>S[o]&&!(o==="apropos"&&$("af-pas-histoire").checked)).forEach(o=>{
+    /* Le modèle a déjà cette partie : on la remplit (une seule partie « Tarifs », 19 Nov. 2026) */
+    const dejaLa=o=>{const m=sectionDuModele(doc,o);if(!m)return false;
+      if(o==="tarifs"){if(prixLignes().length||afVal("prix")==="photo")remplirApres(m.h,m.sec,S.tarifs[1]);m.sec.setAttribute("data-hood","tarifs");return true}
+      if(o==="apropos"){if(histoireTexte()){const p=[...m.sec.querySelectorAll("p")].filter(x=>!x.closest("[data-hood-a-completer]"));if(p[0]){p[0].textContent=histoireTexte();p.slice(1).forEach(x=>x.remove())}}m.sec.setAttribute("data-hood","apropos");return true}
+      return true};
+    const aDejaRdv=[...doc.querySelectorAll("a,button")].some(a=>!a.closest(".hood-opt,footer")&&/réserv|rendez-vous|\brdv\b|commander/i.test(a.textContent));
+    opts.filter(o=>!((o==="rdv"||o==="resa")&&aDejaRdv)).filter(o=>S[o]&&!(o==="apropos"&&$("af-pas-histoire").checked)&&!dejaLa(o)).forEach(o=>{
       const sec=doc.createElement("section");sec.className="hood-opt";sec.dataset.hood=o;
       sec.innerHTML=`<div style="max-width:1100px;margin:0 auto"><h2>${S[o][0]}</h2>${S[o][1]}</div>`;parent.insertBefore(sec,ref);
       const cs=doc.defaultView.getComputedStyle(sec);
@@ -915,12 +973,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       const p1=a&&b?a+" – "+b:"",p2=c&&e?c+" – "+e:"";return [p1,p2].filter(Boolean).join(", ")||"Ouvert"});
     const out=[];for(let i=0;i<7;){let j=i;while(j+1<7&&d[j+1]===d[i])j++;out.push([j>i?JOURS[i]+" – "+JOURS[j].toLowerCase():JOURS[i],d[i]]);i=j+1}
     return out}
-  const prixLignes=()=>{if(afVal("prix")!=="write")return [];const r=[];for(let i=0;i<12;i++)if(txt("af-pn-"+i)&&txt("af-pp-"+i))r.push([txt("af-pn-"+i),txt("af-pp-"+i)]);return r};
+  const prixLignes=()=>{if(afVal("prix")!=="write")return [];const r=[];for(let i=0;i<12;i++)if(txt("af-pn-"+i)&&txt("af-pp-"+i))r.push([txt("af-pn-"+i),prixFmt(txt("af-pp-"+i))]);return r};
   const zoneLib=()=>({ville:"Dans "+(txt("ville")||"votre ville"),"15":"Jusqu'à 15 km","30":"Jusqu'à 30 km",dept:"Tout le département"})[afVal("zone")]||"";
   const liste=s=>(s||"").split(/[,;\n]/).map(x=>x.trim()).filter(Boolean).slice(0,10);
   const histoireTexte=()=>{if(!afList().includes("histoire")||$("af-pas-histoire").checked)return "";
     const touche=afVal("eq")||afVal("depuis")||[...Array(NV).keys()].some(i=>$("af-v-"+i).checked);return touche?$("af-say").textContent.trim():""};
-  const photosUrls=()=>/^(mine|mix)$/.test(afVal("photos"))?upListe("photos").map(n=>apercus[n]).filter(Boolean):[];
   /* Les photos des modèles sont des images de fond : on les repère dans l'ordre du document. */
   function photoEls(doc){if(doc._hoodPh)return doc._hoodPh;const w=doc.defaultView;
     doc._hoodPh=[...doc.body.querySelectorAll("*")].filter(el=>!el.closest("nav")&&/url\((?!["']?data:)/.test(w.getComputedStyle(el).backgroundImage||""));return doc._hoodPh}
@@ -935,13 +992,144 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const ft=doc.querySelector("footer");if(ft&&ft.parentElement)ft.parentElement.insertBefore(sec,ft);else doc.body.append(sec);
     const cs=doc.defaultView.getComputedStyle(sec);if(parseFloat(cs.paddingLeft)<8){sec.style.paddingLeft="20px";sec.style.paddingRight="20px"}
     if(parseFloat(cs.paddingTop)<8){sec.style.paddingTop="36px";sec.style.paddingBottom="36px"}}
+  /* ==== Emplacements des photos (19 Nov. 2026, retour de Steve : une photo d'ambiance arrivait dans les tarifs) ====
+     Chaque modèle a ses propres emplacements (grande photo d'accueil, photos des parties, petites photos des
+     prestations). Par défaut, vos photos vont dans la grande photo, puis dans la galerie, puis dans les grandes
+     photos des parties, une seule fois chacune ; jamais dans les petites photos des prestations ou des tarifs.
+     Le client voit la liste et déplace une photo où il veut (champ af-photos-places). */
+  const titreCourt=el=>{const t=norm1((el&&el.textContent)||"");return t.length>44?t.slice(0,42)+"…":t};
+  function photoPlaces(doc){
+    if(doc._hoodPlaces)return doc._hoodPlaces;
+    const out=[];
+    photoEls(doc).forEach((el,i)=>{
+      const sec=el.closest("section,header,footer,article,.tuile")||el.parentElement;
+      let carte=null,c=el.parentElement;
+      for(let n=0;c&&n<3&&c!==sec&&c!==doc.body;n++,c=c.parentElement){const h=c.querySelectorAll("h3,h4");if(h.length===1){carte=h[0];break}if(h.length>1)break}
+      const h2=sec&&sec.querySelector("h2");
+      let lab,petite=false;
+      if(i===0)lab="Grande photo d'accueil";
+      else if(carte){lab="Petite photo : « "+titreCourt(carte)+" »";petite=true}
+      else if(h2)lab="Photo de la partie « "+titreCourt(h2)+" »";
+      else lab="Autre photo du site";
+      out.push({el,k:"p:"+i,lab,petite,hero:i===0});
+    });
+    doc.querySelectorAll(".hood-ph").forEach((el,i)=>{const s=el.closest("[data-hood]"),h2=s&&s.querySelector("h2");out.push({el,k:"g:"+i,lab:"Galerie « "+(h2?titreCourt(h2):"En images")+" »",gal:true})});
+    /* Même libellé plusieurs fois : on numérote (photo 1, photo 2…) */
+    const nb={},rang={};out.forEach(p=>nb[p.lab]=(nb[p.lab]||0)+1);out.forEach(p=>{if(nb[p.lab]>1){rang[p.lab]=(rang[p.lab]||0)+1;p.lab+=", photo "+rang[p.lab]}});
+    doc._hoodPlaces=out;return out}
+  const placesChoix=()=>{try{const o=JSON.parse(txt("af-photos-places")||"{}");return o&&typeof o==="object"&&o.__m===String(tplKey())?o:{}}catch(e){return {}}};
+  function placesAffectation(places){
+    const user=upListe("photos"),choix=placesChoix(),map={},pris=new Set();
+    places.forEach(p=>{if(!(p.k in choix))return;const v=choix[p.k];if(v===""){map[p.k]="";return}if(user.includes(v)){map[p.k]=v;pris.add(v)}});
+    const libres=user.filter(n=>!pris.has(n));
+    const mix=afVal("photos")==="mix";
+    const ordre=[...places.filter(p=>p.hero),...places.filter(p=>p.gal),...(mix?[]:places.filter(p=>!p.hero&&!p.gal&&!p.petite))];
+    ordre.forEach(p=>{if(p.k in map)return;const n=libres.shift();if(n)map[p.k]=n});
+    return map}
+  function placesAppliquer(doc){
+    if(!/^(mine|mix)$/.test(afVal("photos"))||!upListe("photos").length)return;
+    const pl=photoPlaces(doc),mp=placesAffectation(pl);
+    pl.forEach(p=>{const f=mp[p.k];if(f&&apercus[f]){mettrePhoto(doc,p.el,apercus[f]);if(p.gal)p.el.textContent=""}})}
+  let placeCible="";
+  function placeMontrer(k){try{const d=frame.contentDocument,w=frame.contentWindow;const p=photoPlaces(d).find(x=>x.k===k);if(!p)return;
+    w.scrollTo({top:Math.max(0,p.el.getBoundingClientRect().top+w.scrollY-40),behavior:"smooth"});
+    p.el.style.outline="4px solid #0a50ff";p.el.style.outlineOffset="-4px";setTimeout(()=>{p.el.style.outline=""},1800)}catch(e){}}
+  function placesDessiner(){
+    const box=$("af-places"),l=upListe("photos");let d=null;try{d=frame.contentDocument}catch(e){}
+    if(!l.length||!d||!d.body||!/^(mine|mix)$/.test(afVal("photos"))){box.hidden=true;box.innerHTML="";return}
+    const pl=photoPlaces(d),mp=placesAffectation(pl),utilisees=new Set(Object.values(mp).filter(Boolean));
+    const opts=v=>`<option value="">Photo du modèle</option>`+l.map((n,i)=>`<option value="${esc(n)}"${v===n?" selected":""}>Votre photo ${i+1}</option>`).join("");
+    const nonPlacees=l.map((n,i)=>utilisees.has(n)?0:i+1).filter(Boolean);
+    box.innerHTML=`<b>Où va chaque photo&#8239;?</b><span class="hint">Vos photos sont numérotées comme ci-dessus. Choisissez la photo de chaque emplacement : l'aperçu suit.</span>`+
+      pl.map(p=>`<label class="place"><span>${esc(p.lab)}${p.petite?"<small>Petite vignette à côté d'une prestation</small>":""}</span><select data-place="${esc(p.k)}" aria-label="${esc(p.lab)}">${opts(mp[p.k]||"")}</select></label>`).join("")+
+      (nonPlacees.length?`<span class="hint">Pas encore placée${nonPlacees.length>1?"s":""} : photo${nonPlacees.length>1?"s":""} ${nonPlacees.join(", ")}. Elle${nonPlacees.length>1?"s":""} reste${nonPlacees.length>1?"nt":""} disponible${nonPlacees.length>1?"s":""} pour votre site.</span>`:"");
+    box.hidden=false;
+    box.querySelectorAll("select").forEach(sel=>{
+      sel.addEventListener("focus",()=>placeMontrer(sel.dataset.place));
+      sel.addEventListener("change",()=>{const c=placesChoix();c.__m=String(tplKey());pl.forEach(p=>{if(!(p.k in c))c[p.k]=mp[p.k]||""});c[sel.dataset.place]=sel.value;
+        $("af-photos-places").value=JSON.stringify(c);modifie=true;sauver();placeCible=sel.dataset.place;render()})});
+  }
+
+  /* ==== Prix : « € », TTC ou HT (demande de Steve, 19 Nov. 2026) ==== */
+  function prixFmt(v){v=norm1(v);if(!v)return v;const eu=$("af-prix-euro").checked;
+    if(eu&&/\d$/.test(v))v+=" €";if(!eu)v=v.replace(/\s*€/g,"").trim();
+    const t=afVal("taxe");if(t&&/\d/.test(v)&&!/\b(HT|TTC)\b/i.test(v))v+=" "+t;return v}
+
+  /* ==== Parties que le modèle a déjà (19 Nov. 2026 : « Tarifs » apparaissait deux fois sur le barbier) ====
+     Si le modèle a déjà sa partie Tarifs, À propos ou Galerie, on la remplit au lieu d'en ajouter une seconde. */
+  const SEC_MODELE={tarifs:/^(nos\s+|les\s+)?(tarifs|prix|la carte|notre carte|carte|menu|nos menus)\b/i,
+    apropos:/^(à propos|a propos|notre histoire|qui sommes-nous|l'histoire|l’histoire)\b/i,
+    galerie:/^(galerie|nos réalisations|réalisations|en images|nos chantiers|portfolio|nos créations)\b/i};
+  SEC_MODELE.photos=SEC_MODELE.galerie;
+  function sectionDuModele(doc,o){const re=SEC_MODELE[o];if(!re)return null;
+    const h=[...doc.querySelectorAll("h2")].find(x=>!x.closest("nav,footer,[data-hood],.hood-opt")&&re.test(norm1(x.textContent)));
+    return h?{h,sec:h.closest("section")||h.parentElement}:null}
+  function remplirApres(h,sec,html){
+    let n=h;while(n&&n!==sec){let x=n.nextSibling;while(x){const y=x.nextSibling;x.remove();x=y}n=n.parentElement}
+    let host=h.parentElement;if(host!==sec&&host.children.length===1&&host.parentElement)host=host.parentElement;
+    const div=doc0(h).createElement("div");div.innerHTML=html;div.style.marginTop="16px";host.append(div)}
+  const doc0=el=>el.ownerDocument;
+
+  /* ==== Les boutons du site mènent quelque part (19 Nov. 2026, retour de Steve) ====
+     Appeler : votre numéro. Itinéraire : Google Maps vers votre adresse. Réserver / Prendre rendez-vous : votre
+     outil de réservation, sinon votre téléphone, sinon votre formulaire de contact. Avis : votre fiche Google.
+     Instagram : votre compte. Dans l'aperçu, un clic montre où le bouton mène, sans quitter la page. */
+  const urlOk=u=>/^https:\/\/[^\s/$.?#][^\s]*\.[^\s]{2,}$/i.test(u||"");
+  const ficheOk=u=>/^https?:\/\/(?:www\.)?(?:google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps|g\.page|g\.co\/kgs|share\.google)\b/i.test(u||"");
+  const ficheGoogle=()=>ficheOk(txt("af-fiche-google"))?txt("af-fiche-google"):ficheOk(txt("lien"))?txt("lien"):"";
+  const instaNom=()=>{const v=txt("af-insta").replace(/^https?:\/\/(www\.)?instagram\.com\//i,"").replace(/^@/,"").replace(/[/?#].*$/,"");return /^[A-Za-z0-9._]{1,30}$/.test(v)?v:""};
+  const CTA_RE=[["tel",/appel|téléphon/i],["rdv",/rendez-vous|\brdv\b|réserv|prendre (un )?créneau|commander|passer commande/i],["itin",/itinéraire|y aller|nous trouver|plan d'accès/i],
+    ["avis",/avis/i],["insta",/instagram/i],["facebook",/facebook/i],["contact",/devis|écrire|nous contacter|contactez|envoyer un message/i]];
+  const CTA_LAB={tel:"Appeler",rdv:"Réserver, prendre rendez-vous",itin:"Itinéraire",avis:"Voir les avis",insta:"Instagram",facebook:"Facebook",contact:"Contact, devis"};
+  function ctaType(a){
+    if(a.closest(".demo"))return "";
+    if(a.hasAttribute("data-hood-cta"))return a.getAttribute("data-hood-cta");
+    const t=norm1(a.textContent),h=a.getAttribute("href")||"";
+    if(/^#./.test(h)){let x=null;try{x=a.ownerDocument.getElementById(decodeURIComponent(h.slice(1)))}catch(e){}if(x&&!/réserv|rendez-vous|\brdv\b|appel/i.test(t))return ""}
+    if(a.closest("footer")&&/mentions|confidentialit/i.test(t))return "";
+    if(/^tel:/.test(h))return "tel";if(/instagram\.com/i.test(h))return "insta";if(/facebook\.com/i.test(h))return "facebook";if(/maps|itin/i.test(h))return "itin";
+    for(const [k,re] of CTA_RE)if(re.test(t))return k;
+    return ""}
+  function ctaDest(type,doc){
+    const tel=txt("tel"),adr=[txt("adresse"),txt("ville")].filter(Boolean).join(", "),rdv=txt("af-lien-rdv"),fiche=ficheGoogle(),ig=instaNom();
+    const contact=doc&&doc.querySelector('[data-hood="contact"]');
+    const telH=tel&&telOk(tel)?"tel:"+tel.replace(/[\s.-]/g,""):"";
+    switch(type){
+      case "tel":return telH?{href:telH,desc:"appelle le "+tel}:{href:"#",desc:"appellera votre numéro : donnez-le à l'étape 2 (« Téléphone de l'entreprise »)",manque:1};
+      case "itin":return txt("adresse")?{href:"https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(adr),desc:"ouvre l'itinéraire Google Maps jusqu'à "+adr}:{href:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(adr||"votre ville"),desc:"ouvre Google Maps sur votre ville : ajoutez votre adresse à l'étape 2 pour un itinéraire précis",manque:1};
+      case "rdv":if(urlOk(rdv)){let host="";try{host=new URL(rdv).hostname.replace(/^www\./,"")}catch(e){}return {href:rdv,desc:"ouvre votre page de réservation ("+host+")"}}
+        if(telH)return {href:telH,desc:"appelle le "+tel+" (pas de lien de réservation donné)",doux:1};
+        return {href:"#hood-contact",desc:"ouvre votre formulaire de contact (pas de lien de réservation ni de numéro donné)",doux:1};
+      case "avis":return fiche?{href:fiche,desc:"ouvre vos avis sur votre fiche Google"}:{href:"#",desc:"ouvrira vos avis Google : donnez le lien de votre fiche Google (question « Vos horaires » ou étape 2)",manque:1};
+      case "insta":return ig?{href:"https://www.instagram.com/"+ig+"/",desc:"ouvre votre compte Instagram @"+ig}:{href:"#",desc:"ouvrira votre compte Instagram : donnez-le ci-dessous",manque:1};
+      case "facebook":return /facebook\.com/i.test(txt("lien"))?{href:txt("lien"),desc:"ouvre votre page Facebook"}:{href:"#",desc:"ouvrira votre page Facebook : collez son lien à l'étape 2",manque:1};
+      case "contact":return contact?{href:"#hood-contact",desc:"ouvre votre formulaire de contact"}:telH?{href:telH,desc:"appelle le "+tel}:{href:"#hood-contact",desc:"ouvre votre formulaire de contact (cochez « Formulaire de contact » à l'étape 5)",manque:1};
+    }
+    return null}
+  function boutonsDuSite(doc){
+    const vus={};
+    doc.body.querySelectorAll("a,button").forEach(a=>{if(a.closest("nav")&&!/réserv|rendez-vous|appel/i.test(a.textContent))return;
+      const t=ctaType(a);if(!t)return;const d=ctaDest(t,doc);if(!d)return;
+      a.setAttribute("data-hood-cta",t);if(a.tagName==="A")a.setAttribute("href",d.href);
+      if(/^https?:/.test(d.href)&&a.tagName==="A"){a.setAttribute("target","_blank");a.setAttribute("rel","noopener")}
+      if(!vus[t])vus[t]={lab:CTA_LAB[t],txt:norm1(a.textContent).slice(0,40),...d}});
+    const c=doc.querySelector('[data-hood="contact"]');if(c)c.id="hood-contact";
+    return vus}
+  function toast(doc,t){let el=doc.getElementById("hood-toast");
+    if(!el){el=doc.createElement("div");el.id="hood-toast";el.setAttribute("data-hood","toast");
+      el.style.cssText="position:fixed;left:12px;right:12px;bottom:14px;z-index:2147483647;max-width:520px;margin:0 auto;background:#101114;color:#fff;font:600 14px/1.45 Inter,Arial,sans-serif;padding:12px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:opacity .2s";doc.body.append(el)}
+    el.textContent=t;el.style.opacity="1";clearTimeout(doc._hoodToast);doc._hoodToast=setTimeout(()=>{el.style.opacity="0"},3800)}
+  function boutonsDessiner(){
+    let d=null;try{d=frame.contentDocument}catch(e){}if(!d||!d.body)return;
+    const v=boutonsDuSite(d),ks=Object.keys(v);
+    $("af-btns-liste").innerHTML=ks.length?ks.map(k=>`<div class="btn-dest${v[k].manque?" manque":""}"><b>« ${esc(v[k].txt||v[k].lab)} »</b><span>${esc(v[k].desc.charAt(0).toUpperCase()+v[k].desc.slice(1))}${v[k].manque?" ⚠":""}</span></div>`).join(""):`<span class="hint">Votre modèle n'a pas de bouton à régler.</span>`;
+    $("af-rdv-zone").hidden=!(v.rdv||opt("rdv")||opt("resa"));
+    $("af-insta-zone").hidden=!(v.insta||opt("insta"));
+  }
   function affinageVisible(doc){
     const A=afm(),ti=["chaleureux","serieux","chic"].indexOf(afVal("ton"));
     if(ti>=0&&A.t&&A.t[ti]){const p=heroSub(doc);if(p)p.textContent=A.t[ti].replace("{ville}",txt("ville")||"votre ville").replace("{nom}",txt("nom")||"votre commerce")}
-    const u=photosUrls();
-    if(u.length){let k=0;const mix=afVal("photos")==="mix";
-      photoEls(doc).forEach((el,i)=>{if(mix&&i%2)return;mettrePhoto(doc,el,u[k++%u.length])});
-      doc.querySelectorAll(".hood-ph").forEach(el=>{mettrePhoto(doc,el,u[k++%u.length]);el.textContent=""})}
+    placesAppliquer(doc);
     const h=afVal("horaires");
     if(h==="write"||h==="google"){
       const L=h==="write"?heuresLignes():[["Nos horaires","comme sur notre fiche Google"]];
@@ -1053,6 +1241,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     /* Les liens de l'aperçu ne quittent pas la page ; les onglets du menu (#partie) y font défiler (retour de Steve, 12 Nov. 2026). */
     doc.addEventListener("click",e=>{const a=e.target.closest("a,button");if(!a)return;e.preventDefault();
       if(retouche&&e.target.closest("[data-hood-edit]"))return;
+      /* 19 Nov. 2026 : un bouton d'action montre où il mène sur le vrai site, sans quitter l'aperçu */
+      const ty=a.getAttribute("data-hood-cta");
+      if(ty){const d=ctaDest(ty,doc);if(d)toast(doc,"Sur votre site, ce bouton "+d.desc+(d.manque?".  ⚠ À compléter.":"."));
+        if((a.getAttribute("href")||"")!=="#hood-contact")return}
       const h=a.getAttribute("href")||"";if(!/^#./.test(h))return;
       let t=null;try{t=doc.getElementById(decodeURIComponent(h.slice(1)))}catch(x){}
       if(t){const w=doc.defaultView;w.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+w.scrollY-10),behavior:"smooth"})}},true);
@@ -1066,6 +1258,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     sansInventions(doc);
     optionSections(doc,svc);
     affinageVisible(doc);
+    boutonsDuSite(doc);
     retouchesSurLeSite(doc);
     aCompleterNoter(doc);
   }
@@ -1157,7 +1350,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     frame.style.width=W+"px";frame.style.height=(hgt/s)+"px";frame.style.transform=`scale(${s})`;
   }
   new ResizeObserver(size).observe(vp);
-  frame.addEventListener("load",()=>{try{const d=frame.contentDocument;decorate(d);frame.contentWindow.scrollTo(0,lastScroll)}catch(e){}});
+  frame.addEventListener("load",()=>{try{const d=frame.contentDocument;decorate(d);frame.contentWindow.scrollTo(0,lastScroll);
+    if(step===7){const k=afList()[+$("af-i").value];if(k==="photos")placesDessiner();if(k==="boutons")boutonsDessiner()}
+    if(placeCible){const c=placeCible;placeCible="";setTimeout(()=>placeMontrer(c),60)}}catch(e){}});
   /* Pendant l'affinage, l'aperçu montre la partie du site dont parle la question. */
   const CIBLE={prix:"tarifs",horaires:"horaires",zone:"zone",marques:"marques",histoire:"apropos"};
   function scrollCible(k){try{const d=frame.contentDocument,w=frame.contentWindow;if(!d||!d.body)return;
@@ -1167,7 +1362,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(!el&&k==="photos")el=photoEls(d)[1]||null;
     if(el)w.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+w.scrollY-30),behavior:sm})}catch(e){}}
   async function render(){
-    buildFamilySteps();famDuChoix();const id=++renderId;
+    buildFamilySteps();const id=++renderId;
     try{lastScroll=frame.contentWindow?frame.contentWindow.scrollY:0}catch(e){lastScroll=0}
     const k=tplKey();$("p-tpl").textContent=tplName(k);$("p-fam").textContent=fam().lab;
     $("p-url").textContent=urlApercu();
@@ -1356,6 +1551,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     l.push("horaires");
     ["zone","marques"].forEach(k=>opt(k)&&l.push(k));
     if(opt("apropos"))l.push("histoire");
+    l.push("boutons");
     if(opt("contact"))l.push("contact");
     l.push("fin","valider");return l}
   const afVal=n=>{const r=form.querySelector(`input[name="af-${n}"]:checked`);return r?r.value:""};
@@ -1489,7 +1685,6 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     domVerifier();titInit();
     const dev=devChecked();
     $("sum").innerHTML=`<div><span>Création du site, L'Essentiel</span><b>290 €</b></div><div><span>Puis chaque mois, à partir du 2e mois : le 1er mois est compris dans les 290 €<br><small class="hint">Hébergement, domaine, sécurité. Sans engagement.</small></span><b>10 € / mois</b></div>`+
-      (dev.length?`<div><span>Aussi dans votre site : ${esc(dev.join(", "))}</span><b>inclus</b></div>`:"")+
       `<div><small class="hint">Prix nets. TVA non applicable, article 293 B du CGI.</small></div>`;payPret()}
 
   /* ---- Envoi des photos pendant l'affinage (12 Nov. 2026) ----
@@ -1506,6 +1701,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const l=upListe(k),box=$("af-th-"+k);box.innerHTML="";
     l.forEach((nom,i)=>{const d=document.createElement("div");d.className="th";
       if(apercus[nom]){const im=document.createElement("img");im.src=apercus[nom];im.alt="";d.append(im)}else d.append(/\.pdf$/.test(nom)?"PDF":"✓");
+      if(k==="photos"){const nb=document.createElement("span");nb.className="th-n";nb.textContent=i+1;d.append(nb)}
       const b=document.createElement("button");b.type="button";b.textContent="×";b.setAttribute("aria-label",`Retirer le fichier ${i+1}`);
       b.addEventListener("click",()=>{const m=upListe(k);m.splice(i,1);upSet(k,m);upDraw(k);upMsg(k,"Fichier retiré.");
         const nx=box.querySelectorAll(".th button")[Math.min(i,m.length-1)];(nx||$("af-up-"+k)).focus()});
@@ -1561,9 +1757,17 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("af-next").hidden=$("af-skip").hidden=k==="valider"||k==="fin";
     $("af-back").textContent=i===0?"← Revoir mon site":"← Retour";
     if(k==="contact"&&!txt("af-contact")&&txt("email"))$("af-contact").value=txt("email");
+    if(k==="horaires"&&!txt("af-fiche-google")&&ficheOk(txt("lien")))$("af-fiche-google").value=txt("lien");
+    $("af-mention").hidden=k==="fin"||k==="valider";
+    if(k==="photos")placesDessiner();if(k==="boutons")boutonsDessiner();
     afTexts();afMore();afRows();upDraw("photos");upDraw("tarifs");if(k==="valider")afValider();
   }
-  function afGo(d){
+  function afGo(d,passer){
+    const kq=afList()[+$("af-i").value];
+    $("af-fiche-google").classList.remove("bad");
+    if(d>0&&!passer&&kq==="horaires"&&afVal("horaires")==="google"&&!ficheOk(txt("af-fiche-google"))){
+      $("af-fiche-google").classList.add("bad");$("af-fiche-google").focus();
+      $("err").textContent=txt("af-fiche-google")?"Ce lien ne ressemble pas à une fiche Google : sur Google Maps, ouvrez votre fiche, « Partager », puis « Copier le lien ».":"Collez le lien de votre fiche Google, pour qu'on reprenne les bons horaires.";return}
     if(d>0&&afList()[+$("af-i").value]==="contact"&&txt("af-contact")&&!(COMPTE.emailValide||(e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)))(txt("af-contact"))){
       $("af-contact").classList.add("bad");$("af-contact").focus();$("err").textContent="Cette adresse email ne semble pas complète.";return}
     $("af-contact").classList.remove("bad");$("err").textContent="";
@@ -1581,7 +1785,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("rt-txt").addEventListener("input",()=>{rtCompte();$("rt-msg").textContent=""});
   $("rt-txt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();rtValider()}});
   $("rt-photo").addEventListener("change",()=>{const f=$("rt-photo").files[0];$("rt-photo").value="";rtPhoto(f)});
-  $("af-skip").addEventListener("click",()=>afGo(1));
+  $("af-skip").addEventListener("click",()=>afGo(1,true));
   $("af-back").addEventListener("click",()=>afGo(-1));
   $("af-addrow").addEventListener("click",()=>{const r=form.querySelector(".prow[hidden]");if(r){r.hidden=false;r.querySelector("input").focus()}$("af-addrow").hidden=!form.querySelector(".prow[hidden]")});
   form.addEventListener("change",e=>{const id=e.target.id||"";if(!id.startsWith("af-"))return;
@@ -1590,9 +1794,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function afResume(){const L=[],v=afVal,lab=(n)=>{const r=form.querySelector(`input[name="af-${n}"]:checked`);return r?r.closest("label").querySelector("span").firstChild.textContent.trim():"au mieux"};
     L.push("Photos : "+lab("photos")+(upListe("photos").length?` (${upListe("photos").length} reçues)`:""));L.push("Ton : "+lab("ton"));
     const pr=[];for(let i=0;i<12;i++)if(txt("af-pn-"+i))pr.push(txt("af-pn-"+i)+" : "+txt("af-pp-"+i));
-    if(afList().includes("prix"))L.push("Prix : "+(v("prix")==="write"&&pr.length?pr.join(" ; "):lab("prix")));
+    if(afList().includes("prix"))L.push("Prix : "+(v("prix")==="write"&&prixLignes().length?prixLignes().map(x=>x.join(" : ")).join(" ; "):lab("prix")));
     const hs=[];if(v("horaires")==="write")["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"].forEach((d,i)=>{if($("af-h-"+i).checked)hs.push(d+" "+txt(`af-h-${i}-a`)+"-"+txt(`af-h-${i}-b`)+(txt(`af-h-${i}-c`)?", "+txt(`af-h-${i}-c`)+"-"+txt(`af-h-${i}-d`):""))});
-    L.push("Horaires : "+(hs.length?hs.join(" ; "):lab("horaires")));
+    L.push("Horaires : "+(hs.length?hs.join(" ; "):lab("horaires"))+(v("horaires")==="google"&&ficheGoogle()?" ("+ficheGoogle()+")":""));
+    if(txt("af-lien-rdv"))L.push("Lien de réservation : "+txt("af-lien-rdv"));
+    if(instaNom())L.push("Instagram : @"+instaNom());
     if(afList().includes("zone"))L.push("Zone : "+lab("zone")+(txt("af-communes")?" ("+txt("af-communes")+")":""));
     if(afList().includes("marques")&&txt("af-marques"))L.push("Marques : "+txt("af-marques"));
     if(afList().includes("histoire"))L.push("Histoire : "+($("af-pas-histoire").checked?"pas de partie histoire":$("af-say").textContent));
@@ -1624,7 +1830,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
         plafond_projet:"Trop de tentatives de paiement aujourd'hui pour ce site. Réessayez demain ou écrivez-nous.",plafond_site:"Le paiement est momentanément indisponible. Réessayez un peu plus tard.",
         projet:"Ce site est déjà commandé, ou la session a expiré : rechargez la page.",
         titulaire_prestataire:"Le nom de domaine doit être au nom de votre entreprise : HOOD et GreenRock, le prestataire, ne peuvent pas en être titulaires. Choisissez votre entreprise dans « Le titulaire ».",
-        sans_projet:"Nous n'avons pas pu enregistrer votre site avec cette adresse e-mail : plus de 3 sites commencés en 24 heures avec la même adresse (protection contre les robots), ou coupure de réseau. Écrivez-nous à contact@hood-web.com, on finalise avec vous.",stripe:"Le service de paiement ne répond pas. Réessayez dans un instant."};
+        sans_projet:"Nous n'avons pas pu enregistrer votre site avec cette adresse e-mail : plus de 10 sites commencés en 24 heures avec la même adresse (protection contre les robots), ou coupure de réseau. Écrivez-nous à contact@hood-web.com, on finalise avec vous.",stripe:"Le service de paiement ne répond pas. Réessayez dans un instant."};
       modifie=true;Promise.race([enregistrerMaintenant(),new Promise(r=>setTimeout(r,1500))]).catch(()=>{})
         .then(()=>COMPTE.payer?COMPTE.payer(etat()):{motif:"non_configure"})
         /* Rien d'enregistré pour ce navigateur (ex. : plafond de 3 sites par adresse en 24 h à l'étape 2) : un nouvel essai d'enregistrement, puis le paiement */
@@ -1651,7 +1857,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   form.addEventListener("input",e=>{const id=e.target.id||"";if(!["q","domaine","remarques"].includes(id)&&!id.startsWith("af-")&&!id.startsWith("tit-"))onChange();
     else if(EN_DIRECT(id)&&e.target.type!=="radio"&&e.target.type!=="checkbox")onChange(true)});
   form.addEventListener("change",e=>{const id=e.target.id||"";if(EN_DIRECT(id)&&(e.target.type==="radio"||e.target.type==="checkbox"||e.target.type==="time"))onChange()});
-  form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent=""}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
+  form.addEventListener("change",e=>{if(e.target.name==="metier"){builtFor="";if(e.target.value!=="autre")$("err").textContent="";offreFermer();
+    const f=e.target.closest(".fam");if(f&&$("secteur").value!==f.dataset.fam)$("secteur").value=f.dataset.fam}if((e.target.type==="radio"||e.target.type==="checkbox")&&!(e.target.id||"").startsWith("af-"))render()});
 
   /* ---- Comptes clients (compte.js) : éteint tant que compte.js n'est pas configuré ----
      Corrigé après le contrôle de Justine (11 Nov. 2026) : rien n'est enregistré tant
@@ -1660,34 +1867,36 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function etat(){const c={};form.querySelectorAll("input,textarea,select").forEach(el=>{
       if(!el.id||el.type==="file"||["q","email","recap","cgv-ok"].includes(el.id))return;
       if(el.type==="radio"||el.type==="checkbox"){if(el.checked)c[el.id]=true}else if(el.value)c[el.id]=String(el.value).slice(0,2000)});
+    /* 19 Nov. 2026 : métier et modèle enregistrés tels que choisis (le modèle par son nom de fichier) */
+    if(val("metier"))c._metier=val("metier");c._modele=String(tplKey());
     return {v:1,etape:step,champs:c}}
-  let modifie=false,repriseEnCours=false,reprisePendante=false,relie=false,compteDemande=false,valide=false,saveTimer;
+  let modifie=false,repriseEnCours=false,relie=false,compteDemande=false,valide=false,saveTimer;
   ["input","change"].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.id!=="q")modifie=true},true));
   function enregistrerMaintenant(){clearTimeout(saveTimer);
-    if(!COMPTE.actif||!modifie||repriseEnCours||reprisePendante||valide)return Promise.resolve();
+    if(!COMPTE.actif||!modifie||repriseEnCours||valide)return Promise.resolve();
     return COMPTE.enregistrer(etat(),Math.min(step,8)).then(r=>{
       if(r==="relier")note("Votre site est maintenant dans votre espace : ouvrez le lien reçu par mail pour continuer à l'enregistrer.")}).catch(()=>{})}
-  function sauver(){if(!COMPTE.actif||!modifie||repriseEnCours||reprisePendante||valide)return;clearTimeout(saveTimer);saveTimer=setTimeout(enregistrerMaintenant,400)}
+  function sauver(){if(!COMPTE.actif||!modifie||repriseEnCours||valide)return;clearTimeout(saveTimer);saveTimer=setTimeout(enregistrerMaintenant,400)}
   function note(t,recommencer){const el=$("compte-note");el.textContent=t||"";
     if(t&&recommencer){const b=document.createElement("button");b.type="button";b.className="alt";b.textContent="Recommencer à zéro";
-      b.addEventListener("click",()=>{COMPTE.oublierJeton();location.href="/maquette"});el.append(" ",b)}
+      b.addEventListener("click",()=>{COMPTE.oublierJeton();COMPTE.oublierProjet&&COMPTE.oublierProjet();location.href="/maquette"});el.append(" ",b)}
     el.hidden=!t}
+  /* ---- Un projet par visite (19 Nov. 2026, diagnostic d'Aymeric : Plombier devenait Nettoyage) ----
+     Le métier et le modèle choisis pendant cette visite sont la seule référence : aucun projet relu
+     depuis la base ne les remplace sans que le visiteur l'ait demandé. À l'étape 2, l'email crée un
+     NOUVEAU projet, propre à cet onglet. Un site commencé plus tôt dans ce navigateur est seulement
+     proposé (« Reprendre ce site » ou « Commencer un nouveau site ») ; depuis l'espace client
+     (lien reçu par mail, ?reprendre=1), le visiteur a déjà choisi de reprendre. */
   function commencerCompte(){
     const em=txt("email");
-    if(!COMPTE.actif||relie||compteDemande||COMPTE.jeton(em))return;
-    compteDemande=true;
+    if(!COMPTE.actif||relie||compteDemande||!COMPTE.emailValide(em)||COMPTE.aUnProjet(em))return;
+    compteDemande=true;offreFermer();
     COMPTE.commencer(em,etat(),2).then(r=>{compteDemande=false;
-      if(!r.ok){note("Votre site n'a pas pu être enregistré avec cette adresse e-mail (plus de 3 sites commencés en 24 heures avec la même adresse, ou coupure de réseau). Vous pouvez continuer ; si le paiement bloque, écrivez-nous à contact@hood-web.com.");return}
-      if(r.ok){modifie=true;note(r.mail?"Votre site est enregistré. Un lien pour le reprendre vient de partir par mail. Vous ne le voyez pas ? Regardez dans vos courriers indésirables (spams).":"Votre site est enregistré.")}
+      if(!r.ok){note("Votre site n'a pas pu être enregistré avec cette adresse e-mail (plus de 10 sites commencés en 24 heures avec la même adresse, ou coupure de réseau). Vous pouvez continuer ; si le paiement bloque, écrivez-nous à contact@hood-web.com.");return}
+      modifie=true;note(r.essai?"Adresse d'essai de l'équipe HOOD : site enregistré pour 2 jours, sans mail.":r.mail?"Votre site est enregistré. Un lien pour le reprendre vient de partir par mail. Vous ne le voyez pas ? Regardez dans vos courriers indésirables (spams).":"Votre site est enregistré.")
     }).catch(()=>{compteDemande=false});
   }
   function restaurer(p,email){
-    /* Audit d'Aymeric (13 Nov. 2026, métier qui change) : un projet relu après la fin de l'attente
-       arrivait en plein parcours et écrasait le métier choisi. Passé ce délai, on ne restaure plus rien :
-       le visiteur retrouve son ancien site depuis son espace. */
-    /* Contrôle de Justine (17 Nov. 2026) : si le visiteur n'a encore rien touché, on restaure quand même ;
-       s'il a commencé un autre site, on oublie l'ancien jeton pour ne pas l'écraser, et on le lui dit. */
-    if(!repriseEnCours&&modifie){oublierAncien();return}
     const c=(p&&p.reponses&&p.reponses.champs)||{};
     const m=Object.keys(c).find(id=>/^m-/.test(id));
     if(m&&$(m)){$(m).checked=true;$(m).dispatchEvent(new Event("change",{bubbles:true}))}
@@ -1695,37 +1904,48 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     form.querySelectorAll("input,textarea,select").forEach(el=>{
       if(!el.id||el.type==="file"||["q","email","recap"].includes(el.id))return;
       if(el.type==="radio"||el.type==="checkbox"){if(el.name!=="metier"&&el.id!=="af-tit-atteste")el.checked=!!c[el.id]}else if(c[el.id]!==undefined)el.value=c[el.id]});
+    /* Le modèle est enregistré par son nom de fichier (ex. : V01A-fleuriste.html), jamais recalculé. */
+    if(c._modele){const t=[...form.querySelectorAll('input[name="tpl"]')].find(x=>x.value===c._modele);if(t)t.checked=true}
+    secteurDuChoix();
     if(email&&!$("email").value)$("email").value=email;
     $("autre-wrap").hidden=val("metier")!=="autre";
     render();show(Math.min(Math.max(p.etape||1,1),7));
     modifie=false;
     note("Bon retour : votre site est là où vous l'aviez laissé.",!relie);
   }
-  /* Second contrôle de Justine (17 Nov. 2026) : tant que l'ancien projet n'a pas répondu, rien n'est sauvegardé ;
-     s'il arrive après que le visiteur a commencé autre chose, on l'oublie (jeton et projet du compte),
-     et le site en cours devient un nouveau projet. */
-  function oublierAncien(){COMPTE.oublierJeton&&COMPTE.oublierJeton();COMPTE.oublierProjet&&COMPTE.oublierProjet();relie=false;
-    note("Un site commencé plus tôt dans ce navigateur n'a pas été repris, pour ne pas le mélanger avec celui-ci. Il reste dans votre espace si vous aviez ouvert le lien reçu par mail.");
-    if(step>2&&COMPTE.emailValide(txt("email")))commencerCompte()}
+  /* Proposition de reprise : jamais automatique. */
+  let offreProjet=null;
+  function offreFermer(){offreProjet=null;$("reprise").hidden=true}
+  function offreMontrer(p){
+    const c=(p.reponses&&p.reponses.champs)||{};const mid=Object.keys(c).find(k=>/^m-/.test(k));
+    const me=mid&&METIERS.find(x=>"m-"+x.id===mid);const nom=String(c.nom||"").slice(0,60);
+    offreProjet=p;const el=$("reprise");
+    el.innerHTML=`<span><b>Vous aviez commencé un site dans ce navigateur</b>${nom||me?" : "+esc([nom,me?me.lab:""].filter(Boolean).join(", ")):""}.</span><span class="reprise-btns"><button type="button" class="btn line" id="rp-oui">Reprendre ce site</button><button type="button" class="linkbtn" id="rp-non">Commencer un nouveau site</button></span>`;
+    el.hidden=false;
+    $("rp-oui").addEventListener("click",()=>{const q=offreProjet;offreFermer();if(q&&COMPTE.reprendreLocal())restaurer(q,q.email)});
+    $("rp-non").addEventListener("click",()=>{COMPTE.oublierLocal();offreFermer()});
+  }
   if(COMPTE.actif){
     $("email-wrap").hidden=false;
     document.querySelectorAll('[data-compte="off"]').forEach(e=>e.hidden=true);
     document.querySelectorAll('[data-compte="on"]').forEach(e=>e.hidden=false);
-    /* Pendant la reprise (quelques instants), le formulaire est figé : un clic ne peut
-       pas écraser le projet enregistré (réserve 1 de Justine, second tour). */
-    repriseEnCours=true;reprisePendante=true;form.inert=true;form.setAttribute("aria-busy","true");
-    let abandon=false;
-    const parLeJeton=()=>COMPTE.lireLocal().then(p=>{if(!abandon&&p&&p.statut==="en_cours")restaurer(p,p.email)});
-    const reprise=/[?&]reprendre=1\b/.test(location.search)
-      ?COMPTE.monEspace().then(d=>{if(abandon)return;if(d&&d.projet&&d.projet.statut==="en_cours"){relie=true;restaurer(d.projet,d.email)}else return parLeJeton()})
-      :parLeJeton();
-    Promise.race([reprise.catch(()=>{}),new Promise(r=>setTimeout(r,6000))])
-      .then(()=>{repriseEnCours=false;form.inert=false;form.removeAttribute("aria-busy");modifie=false});
-    reprise.catch(()=>{}).then(()=>{if(abandon||!reprisePendante)return;reprisePendante=false;sauver()});
-    /* Sans aucune réponse au bout de 20 s : on abandonne l'ancien projet. */
-    setTimeout(()=>{if(!reprisePendante)return;abandon=true;reprisePendante=false;if(modifie)oublierAncien();else{COMPTE.oublierJeton&&COMPTE.oublierJeton();COMPTE.oublierProjet&&COMPTE.oublierProjet()}},20000);
+    if(/[?&]reprendre=1\b/.test(location.search)){
+      /* Depuis l'espace client : le visiteur a demandé à reprendre. Formulaire figé quelques instants ;
+         une réponse qui arrive après qu'il a commencé autre chose n'écrase rien. */
+      repriseEnCours=true;form.inert=true;form.setAttribute("aria-busy","true");
+      const fin=()=>{repriseEnCours=false;form.inert=false;form.removeAttribute("aria-busy")};
+      const pid=new URLSearchParams(location.search).get("projet");
+      const reprise=COMPTE.monEspace(pid).then(d=>{
+        if(!(d&&d.projet&&d.projet.statut==="en_cours"))return;
+        if(!repriseEnCours&&modifie){COMPTE.oublierProjet();note("Votre site enregistré n'a pas été chargé à temps : il reste dans votre espace.");return}
+        relie=true;restaurer(d.projet,d.email)}).catch(()=>{});
+      Promise.race([reprise,new Promise(r=>setTimeout(r,6000))]).then(()=>{fin();modifie=false});
+    }else{
+      COMPTE.lireLocal().then(p=>{if(p&&p.statut==="en_cours"&&step===1&&!val("metier"))offreMontrer(p)}).catch(()=>{});
+    }
   }
-
+  /* Pour le test automatique des 61 métiers (tests/parcours-metiers.mjs) : lecture seule. */
+  window.__hood={metier:()=>val("metier"),modele:()=>String(tplKey()),modeles:()=>tplList().map(String),etape:()=>step};
   upInit();
   render();show(1);setDevice("phone");
   /* Site déjà validé dans ce navigateur (réserve R6 de Justine) : on réaffiche « C'est validé ! » */
