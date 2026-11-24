@@ -959,7 +959,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(step===7&&afList()[+$("af-i").value]==="fin")$("meta").textContent=retouche?"Retouches":"Votre site est prêt"}
   const norm1=s=>(s||"").replace(/\s+/g," ").trim();
   const mots=s=>norm1(s)?norm1(s).split(" ").length:0;
-  const rtListe=()=>{try{const l=JSON.parse(txt("af-retouches")||"[]");return Array.isArray(l)?l.filter(r=>r&&typeof r.k==="string").slice(0,RT_MAX):[]}catch(e){return []}};
+  const rtListe=()=>{try{const l=JSON.parse($("af-retouches").value.trim()||"[]")/* HOO-195 : JSON lu tel quel, sans retrait des balises */;return Array.isArray(l)?l.filter(r=>r&&typeof r.k==="string").slice(0,RT_MAX):[]}catch(e){return []}};
   const RT_LAB={titre:"Le grand titre",section:"Un titre de partie",sous:"Un petit titre",texte:"Un texte",menu:"Un onglet du menu",photo:"Une photo"};
   /* Jamais moins que le texte d'origine : au moins une fois et demie sa longueur, avec un plancher par endroit (retour de Steve, 12 Nov. 2026). */
   function rtMax(type,avant){const n=mots(avant),base={titre:6,section:10,sous:8,menu:3,texte:25}[type]||10;
@@ -1018,7 +1018,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function rtEnregistrer(l){$("af-retouches").value=l.length?JSON.stringify(l.slice(0,RT_MAX)):"";modifie=true;sauver();rtListeDraw();render()}
   function rtFermer(){rtSel=null;$("rt-ed").hidden=true;try{frame.contentDocument.querySelectorAll(".hood-sel").forEach(e=>e.classList.remove("hood-sel"))}catch(e){}}
   function rtValider(){
-    if(!rtSel)return;const v=norm1($("rt-txt").value);
+    if(!rtSel)return;const v=norm1(sansBalises($("rt-txt").value));
     if(!v){$("rt-msg").textContent="Ce texte ne peut pas être vide. Pour revenir au texte d'origine : « Remettre l'original ».";return}
     if(mots(v)>rtSel.max){$("rt-msg").textContent=`Trop long pour cet endroit : ${mots(v)} mots, ${rtSel.max} au maximum.`;return}
     if(/https?:\/\/|www\.|\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{4}\b/i.test(v)){$("rt-msg").textContent="Pas de lien internet ni de numéro de carte dans les textes du site.";return}
@@ -1405,7 +1405,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const UP={photos:{max:12,min:1000,types:["image/jpeg","image/png","image/webp"],sorte:"photo"},
             tarifs:{max:3,min:0,types:["image/jpeg","image/png","image/webp","application/pdf"],sorte:"tarifs"}};
   const apercus={};
-  const upListe=k=>{try{const l=JSON.parse(txt("af-"+k+"-liste")||"[]");return Array.isArray(l)?l.filter(x=>typeof x==="string").slice(0,UP[k].max):[]}catch(e){return []}};
+  const upListe=k=>{try{const l=JSON.parse($("af-"+k+"-liste").value.trim()||"[]");return Array.isArray(l)?l.filter(x=>typeof x==="string").slice(0,UP[k].max):[]}catch(e){return []}};
   const upMsg=(k,t)=>{$("af-msg-"+k).textContent=t||""};
   function upSet(k,l){$("af-"+k+"-liste").value=l.length?JSON.stringify(l):"";modifie=true;sauver();onChange()}
   function upDraw(k){
