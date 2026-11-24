@@ -1321,7 +1321,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   async function domSuggerer(n,e,id){
     const nom=slug(txt("nom"))||n,ville=slug(txt("ville")),m=metier(),met=m?slug(m.m):"",autre=e==="fr"?"com":"fr";
-    const noms=[...new Set([ville&&nom+"-"+ville,met&&!nom.includes(met)&&met+"-"+nom,met&&ville&&met+"-"+ville,"le-"+nom,nom+"-"+(ville?ville.slice(0,4):"pro")]
+    /* HOO-197 : la ville n'est ajoutée que si le nom ne la contient pas déjà (sinon « coiffure-nancy-nancy »). */
+    const aVille=ville&&!("-"+nom+"-").includes("-"+ville+"-");
+    const noms=[...new Set([aVille&&nom+"-"+ville,met&&!nom.includes(met)&&met+"-"+nom,met&&ville&&met+"-"+ville,"le-"+nom,nom+"-"+(aVille?ville.slice(0,4):"pro")]
       .filter(x=>x&&x!==n&&domValide(x)))].slice(0,5);
     const c=[[n,autre],...noms.map(x=>[x,e])];
     const res=await Promise.all(c.map(([x,y])=>domLibre(x,y).then(ok=>ok===true?[x,y]:null)));if(id!==domSeq)return;
