@@ -859,12 +859,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   /* HOO-189 (décision du 20 nov.) : le site affiche toujours le métier choisi par le client, jamais la spécialité du modèle.
      On remplace la spécialité là où elle forme un morceau entier d'une ligne « … · … » (bandeau du haut, pied de page,
-     où le modèle l'abrège parfois : « Bistrot » pour « Bistrot français »). */
+     où le modèle l'abrège parfois : « Bistrot » pour « Bistrot français »). Jamais dans l'en-tête ni le logo (nom du client). */
   function metierChoisi(doc){
     const k=tplKey(),m=metier();if(isEquipe(k)||!m)return;const e=CATI[k];if(!e||!e.sp)return;
     const nz=x=>x.replace(/[’']/g,"'").replace(/\s+/g," ").trim().toLowerCase(),sp=nz(e.sp);if(nz(m.lab)===sp)return;
     const w=doc.createTreeWalker(doc.body,4);const ns=[];let n;
-    while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE)$/.test(p.tagName)||p.closest("[data-hood]"))continue;ns.push(n)}
+    while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE)$/.test(p.tagName)||p.closest("[data-hood],header,nav,.logo"))continue;ns.push(n)}
     ns.forEach(n=>{const parts=n.nodeValue.split(/(\s*·\s*)/);let ch=false;
       const pied=!!n.parentElement.closest("footer");
       for(let i=0;i<parts.length;i+=2){const t=parts[i],z=nz(t);if(z&&(z===sp||(pied&&i===0&&sp.startsWith(z+" ")))){const a=t.match(/^\s*/)[0],b=t.match(/\s*$/)[0];parts[i]=a+m.lab+b;ch=true}}
