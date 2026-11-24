@@ -145,7 +145,8 @@ a{color:var(--accent)}
     e.preventDefault();const em=$("email").value.trim();
     if(!C.emailValide(em)){$("lien-msg").textContent="Cette adresse email ne semble pas complète.";return}
     $("lien-msg").textContent="Envoi…";
-    try{await C.recevoirLien(em)}catch(x){}
+    /* HOO-199 : on n'attend jamais plus de 10 secondes (captcha ou réseau bloqués) ; le message reste neutre. */
+    try{await Promise.race([C.recevoirLien(em),new Promise(r=>setTimeout(r,10000))])}catch(x){}
     $("lien-msg").textContent="Si un site est enregistré avec cette adresse, un lien vient de partir. Pensez à regarder dans vos indésirables.";
   });
   $("sortir").addEventListener("click",async()=>{await C.deconnecter();$("sortir").hidden=true;vue("connexion")});
