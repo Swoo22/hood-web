@@ -849,9 +849,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function applyServices(doc){
     const k=tplKey();if(isEquipe(k))return null;const u=userSv();const b=servicesGroup(doc);if(!b)return null;
     /* HOO-191 : aucun prix ni prestation inventés. Une carte que le client n'a pas remplie est masquée
-       (s'il a rempli au moins un service) ; un prix du modèle devient « Votre prix », y compris un prix écrit sans « € » (« 15 »). */
+       (s'il a rempli au moins un service) ; un prix du modèle devient « Votre prix », y compris dans la case prix sans « € » (« 15 », « offerte »). */
     const n=u.filter(Boolean).length;
-    const estPrix=x=>{const t=x.textContent.trim();return /^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t)||(/(^|\s)(pr|prix|price|tarif)(\s|$)/i.test(x.className||"")&&/^\d{1,4}(?:[.,]\d{1,2})?$/.test(t))};
+    const estPrix=x=>{const t=x.textContent.trim();return /^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t)||(/(^|\s)(pr|prix|price|tarif)(\s|$)/i.test(x.className||"")&&t.length>0&&t.length<=20)};
     b.cards.forEach((card,i)=>{const s=i<4?u[i]:"";
       if(!s){if(n){card.style.display="none";card.setAttribute("data-hood-masque","")}
         else card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&estPrix(x))x.textContent="Votre prix"});return}
