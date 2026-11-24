@@ -848,8 +848,15 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   }
   function applyServices(doc){
     const k=tplKey();if(isEquipe(k))return null;const u=userSv();const b=servicesGroup(doc);if(!b)return null;
-    b.cards.slice(0,4).forEach((card,i)=>{const s=u[i];if(!s)return;const h=card.querySelector("h3");if(h)h.textContent=s;
-      card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&x!==h){const t=x.textContent.trim();if(/^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t))x.textContent="Votre prix";else if(t.length>20&&x.tagName!=="H3")x.textContent=""}})});
+    /* HOO-191 : aucun prix ni prestation inventés. Une carte que le client n'a pas remplie est masquée
+       (s'il a rempli au moins un service) ; un prix du modèle devient « Votre prix », y compris un prix écrit sans « € » (« 15 »). */
+    const n=u.filter(Boolean).length;
+    const estPrix=x=>{const t=x.textContent.trim();return /^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t)||(/(^|\s)(pr|prix|price|tarif)(\s|$)/i.test(x.className||"")&&/^\d{1,4}(?:[.,]\d{1,2})?$/.test(t))};
+    b.cards.forEach((card,i)=>{const s=i<4?u[i]:"";
+      if(!s){if(n){card.style.display="none";card.setAttribute("data-hood-masque","")}
+        else card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&estPrix(x))x.textContent="Votre prix"});return}
+      const h=card.querySelector("h3");if(h)h.textContent=s;
+      card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&x!==h){const t=x.textContent.trim();if(estPrix(x))x.textContent="Votre prix";else if(t.length>20&&x.tagName!=="H3")x.textContent=""}})});
     return b;
   }
   function brandEl(doc){
