@@ -749,7 +749,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
   const val=n=>{const el=form.querySelector(`input[name="${n}"]:checked`);return el?el.value:""};
-  const txt=id=>$(id).value.trim();
+  /* HOO-195 : les balises HTML saisies (ex. « <b>QA</b> ») sont retirées avant l'affichage et avant de fabriquer l'adresse du site.
+     Seules les vraies balises (« < » suivi d'une lettre ou de « / ») sont retirées : « moins de 10 < 20 » reste intact. */
+  const sansBalises=s=>s.replace(/<\/?[a-z][^<>]*>/gi,"");
+  const txt=id=>sansBalises($(id).value).trim();
   const slug=s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   const cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
 
