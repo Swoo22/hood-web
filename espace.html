@@ -108,15 +108,22 @@ a{color:var(--accent)}
     }else if(liste.length>1){
       /* 19 Nov. 2026 : plusieurs sites avec la même adresse, un par commerce */
       $("projet").innerHTML='<ul class="f">'+liste.map(x=>{const e=Math.min(Math.max(x.etape||1,1),6);
-        const etat=x.statut==="commande"?"Site validé":e>=6?"Première version prête":`Questionnaire : étape ${e} sur 5`;
+        const etat=x.statut==="paye"?"Payé : mise en ligne en préparation":x.statut==="commande"?"Site validé":e>=6?"Première version prête":`Questionnaire : étape ${e} sur 5`;
         return `<li><span><b>${esc(x.nom||"Site sans nom")}</b><br><span class="small">${etat} · modifié le ${esc(jour(x.maj_le))}</span></span>`+
-          (x.statut==="commande"?"":`<a href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(x.id)}">${e>=6?"Revoir et finaliser":"Reprendre"}</a>`)+`</li>`}).join("")+
+          (x.statut!=="en_cours"?"":`<a href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(x.id)}">${e>=6?"Revoir et finaliser":"Reprendre"}</a>`)+`</li>`}).join("")+
         '</ul><p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d\'un autre commerce</a></p>';
     }else{
       const c=(p.reponses&&p.reponses.champs)||{};
       const nom=c.nom?esc(c.nom):"Votre site";
-      if(p.statut==="commande"){
-        $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Site validé. On le prépare avec vos réponses et on vous écrit pour la suite : l'adresse du site, d'éventuelles photos en plus, puis le paiement juste avant la mise en ligne.</p>`;
+      /* HOO-208 (25 Nov. 2026) : un site payé ne se modifie plus et ne se repaie pas. Plus aucun lien vers le questionnaire. */
+      const dom=c.domaine?esc(c.domaine+"."+(c["af-dom-ext"]==="com"?"com":"fr")):"";
+      if(p.statut==="paye"){
+        $("projet").innerHTML=`<p><b>${nom}</b></p><div class="bar" aria-hidden="true"><i style="width:100%"></i></div>
+          <p class="small"><b>Commande payée. Merci !</b>${dom?` Adresse de votre site : <b>${dom}</b>.`:""}</p>
+          <p class="small">Notre équipe vous écrit sous 24 heures pour les dernières informations (horaires, photos, avis…). Votre site est en ligne sous 72 heures après leur réception.</p>
+          <p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d'un autre commerce</a></p>`;
+      }else if(p.statut==="commande"){
+        $("projet").innerHTML=`<p><b>${nom}</b></p><p class="small">Site validé. On le prépare avec vos réponses et on vous écrit pour la suite.</p>`;
       }else{
         const e=Math.min(Math.max(p.etape||1,1),6),pct=Math.round(Math.min(e,6)/6*100);
         const ou=e>=6?"Votre première version est prête.":`Questionnaire : étape ${e} sur 5.`;
@@ -128,7 +135,7 @@ a{color:var(--accent)}
     }
     const f=d.factures||[];
     $("factures").innerHTML=f.length?'<ul class="f">'+f.map(x=>`<li><span>${esc(x.libelle)}<br><span class="small">N° ${esc(x.numero)}, ${esc(jour(x.date))}</span></span><span><b>${esc(euros(x.montant_centimes))}</b> · <a href="${esc(x.lien)}" target="_blank" rel="noopener">Voir la facture</a></span></li>`).join("")+"</ul>"
-      :'<p class="small">Aucune facture pour l\'instant. Elle apparaîtra ici dès votre paiement.</p>';
+      :'<p class="small">Aucune facture pour l\'instant. Elle apparaît ici quelques minutes après votre paiement ; le reçu Stripe arrive aussi par e-mail.</p>';
     vue("espace");
   }
 
