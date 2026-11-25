@@ -2009,6 +2009,25 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(p&&p.champs&&Object.keys(p.champs).length){COMPTE.retrouverVisite&&COMPTE.retrouverVisite();remplir(p.champs);if(p.champs.email&&!$("email").value)$("email").value=p.champs.email;
       render();show(Math.min(Math.max(+p.etape||1,1),7));modifie=false}}catch(e){}
   localPret=true;
+  /* HOO-206 (25 nov. 2026) : outil de livraison de l'équipe, pour le lancement assisté.
+     /maquette?livrer=1 : on colle la colonne « reponses » d'un projet (lue dans Supabase), le site se construit
+     comme le client l'a vu, et un bouton le télécharge en un fichier index.html. Rien n'est envoyé ni enregistré. */
+  if(new URLSearchParams(location.search).has("livrer")){
+    const lv=document.createElement("div");lv.id="livrer";
+    lv.style.cssText="position:fixed;z-index:9999;right:16px;bottom:16px;width:380px;max-width:calc(100vw - 32px);background:#fff;color:#101114;border:2px solid #0047ff;border-radius:12px;padding:14px;font:14px/1.45 Inter,Arial,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.25)";
+    lv.innerHTML='<b>Livraison (équipe HOOD)</b><p style="margin:6px 0">Collez le contenu de la colonne « reponses » du projet, copié dans Supabase.</p><textarea id="lv-json" rows="5" style="width:100%;font:12px monospace" aria-label="Réponses du projet"></textarea><p style="margin:8px 0 0"><button type="button" id="lv-ok">Construire le site</button> <button type="button" id="lv-dl" disabled>Télécharger index.html</button></p><p id="lv-msg" role="status" style="margin:8px 0 0;color:#5d6272"></p>';
+    document.body.appendChild(lv);
+    $("lv-ok").addEventListener("click",async()=>{
+      try{const j=JSON.parse($("lv-json").value);const c=(j&&j.champs)||(j&&j.reponses&&j.reponses.champs)||j;
+        if(!c||typeof c!=="object"||!(c._metier||c.metier))throw new Error("champs");
+        remplir(c);await render();show(6);oublierLocal();$("lv-dl").disabled=false;
+        $("lv-msg").textContent="Modèle : "+tplKey()+". Métier : "+val("metier")+". Vérifiez l'aperçu, puis téléchargez."}
+      catch(e){console.warn("HOOD livraison :",e);$("lv-dl").disabled=true;$("lv-msg").textContent="Réponses illisibles : collez le contenu exact de la colonne « reponses »."}});
+    $("lv-dl").addEventListener("click",async()=>{
+      const html=await buildHTML();const a=document.createElement("a");
+      a.href=URL.createObjectURL(new Blob([html],{type:"text/html;charset=utf-8"}));a.download="index.html";
+      document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)});
+  }
   /* Site déjà validé dans ce navigateur (réserve R6 de Justine) : on réaffiche « C'est validé ! » */
   try{const v=JSON.parse(localStorage.getItem("hood_valide")||"null");
     if(v&&v.dom&&!/[?&]reprendre=1\b/.test(location.search)){valide=true;$("ok-dom").textContent=String(v.dom).slice(0,70);document.body.classList.add("deja-valide");oublierLocal();show(9)}}catch(e){}
