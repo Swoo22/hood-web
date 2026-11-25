@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Mon espace, HOOD</title>
+<title>Mon espace, HOOD</title><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@ a{color:var(--accent)}
       <button class="btn" type="submit">Recevoir mon lien</button>
       <p class="small" id="lien-msg" role="status"></p>
     </form>
-    <p class="small">Pas encore de site ? <a href="/maquette">Voir mon site web</a></p>
+    <p class="small">Pas encore de site ? <a href="/maquette">Montrez-moi mon site</a></p>
   </div>
 
   <!-- Connecté -->
@@ -90,7 +90,7 @@ a{color:var(--accent)}
   </div>
 </div>
 
-<script src="compte.js?v=20261112h"></script>
+<script src="compte.js?v=20261119a"></script>
 <script>
 (function(){
   const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
@@ -102,9 +102,16 @@ a{color:var(--accent)}
   function afficher(d){
     $("sortir").hidden=false;
     $("bonjour").textContent="Connecté avec "+(d.email||"votre email")+".";
-    const p=d.projet;
+    const p=d.projet,liste=d.projets||[];
     if(!p){
-      $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="/maquette">Voir mon site web</a>';
+      $("projet").innerHTML='<p class="small">Aucun site en cours avec cette adresse.</p><a class="btn" href="/maquette">Montrez-moi mon site</a>';
+    }else if(liste.length>1){
+      /* 19 Nov. 2026 : plusieurs sites avec la même adresse, un par commerce */
+      $("projet").innerHTML='<ul class="f">'+liste.map(x=>{const e=Math.min(Math.max(x.etape||1,1),6);
+        const etat=x.statut==="commande"?"Site validé":e>=6?"Première version prête":`Questionnaire : étape ${e} sur 5`;
+        return `<li><span><b>${esc(x.nom||"Site sans nom")}</b><br><span class="small">${etat} · modifié le ${esc(jour(x.maj_le))}</span></span>`+
+          (x.statut==="commande"?"":`<a href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(x.id)}">${e>=6?"Revoir et finaliser":"Reprendre"}</a>`)+`</li>`}).join("")+
+        '</ul><p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d\'un autre commerce</a></p>';
     }else{
       const c=(p.reponses&&p.reponses.champs)||{};
       const nom=c.nom?esc(c.nom):"Votre site";
@@ -115,7 +122,8 @@ a{color:var(--accent)}
         const ou=e>=6?"Votre première version est prête.":`Questionnaire : étape ${e} sur 5.`;
         $("projet").innerHTML=`<p><b>${nom}</b></p><div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
           <p class="small">${ou} Dernière modification le ${esc(jour(p.maj_le))}.</p>
-          <a class="btn" href="/maquette?reprendre=1">${e>=6?"Revoir et finaliser mon site":"Reprendre mon site"}</a>`;
+          <a class="btn" href="/maquette?reprendre=1&amp;projet=${encodeURIComponent(p.id)}">${e>=6?"Revoir et finaliser mon site":"Reprendre mon site"}</a>
+          <p class="small" style="margin-top:12px"><a href="/maquette">Créer le site d'un autre commerce</a></p>`;
       }
     }
     const f=d.factures||[];
@@ -145,7 +153,8 @@ a{color:var(--accent)}
     e.preventDefault();const em=$("email").value.trim();
     if(!C.emailValide(em)){$("lien-msg").textContent="Cette adresse email ne semble pas complète.";return}
     $("lien-msg").textContent="Envoi…";
-    try{await C.recevoirLien(em)}catch(x){}
+    /* HOO-199 : on n'attend jamais plus de 10 secondes (captcha ou réseau bloqués) ; le message reste neutre. */
+    try{await Promise.race([C.recevoirLien(em),new Promise(r=>setTimeout(r,10000))])}catch(x){}
     $("lien-msg").textContent="Si un site est enregistré avec cette adresse, un lien vient de partir. Pensez à regarder dans vos indésirables.";
   });
   $("sortir").addEventListener("click",async()=>{await C.deconnecter();$("sortir").hidden=true;vue("connexion")});

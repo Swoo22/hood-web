@@ -1,0 +1,25 @@
+# Test automatique du questionnaire (demandé par Aymeric, 19 Nov. 2026) :
+# chaque métier, avec un email neuf puis un email déjà utilisé, doit garder
+# son métier et son modèle jusqu'à l'aperçu. Lancé à chaque proposition de
+# modification et à chaque envoi sur main. Aucun secret, rien n'est envoyé.
+# Pour qu'un échec bloque la fusion : réglage GitHub « Branch protection »
+# de main, case « Require status checks » avec ce test (geste de Steve).
+name: Parcours des métiers
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  parcours:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - run: |
+          python -m http.server 8765 >/dev/null 2>&1 &
+          sleep 1
+          python tests/parcours_metiers.py
