@@ -895,8 +895,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const T0=[],tok=v=>{T0.push(v);return "\u0001"+(T0.length-1)+"\u0001"};
     const swap=(from,to)=>{if(!from||to==null)return;const t=tok(to);variants(from).forEach(f=>{html=html.split(f).join(t)})};
     const cityOf=s=>s?s.replace(/^\d{5}\s+/,"").replace(/\s+(\d+(e|er)|et agglomération)$/,"").trim():"";
-    if(nom){swap(e.c,esc(nom));swap(e.c.toUpperCase(),esc(nom.toUpperCase()))}
-    if(ville){swap(e.l,esc(ville));if(e.cp)swap(e.cp,esc(ville));const cv=cityOf(e.cp||e.l);if(cv&&cv.length>2)swap(cv,esc(ville))}
+    /* HOO-193 : avant la saisie, jamais le nom ni la ville d'exemple du modèle : « Votre commerce » et « votre ville », comme les modèles de l'équipe. */
+    const nomA=nom||"Votre commerce",villeA=ville||"votre ville";
+    swap(e.c,esc(nomA));swap(e.c.toUpperCase(),esc(nomA.toUpperCase()));
+    {swap(e.l,esc(villeA));if(e.cp)swap(e.cp,esc(villeA));const cv=cityOf(e.cp||e.l);if(cv&&cv.length>2)swap(cv,esc(villeA))}
     if(e.a)swap(e.a,esc(adr||"Votre adresse"));
     if(e.t&&tel){swap(e.t,esc(tel));swap(e.t.replace(/ /g,""),esc(tel.replace(/\s/g,"")))}
     else if(e.t)swap(e.t,"Votre téléphone");
@@ -1280,9 +1282,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const svc=applyServices(doc);
     metierChoisi(doc);
     const b=brandEl(doc);
-    if(b&&!isEquipe(tplKey())&&txt("nom")&&!b.querySelector("img")){b.textContent=txt("nom")}
+    const nomA=txt("nom")||"Votre commerce";/* HOO-193 : libellé neutre tant que le nom n'est pas saisi */
+    if(b&&!isEquipe(tplKey())&&!b.querySelector("img")){b.textContent=nomA}
     if(logoURL&&b){const img=doc.createElement("img");img.src=logoURL;img.alt="Logo";img.style.cssText="height:1.9em;width:auto;max-width:150px;object-fit:contain;vertical-align:middle;margin-right:.5em;display:inline-block";b.prepend(img)}
-    if(!isEquipe(tplKey())&&txt("nom"))renameH1(doc,txt("nom"));
+    if(!isEquipe(tplKey()))renameH1(doc,nomA);
     /* Audit d'Aymeric (13 Nov. 2026) : les prix de l'exemple ne restent jamais. Vos prix, s'il y en a, arrivent par « Vos tarifs ». */
     sansPrix(doc);
     sansInventions(doc);
