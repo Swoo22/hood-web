@@ -5,6 +5,7 @@ Site vitrine de HOOD, publié automatiquement par GitHub Pages à chaque envoi s
 - `index.html` : page d'accueil
 - `maquette.html` : questionnaire « Montrez-moi mon site », avec aperçu en direct, affinage, choix du nom de domaine et du titulaire, paiement (Stripe en mode essai tant que le paiement réel n'est pas branché)
 - `espace.html` : espace client (mon site en cours, mes factures), connexion par lien magique
+- `suivi-tests.js` : enregistrement des visites des testeurs (PostHog, serveurs en Europe), seulement avec un lien `?test=1&testeur=T01` ; rien pour les autres visiteurs, rien sans clé PostHog
 - `compte.js` : comptes clients, branchés sur la base Supabase de HOOD depuis le 12 nov. 2026 : le projet est enregistré dès que le visiteur donne son email. La base et ses fonctions sont dans le dépôt Swoo22/Hood
 - `modeles/` : les modèles de sites d'Aymeric et leur catalogue (`catalogue.json`). Ce sont des exemples : dans le questionnaire, leurs avis, notes, prix, horaires, téléphone et années sont remplacés par des cases « à compléter » (jamais publiés tels quels). Non indexés (robots.txt)
 - `cgv.html` : conditions générales de vente (version provisoire) ; `cgv-provisoire.html` et `donnees.html` renvoient vers `/cgv` et vers les mentions légales
