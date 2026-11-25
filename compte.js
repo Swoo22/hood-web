@@ -148,7 +148,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
      fonction serveur « paiement-creer » fait vérifier le projet par la base, puis
      crée la page de paiement Stripe. Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
      sur le lien d'essai : non_configure, cle_reelle_refusee, reseau, eteint. */
-  C.payer = async function (etat) {
+  C.payer = async function (etat, cgv) {
     const sb = await charger(); if (!sb) return { motif: "eteint" };
     const j = jetonVisite;
     if (!projetConnecte && !j) return { motif: "sans_projet" };  /* rien d'enregistré pour ce navigateur */
@@ -158,7 +158,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
       const r = await fetch(C.url + "/functions/v1/paiement-creer", {
         method: "POST",
         headers: { "content-type": "application/json", apikey: C.cle, authorization: "Bearer " + (session ? session.access_token : C.cle) },
-        body: JSON.stringify({ jeton: projetConnecte ? null : j, projet: projetConnecte || null, reponses: etat })
+        body: JSON.stringify({ jeton: projetConnecte ? null : j, projet: projetConnecte || null, reponses: etat, cgv: cgv || null })
       });
       const d = await r.json().catch(() => ({}));
       if (d && typeof d.url === "string" && /^https:\/\/checkout\.stripe\.com\//.test(d.url)) return { url: d.url };
