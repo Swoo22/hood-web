@@ -1155,9 +1155,11 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     $("af-rdv-zone").hidden=!(v.rdv||opt("rdv")||opt("resa"));
     $("af-insta-zone").hidden=!(v.insta||opt("insta"));
   }
+  /* HOO-201 : « près de Évreux » devient « près d'Évreux » (élision devant une voyelle). Le h n'est pas traité : muet ou aspiré, on ne peut pas le savoir. */
+  const avecVille=(s,v)=>s.replace(/\b([dD])e \{ville\}/g,(a,d)=>/^[aeiouyàâäéèêëîïôöùûüœæ]/i.test(v)?d+"'{ville}":a).replace("{ville}",v);
   function affinageVisible(doc){
     const A=afm(),ti=["chaleureux","serieux","chic"].indexOf(afVal("ton"));
-    if(ti>=0&&A.t&&A.t[ti]){const p=heroSub(doc);if(p)p.textContent=A.t[ti].replace("{ville}",txt("ville")||"votre ville").replace("{nom}",txt("nom")||"votre commerce")}
+    if(ti>=0&&A.t&&A.t[ti]){const p=heroSub(doc);if(p)p.textContent=avecVille(A.t[ti],txt("ville")||"votre ville").replace("{nom}",txt("nom")||"votre commerce")}
     placesAppliquer(doc);
     const h=afVal("horaires");
     if(h==="write"||h==="google"){
@@ -1588,7 +1590,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   function afTexts(){
     const k=famKey(),nom=txt("nom")||"votre commerce",ville=txt("ville")||"votre ville";
     const A=afm();
-    ["chaleureux","serieux","chic"].forEach((t,i)=>{$("af-ex-"+t).textContent="« "+A.t[i].replace("{ville}",ville).replace("{nom}",nom)+" »"});
+    ["chaleureux","serieux","chic"].forEach((t,i)=>{$("af-ex-"+t).textContent="« "+avecVille(A.t[i],ville).replace("{nom}",nom)+" »"});
     for(let i=0;i<NV;i++){const v=A.v[i];$("af-vl-"+i).textContent=v||"";$("af-v-"+i).closest("label").hidden=!v;if(!v)$("af-v-"+i).checked=false}
     if(A.p)A.p.forEach((r,i)=>{$("af-pn-"+i).placeholder="Ex. : "+r[0];$("af-pp-"+i).placeholder=r[1]});
     const dep={"2":"depuis peu","10":"depuis quelques années","plus":"depuis plus de dix ans","30":"depuis plus de trente ans"}[afVal("depuis")||"10"];
