@@ -60,10 +60,16 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
      Avant, un projet d'une visite précédente (ou d'un autre onglet) pouvait recevoir les réponses
      et le paiement de la visite en cours. */
   let jetonVisite = null, emailVisite = null;
+  /* HOO-190 (25 Nov. 2026) : le projet de la visite est aussi gardé dans CET onglet (sessionStorage),
+     pour qu'un rechargement (F5) ne le perde pas. Un autre onglet ne le voit pas. Il n'est repris que
+     par C.retrouverVisite(), appelé par le questionnaire quand il recharge le parcours de l'onglet. */
+  const CLE_VISITE = "hood_visite";
+  const garderVisite = () => { try { jetonVisite ? sessionStorage.setItem(CLE_VISITE, JSON.stringify({ j: jetonVisite, e: emailVisite })) : sessionStorage.removeItem(CLE_VISITE) } catch (e) {} };
+  C.retrouverVisite = () => { try { const v = JSON.parse(sessionStorage.getItem(CLE_VISITE) || "null"); if (!v || !v.j) return false; jetonVisite = String(v.j); emailVisite = v.e || null; return true } catch (e) { return false } };
   C.aUnProjet = email => !!jetonVisite && (email === undefined || emailVisite === norm(email));
-  C.oublierJeton = () => { jetonVisite = null; emailVisite = null; ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); };
+  C.oublierJeton = () => { jetonVisite = null; emailVisite = null; garderVisite(); ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); };
   C.oublierLocal = () => { if (lire(CLE_JETON) !== jetonVisite || !jetonVisite) { ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); } };
-  C.reprendreLocal = () => { const j = lire(CLE_JETON); if (!j) return false; jetonVisite = j; emailVisite = lire(CLE_EMAIL); return true; };
+  C.reprendreLocal = () => { const j = lire(CLE_JETON); if (!j) return false; jetonVisite = j; emailVisite = lire(CLE_EMAIL); garderVisite(); return true; };
   /* Adresses d'essai de l'équipe (19 Nov. 2026) : essais@hood-web.com et essais+…@hood-web.com.
      La base les reconnaît (plafonds à part, effacées au bout de 2 jours) ; aucun lien n'est envoyé par mail. */
   C.estEssai = e => /^essais(\+[^@]*)?@hood-web\.com$/i.test(String(e || "").trim());
@@ -86,7 +92,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     const sb = await charger(); if (!sb) return { ok: false };
     const r = await sb.rpc("hood_projet_commencer", { p_email: email, p_reponses: etat, p_etape: etape });
     if (r.error || !r.data) return { ok: false };
-    jetonVisite = r.data; emailVisite = norm(email);
+    jetonVisite = r.data; emailVisite = norm(email); garderVisite();
     ecrire(CLE_JETON, r.data); ecrire(CLE_EMAIL, norm(email));
     if (C.estEssai(email)) return { ok: true, mail: false, essai: true };
     return { ok: true, mail: await envoyerLien(sb, email, true) };
