@@ -1352,6 +1352,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     /* « Horaires, adresse et téléphone : tout est sur cette page. » ne reste que si tout y est */
     if(sansH||sansA||sansT)doc.querySelectorAll("p").forEach(p=>{if(/tout est sur cette page/.test(p.textContent))p.textContent=p.textContent.replace(/\s*Horaires, adresse et téléphone : tout est sur cette page\./,"")});
     const u=userSv();if(u.some(Boolean))doc.querySelectorAll(".carte-s3").forEach((c,i)=>{if(!u[i]){c.style.display="none";c.setAttribute("data-hood-masque","")}});
+    /* « Autre métier » sans aucun service rempli : pas d'exemples propres au métier, donc pas de « Service 1 » à « Service 4 » :
+       la partie « Nos prestations » est retirée. Pour un métier de la liste, les exemples du métier restent (règle HOO-191). */
+    else if(val("metier")==="autre"){const c=doc.querySelector(".carte-s3");const sec=c&&c.closest("section");if(sec)sec.remove()}
   }
   /* ---- Rien d'inventé sur le site d'un client (audit d'Aymeric, 13 Nov. 2026 ; décision d'Octave, 17 Nov. 2026) ----
      Les notes Google, le nombre d'avis, les témoignages, les horaires, le téléphone et l'année de l'exemple
