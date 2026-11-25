@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /modeles/
+Disallow: /espace
+Disallow: /merci
+Disallow: /affiner
+Sitemap: https://hood-web.com/sitemap.xml

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Merci pour votre commande, HOOD</title>
+<title>Merci pour votre commande, HOOD</title><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -31,11 +31,12 @@ a{color:var(--accent)}
   <a class="logo" href="/">HOOD<span>.</span></a>
   <h1>Merci, votre commande <em>est enregistrée</em>.</h1>
   <p class="lead" id="merci-paiement">Votre paiement a bien été reçu. Stripe vous envoie un reçu par e-mail.</p>
-  <script>/* Paiement en deux temps (12 Nov. 2026) : retour de la page créée par le serveur, la carte est autorisée et débitée après la réservation du domaine. */
-  if(/[?&]session_id=cs_(test|live)_[A-Za-z0-9]+/.test(location.search))document.getElementById("merci-paiement").textContent="Votre paiement est accepté. Les 290 € sont débités dès que votre nom de domaine est réservé au nom de votre entreprise ; si la réservation échouait, rien ne serait débité. Stripe vous envoie un reçu par e-mail.";</script>
+  <script>/* Contrôle de Justine (17 Nov. 2026) : un paiement d'essai Stripe (cs_test_) est dit comme tel. */
+  const PAIEMENT_REEL=false; /* à passer à true avec le paiement réel (comme dans maquette.html) */
+  if(/[?&]session_id=cs_test_/.test(location.search)||(!PAIEMENT_REEL&&!/[?&]session_id=cs_live_/.test(location.search)))document.getElementById("merci-paiement").textContent="Paiement d'essai : rien n'a été débité. Le paiement en ligne n'est pas encore ouvert.";</script>
   <ol>
-    <li>Votre site part en ligne, d'abord à une adresse provisoire de HOOD.</li>
-    <li>Votre nom de domaine est réservé au nom de votre entreprise : votre site y répond dès qu'il est actif, en général de quelques minutes à quelques heures.</li>
+    <li>On vous écrit pour les informations qui manquent encore à votre site (horaires, avis, photos…).</li>
+    <li>On réserve votre nom de domaine au nom de votre entreprise, et votre site est en ligne sous 72 heures après réception de ces informations. Si l'adresse choisie n'est plus libre, on vous en propose d'autres ; si aucune ne vous convient, on vous rembourse.</li>
     <li>Le premier mois est compris dans les 290 €. L'abonnement de 10 € par mois commence un mois après votre paiement. Sans engagement.</li>
     <li>Pendant 7 jours, vous nous envoyez vos corrections en une fois : on les fait gratuitement.</li>
   </ol>

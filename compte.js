@@ -53,9 +53,30 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
   const ecrire = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v) } catch (e) {} };
   const norm = e => String(e || "").trim().toLowerCase();
   C.emailValide = e => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(e || "").trim());
-  /* Le jeton du navigateur, seulement s'il a été pris pour cette adresse. */
-  C.jeton = email => { const j = lire(CLE_JETON); return j && (email === undefined || lire(CLE_EMAIL) === norm(email)) ? j : null; };
-  C.oublierJeton = () => { ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); };
+  /* 19 Nov. 2026 (diagnostic d'Aymeric : Plombier devenait Nettoyage) : chaque visite a SON projet.
+     Le jeton de la visite reste en mémoire, dans cet onglet seulement (jetonVisite) : il sert à
+     enregistrer, envoyer les photos et payer. Le jeton gardé dans le navigateur (localStorage) ne sert
+     plus qu'à proposer « Reprendre le site commencé » ; il n'est utilisé que si le visiteur le choisit.
+     Avant, un projet d'une visite précédente (ou d'un autre onglet) pouvait recevoir les réponses
+     et le paiement de la visite en cours. */
+  let jetonVisite = null, emailVisite = null;
+  /* HOO-190 (25 Nov. 2026) : le projet de la visite est aussi gardé dans CET onglet (sessionStorage),
+     pour qu'un rechargement (F5) ne le perde pas. Un autre onglet ne le voit pas. Il n'est repris que
+     par C.retrouverVisite(), appelé par le questionnaire quand il recharge le parcours de l'onglet. */
+  const CLE_VISITE = "hood_visite";
+  const garderVisite = () => { try { jetonVisite ? sessionStorage.setItem(CLE_VISITE, JSON.stringify({ j: jetonVisite, e: emailVisite })) : sessionStorage.removeItem(CLE_VISITE) } catch (e) {} };
+  C.retrouverVisite = () => { try { const v = JSON.parse(sessionStorage.getItem(CLE_VISITE) || "null"); if (!v || !v.j) return false; jetonVisite = String(v.j); emailVisite = v.e || null; return true } catch (e) { return false } };
+  C.aUnProjet = email => !!jetonVisite && (email === undefined || emailVisite === norm(email));
+  C.oublierJeton = () => { jetonVisite = null; emailVisite = null; garderVisite(); ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); };
+  C.oublierLocal = () => { if (lire(CLE_JETON) !== jetonVisite || !jetonVisite) { ecrire(CLE_JETON, null); ecrire(CLE_EMAIL, null); } };
+  C.reprendreLocal = () => { const j = lire(CLE_JETON); if (!j) return false; jetonVisite = j; emailVisite = lire(CLE_EMAIL); garderVisite(); return true; };
+  /* Adresses d'essai de l'équipe (19 Nov. 2026) : essais@hood-web.com et essais+…@hood-web.com.
+     La base les reconnaît (plafonds à part, effacées au bout de 2 jours) ; aucun lien n'est envoyé par mail. */
+  C.estEssai = e => /^essais(\+[^@]*)?@hood-web\.com$/i.test(String(e || "").trim());
+  /* Second contrôle de Justine (17 Nov. 2026) : oublier aussi le projet du compte relu par l'espace,
+     quand le visiteur a commencé un autre site entre-temps. */
+  let projetConnecte = null;
+  C.oublierProjet = () => { projetConnecte = null; };
 
   async function envoyerLien(sb, email, creer) {
     let jetonCaptcha;
@@ -71,31 +92,33 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     const sb = await charger(); if (!sb) return { ok: false };
     const r = await sb.rpc("hood_projet_commencer", { p_email: email, p_reponses: etat, p_etape: etape });
     if (r.error || !r.data) return { ok: false };
+    jetonVisite = r.data; emailVisite = norm(email); garderVisite();
     ecrire(CLE_JETON, r.data); ecrire(CLE_EMAIL, norm(email));
+    if (C.estEssai(email)) return { ok: true, mail: false, essai: true };
     return { ok: true, mail: await envoyerLien(sb, email, true) };
   };
 
-  /* Projet de ce navigateur, relu par le jeton (sans lien magique). */
+  /* Projet commencé plus tôt dans ce navigateur, relu par le jeton gardé (sans lien magique).
+     Sert seulement à le proposer : il ne devient le projet de la visite que par C.reprendreLocal(). */
   C.lireLocal = async function () {
     const sb = await charger(); const j = lire(CLE_JETON);
     if (!sb || !j) return null;
     const r = await sb.rpc("hood_projet_lire", { p_jeton: j });
     if (r.error) return null;
-    if (!r.data) { C.oublierJeton(); return null; }
+    if (!r.data) { C.oublierLocal(); return null; }
     return Object.assign({ email: lire(CLE_EMAIL) }, r.data);
   };
 
   /* Sauvegarde d'une étape : par le compte connecté, sinon par le jeton.
      Renvoie "ok", "relier" (le projet a été rattaché à un compte : il faut
      ouvrir le lien du mail) ou "non". */
-  let projetConnecte = null;
   C.enregistrer = async function (etat, etape) {
     const sb = await charger(); if (!sb) return "non";
     if (projetConnecte) {
       const r = await sb.rpc("hood_projet_enregistrer_connecte", { p_projet: projetConnecte, p_reponses: etat, p_etape: etape });
       if (!r.error && r.data) return "ok";
     }
-    const j = lire(CLE_JETON);
+    const j = jetonVisite;
     if (j) {
       const r = await sb.rpc("hood_projet_enregistrer", { p_jeton: j, p_reponses: etat, p_etape: etape });
       if (!r.error && r.data) return "ok";
@@ -113,7 +136,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
       const r = await sb.rpc("hood_projet_valider", { p_jeton: null, p_projet: projetConnecte, p_reponses: etat });
       if (!r.error && r.data) { projetConnecte = null; return true; }
     }
-    const j = lire(CLE_JETON);
+    const j = jetonVisite;
     if (j) {
       const r = await sb.rpc("hood_projet_valider", { p_jeton: j, p_projet: null, p_reponses: etat });
       if (!r.error && r.data) { C.oublierJeton(); return true; }
@@ -121,14 +144,13 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return false;
   };
 
-  /* Paiement en deux temps (étape 2, 12 Nov. 2026) : la fonction serveur
-     « paiement-creer » fait vérifier le projet par la base, puis crée la page
-     de paiement Stripe (carte autorisée, débitée seulement après l'achat du
-     domaine). Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
+  /* Paiement (étape 2, 12 Nov. 2026 ; débit au paiement depuis le 17 Nov.) : la
+     fonction serveur « paiement-creer » fait vérifier le projet par la base, puis
+     crée la page de paiement Stripe. Renvoie {url} ou {motif}. Motifs qui laissent le site retomber
      sur le lien d'essai : non_configure, cle_reelle_refusee, reseau, eteint. */
   C.payer = async function (etat) {
     const sb = await charger(); if (!sb) return { motif: "eteint" };
-    const j = lire(CLE_JETON);
+    const j = jetonVisite;
     if (!projetConnecte && !j) return { motif: "sans_projet" };  /* rien d'enregistré pour ce navigateur */
     let session = null;
     if (projetConnecte) { try { session = (await sb.auth.getSession()).data.session; } catch (e) { session = null; } }
@@ -151,7 +173,7 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
   const EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf" };
   C.deposerPhoto = async function (file, sorte) {
     const sb = await charger(); if (!sb || !EXT[file.type] || !/^(photo|tarifs)$/.test(sorte)) return { motif: "eteint" };
-    const j = lire(CLE_JETON);
+    const j = jetonVisite;
     if (!projetConnecte && !j) return { motif: "projet" };
     const r = await sb.rpc("hood_depot_photos", { p_jeton: projetConnecte ? null : j, p_projet: projetConnecte || null });
     if (r.error || !r.data) return { motif: "reseau" };
@@ -167,11 +189,13 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return data.session;
   };
 
-  /* Espace client : projet en cours et factures du compte connecté. */
-  C.monEspace = async function () {
+  /* Espace client : sites du compte connecté (19 Nov. 2026 : plusieurs sites avec la même adresse),
+     le site choisi (projetId) ou le dernier modifié, et les factures. */
+  C.monEspace = async function (projetId) {
     const sb = await charger(); if (!sb) return null;
     if (!(await C.session())) return null;
-    const r = await sb.rpc("hood_mon_espace");
+    const ok = typeof projetId === "string" && /^[0-9a-f-]{36}$/.test(projetId);
+    const r = await sb.rpc("hood_mon_espace", ok ? { p_projet: projetId } : {});
     if (r.error || !r.data) return null;
     projetConnecte = r.data.projet && r.data.projet.statut === "en_cours" ? r.data.projet.id : null;
     return r.data;
