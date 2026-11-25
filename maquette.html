@@ -882,7 +882,12 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     return html.replace(/À fournir \(David\)(, selon le métier)?\./g,"");
   }
   const variants=s=>{const a=[s,s.replace(/&/g,"&amp;"),s.replace(/'/g,"’"),s.replace(/'/g,"&#39;"),s.replace(/&/g,"&amp;").replace(/'/g,"’")];return [...new Set(a)]};
+  /* HOO-189 : la spécialité du modèle se lit dans son titre (« Maison Kumo · Ramen & gyoza · Lyon 7e »), avant tout remplacement. */
+  function specialite(html,e){const m=/<title>([^<]*)<\/title>/i.exec(html);if(!m)return "";
+    const d=document.createElement("textarea");d.innerHTML=m[1];const ex=[e.c,e.l,e.cp].filter(Boolean).map(x=>x.toLowerCase());
+    return d.value.split("·").map(x=>x.trim()).find(x=>x&&!ex.includes(x.toLowerCase()))||""}
   function htmlAymeric(html,e){
+    if(e.sp==null)e.sp=specialite(html,e);
     const nom=txt("nom"),ville=txt("ville"),adr=txt("adresse"),tel=txt("tel");
     const T0=[],tok=v=>{T0.push(v);return "\u0001"+(T0.length-1)+"\u0001"};
     const swap=(from,to)=>{if(!from||to==null)return;const t=tok(to);variants(from).forEach(f=>{html=html.split(f).join(t)})};
@@ -909,6 +914,19 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     b.cards.slice(0,4).forEach((card,i)=>{const s=u[i];if(!s)return;const h=card.querySelector("h3");if(h)h.textContent=s;
       card.querySelectorAll("*").forEach(x=>{if(x.children.length===0&&x!==h){const t=x.textContent.trim();if(/^(dès\s+)?\d[\d\s,.]*\s*€|^sur devis$|^\d[\d\s,.]*\s*€/i.test(t))x.textContent="Votre prix";else if(t.length>20&&x.tagName!=="H3")x.textContent=""}})});
     return b;
+  }
+  /* HOO-189 (décision du 20 nov.) : le site affiche toujours le métier choisi par le client, jamais la spécialité du modèle.
+     On remplace la spécialité là où elle forme un morceau entier d'une ligne « … · … » (bandeau du haut, pied de page,
+     où le modèle l'abrège parfois : « Bistrot » pour « Bistrot français »). Jamais dans l'en-tête ni le logo (nom du client). */
+  function metierChoisi(doc){
+    const k=tplKey(),m=metier();if(isEquipe(k)||!m)return;const e=CATI[k];if(!e||!e.sp)return;
+    const nz=x=>x.replace(/[’']/g,"'").replace(/\s+/g," ").trim().toLowerCase(),sp=nz(e.sp);if(nz(m.lab)===sp)return;
+    const w=doc.createTreeWalker(doc.body,4);const ns=[];let n;
+    while((n=w.nextNode())){const p=n.parentElement;if(!p||/^(SCRIPT|STYLE)$/.test(p.tagName)||p.closest("[data-hood],header,nav,.logo"))continue;ns.push(n)}
+    ns.forEach(n=>{const parts=n.nodeValue.split(/(\s*·\s*)/);let ch=false;
+      const pied=!!n.parentElement.closest("footer");
+      for(let i=0;i<parts.length;i+=2){const t=parts[i],z=nz(t);if(z&&(z===sp||(pied&&i===0&&sp.startsWith(z+" ")))){const a=t.match(/^\s*/)[0],b=t.match(/\s*$/)[0];parts[i]=a+m.lab+b;ch=true}}
+      if(ch)n.nodeValue=parts.join("")});
   }
   function brandEl(doc){
     const k=tplKey(),hd=doc.querySelector("header")||doc.querySelector("nav");if(!hd)return null;
@@ -1250,6 +1268,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       let t=null;try{t=doc.getElementById(decodeURIComponent(h.slice(1)))}catch(x){}
       if(t){const w=doc.defaultView;w.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+w.scrollY-10),behavior:"smooth"})}},true);
     const svc=applyServices(doc);
+    metierChoisi(doc);
     const b=brandEl(doc);
     if(b&&!isEquipe(tplKey())&&txt("nom")&&!b.querySelector("img")){b.textContent=txt("nom")}
     if(logoURL&&b){const img=doc.createElement("img");img.src=logoURL;img.alt="Logo";img.style.cssText="height:1.9em;width:auto;max-width:150px;object-fit:contain;vertical-align:middle;margin-right:.5em;display:inline-block";b.prepend(img)}
