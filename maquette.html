@@ -2038,6 +2038,8 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
       const fin=()=>{repriseEnCours=false;form.inert=false;form.removeAttribute("aria-busy")};
       const pid=new URLSearchParams(location.search).get("projet");
       const reprise=COMPTE.monEspace(pid).then(d=>{
+        /* HOO-208 : un site déjà payé ne se rouvre pas ; retour à l'espace client. */
+        if(d&&d.projet&&d.projet.statut==="paye"){repriseEnCours=false;location.replace("/espace");return}
         if(!(d&&d.projet&&d.projet.statut==="en_cours"))return;
         if(!repriseEnCours&&modifie){COMPTE.oublierProjet();note("Votre site enregistré n'a pas été chargé à temps : il reste dans votre espace.");return}
         relie=true;restaurer(d.projet,d.email)}).catch(()=>{});
