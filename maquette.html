@@ -322,6 +322,23 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
   .paybar .btn{width:100%;padding:14px 18px}
   .paybar .alt{display:block;margin:6px auto 0;font-size:13.5px}
 }
+/* HOO-156 (25 nov. 2026) : « J'ai une question » ouvre d'abord la FAQ */
+#faq{border:0;padding:0;border-radius:16px;max-width:560px;width:calc(100vw - 32px);max-height:calc(100vh - 48px);background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+#faq::backdrop{background:rgba(16,17,20,.45)}
+#faq .faq-in{padding:22px 22px 18px;overflow:auto;max-height:calc(100vh - 48px)}
+#faq h2{margin:0 0 4px;font-size:22px;letter-spacing:-.3px}
+#faq .faq-lead{margin:0 0 14px;color:var(--muted);font-size:14px}
+#faq details{border-top:1px solid var(--line);padding:10px 0}
+#faq details:last-of-type{border-bottom:1px solid var(--line)}
+#faq summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+#faq summary::-webkit-details-marker{display:none}
+#faq summary::after{content:"+";color:var(--accent);font-weight:800}
+#faq details[open] summary::after{content:"–"}
+#faq details p{margin:8px 0 2px;color:var(--muted);font-size:14px;line-height:1.5}
+#faq .faq-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+#faq .faq-mail{background:var(--accent);color:var(--on-accent);border:0;border-radius:10px;padding:11px 16px;font:600 14px var(--f-ui);cursor:pointer}
+#faq .faq-close{background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 14px;font:600 14px var(--f-ui);cursor:pointer}
+#faq .faq-x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:22px;color:var(--muted);cursor:pointer}
 </style>
 <script>if(/\.html$/.test(location.pathname))history.replaceState(null,"",location.pathname.replace(/(index)?\.html$/,"")+location.search+location.hash)</script>
 </head><body>
@@ -681,6 +698,25 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
     <button type="button" class="alt" id="back-q">← Modifier mes réponses</button>
   </div>
 </main>
+<dialog id="faq" aria-labelledby="faq-t">
+  <div class="faq-in">
+    <button type="button" class="faq-x" id="faq-x" aria-label="Fermer">×</button>
+    <h2 id="faq-t">Vos questions</h2>
+    <p class="faq-lead">La réponse est peut-être déjà ici. Sinon, écrivez-nous : on vous répond avant que vous payiez.</p>
+    <details><summary>Combien ça coûte, et quand est-ce que je paie ?</summary><p>290 € au moment de la commande, création du site et premier mois compris. Ensuite 10 € par mois, à partir du deuxième mois, pour l'hébergement, l'adresse du site et la sécurité. Sans engagement. TVA non applicable, article 293 B du CGI.</p></details>
+    <details><summary>En combien de temps mon site est-il en ligne ?</summary><p>Sous 72 heures après votre paiement et la réception de vos dernières informations (horaires, photos, avis…). On vous les demande juste après le paiement.</p></details>
+    <details><summary>L'adresse de mon site est-elle à moi ?</summary><p>Oui. Elle est réservée au nom de votre entreprise après le paiement, et elle reste à vous. Si vous arrêtez, on vous donne gratuitement son code de transfert.</p></details>
+    <details><summary>Et si mon adresse n'est plus libre au moment de la réserver ?</summary><p>On vous prévient et on vous propose d'autres adresses. Si aucune ne vous convient, la création vous est remboursée.</p></details>
+    <details><summary>Puis-je modifier mon site après sa mise en ligne ?</summary><p>Oui, à tout moment. Une modification standard (un texte, une photo, des horaires, des prix) coûte 15 €, annoncés avant. Les changements plus importants font l'objet d'un devis. Nos erreurs sont corrigées gratuitement.</p></details>
+    <details><summary>Puis-je arrêter quand je veux ?</summary><p>Oui. L'abonnement est sans engagement : un e-mail suffit, et l'arrêt prend effet à la fin du mois payé. Vous recevez l'archive de votre site et le code de transfert de votre adresse.</p></details>
+    <details><summary>Que se passe-t-il juste après le paiement ?</summary><p>Vous recevez le reçu tout de suite, puis un e-mail de notre équipe sous 24 heures avec le récapitulatif de votre commande et les informations qui manquent encore.</p></details>
+    <details><summary>Et mes données ?</summary><p>Vos réponses servent à réaliser votre site. Le détail est dans nos <a href="/mentions-legales" target="_blank" rel="noopener">mentions légales</a>, et nos conditions dans les <a href="/cgv" target="_blank" rel="noopener">CGV</a>.</p></details>
+    <div class="faq-act">
+      <button type="button" class="faq-mail" id="faq-mail">Ma question n'y est pas : écrire à l'équipe</button>
+      <button type="button" class="faq-close" id="faq-close">Revenir à mon site</button>
+    </div>
+  </div>
+</dialog>
 <div class="paybar" id="paybar"><button type="button" class="btn primary" id="pay-sticky">Je finalise mon site</button></div>
 
 <script src="compte.js?v=20261125a"></script>
@@ -1823,7 +1859,13 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
   $("af-next").addEventListener("click",()=>afGo(1));
   $("fin-payer").addEventListener("click",()=>afGo(1));
-  $("fin-question").addEventListener("click",()=>openMail("question"));$("rt-question").addEventListener("click",()=>openMail("question"));
+  /* HOO-156 (25 nov. 2026, demande de Steve) : « J'ai une question » montre d'abord la FAQ ; le mail vient ensuite. */
+  function faqOuvrir(){const d=$("faq");if(d&&typeof d.showModal==="function"){try{d.showModal();return}catch(e){}}openMail("question")}
+  function faqFermer(){try{$("faq").close()}catch(e){}}
+  $("fin-question").addEventListener("click",faqOuvrir);$("rt-question").addEventListener("click",faqOuvrir);
+  $("faq-mail").addEventListener("click",()=>{faqFermer();openMail("question")});
+  $("faq-close").addEventListener("click",faqFermer);$("faq-x").addEventListener("click",faqFermer);
+  $("faq").addEventListener("click",e=>{if(e.target===$("faq"))faqFermer()});
   $("fin-retouche").addEventListener("click",()=>{retouche=true;finTitres();rtListeDraw();render();
     if(matchMedia("(max-width:900px)").matches)$("vp").scrollIntoView({behavior:"smooth",block:"start"})});
   $("rt-fini").addEventListener("click",()=>{rtFermer();retouche=false;finTitres();render();afGo(1)});
