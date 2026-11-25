@@ -599,11 +599,11 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
           <p class="lead" id="cmd-lead">Choisissez votre adresse, puis payez : votre site est en ligne sous 72 h après réception de vos dernières informations.</p>
           <div class="fields">
             <label class="f">L'adresse de votre site
-              <div class="domain"><input type="text" id="domaine" maxlength="63" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><select id="af-dom-ext" aria-label="Extension"><option value="fr">.fr</option><option value="com">.com</option></select></div>
+              <div class="domain"><input type="text" id="domaine" autocomplete="off" aria-label="Nom de domaine" aria-describedby="dom-etat"><select id="af-dom-ext" aria-label="Extension"><option value="fr">.fr</option><option value="com">.com</option></select></div>
             </label>
             <p class="dom-etat" id="dom-etat" role="status" aria-live="polite"></p>
             <div class="dom-sugg" id="dom-sugg" hidden><span class="hint">Libres en ce moment :</span><div class="dom-chips" id="dom-chips"></div></div>
-            <span class="hint">En .fr ou en .com, vérifiée en direct auprès des registres officiels. On la réserve au nom de votre entreprise après le paiement.</span>
+            <span class="hint">Lettres sans accents, chiffres et tirets, de 2 à 63 caractères. En .fr ou en .com, vérifiée en direct auprès des registres officiels. On la réserve au nom de votre entreprise après le paiement.</span>
             <input type="hidden" id="af-dom-dispo" value="">
             <fieldset class="tit" id="tit">
               <legend>Le titulaire de votre nom de domaine</legend>
@@ -1654,12 +1654,14 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
      Vérifié de nouveau au moment de la réservation, après le paiement. */
   const RDAP={fr:n=>"https://rdap.nic.fr/domain/"+encodeURIComponent(n)+".fr",com:n=>"https://rdap.verisign.com/com/v1/domain/"+encodeURIComponent(n)+".com"};
   const domCache={};let domTimer=0,domSeq=0;
+  /* HOO-196 : toute réécriture de l'adresse tapée (accent, espace, tiret au début ou à la fin) est signalée sous le champ. */
+  let domNote="";const DOM_NOTE="Votre saisie a été adaptée : sans accents, sans espaces, sans tiret au début ni à la fin.";
   const domExt=()=>RDAP[$("af-dom-ext").value]?$("af-dom-ext").value:"fr";
   const domFull=(n,e)=>(n===undefined?txt("domaine"):n)+"."+(e||domExt());
   const domValide=n=>n.length>=2&&n.length<=63&&/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(n);
   function domLibre(n,e){const k=n+"."+e;if(!domCache[k])domCache[k]=fetch(RDAP[e](n),{headers:{accept:"application/rdap+json"}})
     .then(r=>r.status===404?true:r.status===200?false:null).catch(()=>null);return domCache[k]}
-  function domEtat(t,c){const E=$("dom-etat");E.textContent=t;E.className="dom-etat"+(c?" "+c:"")}
+  function domEtat(t,c){const E=$("dom-etat");E.textContent=t&&domNote?t+" "+domNote:t;E.className="dom-etat"+(c?" "+c:"")}
   /* Audit d'Aymeric (13 Nov. 2026) : l'aperçu n'affiche jamais une adresse déjà prise. */
   function urlApercu(){const d=txt("domaine");if(d)return $("af-dom-dispo").value==="pris"||!domValide(d)?"votre-adresse."+domExt():domFull();
     return (slug(txt("nom"))||"votrecommerce").slice(0,63)+".fr"}
@@ -1692,7 +1694,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     const libres=res.filter(Boolean).slice(0,3);if(!libres.length)return;
     const box=$("dom-chips");box.innerHTML="";
     libres.forEach(([x,y])=>{const b=document.createElement("button");b.type="button";b.textContent=domFull(x,y);
-      b.addEventListener("click",()=>{$("domaine").value=x;$("af-dom-ext").value=y;modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
+      b.addEventListener("click",()=>{domNote="";$("domaine").value=x;$("af-dom-ext").value=y;modifie=true;sauver();domVerifier();$("domaine").focus()});box.append(b)});
     $("dom-sugg").hidden=false;
   }
 
@@ -1906,9 +1908,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("af-dom-ext").addEventListener("change",()=>{modifie=true;sauver();domVerifier()});
   /* QA-114 à 116 : on garde le tiret de fin pendant la frappe (sinon « encre-qa » devenait « encreqa ») ;
      le nettoyage complet se fait à la sortie du champ. */
-  $("domaine").addEventListener("input",e=>{const v=norm(e.target.value).replace(/[^a-z0-9]+/g,"-").replace(/^-/,"");if(v!==e.target.value)e.target.value=v;domUrl();
+  $("domaine").addEventListener("input",e=>{const v=norm(e.target.value).replace(/[^a-z0-9]+/g,"-").replace(/^-/,"");
+    const brut=e.target.value;if(brut&&v!==brut.toLowerCase())domNote=DOM_NOTE;else if(brut.length<=1)domNote="";/* champ vidé ou saisie reprise à zéro */if(v!==e.target.value)e.target.value=v;domUrl();
     clearTimeout(domTimer);$("af-dom-dispo").value="";domEtat("");$("dom-sugg").hidden=true;if(!/-$/.test(v))domTimer=setTimeout(domVerifier,450)});
-  $("domaine").addEventListener("change",e=>{const v=slug(e.target.value);if(v!==e.target.value){e.target.value=v;domUrl();clearTimeout(domTimer);domVerifier()}});
+  $("domaine").addEventListener("change",e=>{const v=slug(e.target.value);if(v!==e.target.value){e.target.value=v;domNote=DOM_NOTE;domUrl();clearTimeout(domTimer);domVerifier()}});
   $("pay").addEventListener("click",()=>{
     suivi("clic_payer",{});
     if(!domValide(txt("domaine"))){$("err").textContent="Choisissez une adresse de site de 2 à 63 caractères : lettres sans accents, chiffres ou tirets.";$("domaine").classList.add("bad");return}
