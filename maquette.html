@@ -599,7 +599,7 @@ body.s6 .step[data-step="6"] .lead{margin-bottom:0}
               </div>
               <div class="tit-man" id="tit-man" hidden>
                 <label class="f">Nom de l'entreprise <small>comme sur l'avis de situation Sirene ou le Kbis</small><input type="text" id="af-tit-nom" maxlength="120" autocomplete="organization"></label>
-                <label class="f">Numéro SIREN <small>9 chiffres</small><input type="text" id="af-tit-siren" inputmode="numeric" maxlength="11"></label>
+                <label class="f">Numéro SIREN <small>9 chiffres</small><input type="text" id="af-tit-siren" inputmode="numeric" maxlength="20" aria-describedby="tit-siren-msg"><span class="hint" id="tit-siren-msg" aria-live="polite" style="color:var(--danger)"></span></label>
                 <label class="f">Adresse du siège<input type="text" id="af-tit-adresse" maxlength="200" autocomplete="street-address"></label>
               </div>
               <div class="tit-contact" id="tit-contact" hidden>
@@ -1697,6 +1697,16 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   $("tit-q").addEventListener("input",()=>{clearTimeout(titTimer);titTimer=setTimeout(titChercher,500)});
   $("tit-manuel").addEventListener("click",()=>{$("af-tit-source").value="manuel";titAfficher();$("af-tit-nom").focus()});
   ["af-tit-nom","af-tit-siren","af-tit-adresse"].forEach(i=>$(i).addEventListener("input",()=>{if(txt("af-tit-source")!=="annuaire")$("af-tit-source").value="manuel";$("af-tit-atteste").checked=false}));
+  /* HOO-198 : message dès la saisie du SIREN ; un SIRET (14 chiffres) est ramené à ses 9 premiers chiffres, le SIREN. */
+  function sirenMsg(fin){const v=txt("af-tit-siren"),d=v.replace(/\D/g,"");let m="",info=false;
+    if(fin&&d.length===14&&sirenOk(d.slice(0,9))){$("af-tit-siren").value=fmtSiren(d.slice(0,9));modifie=true;sauver();
+      m="C'était un numéro SIRET (14 chiffres) : nous avons gardé ses 9 premiers chiffres, le SIREN.";info=true}
+    else{
+      if(/[^\d\s]/.test(v))m="Le SIREN ne contient que des chiffres (9 chiffres).";
+      else if(d.length>9||(fin&&d.length&&d.length<9))m="Le SIREN compte 9 chiffres : vous en avez saisi "+d.length+".";
+      else if(d.length===9&&!sirenOk(d))m="Ce numéro SIREN n'est pas valide : vérifiez les 9 chiffres."}
+    $("tit-siren-msg").textContent=m;$("tit-siren-msg").style.color=info?"var(--muted)":"var(--danger)";$("af-tit-siren").classList.toggle("bad",!!m&&!info)}
+  $("af-tit-siren").addEventListener("input",()=>sirenMsg(false));$("af-tit-siren").addEventListener("change",()=>sirenMsg(true));
   function titInit(){titAfficher();if(!(txt("af-tit-nom")&&txt("af-tit-source"))&&!txt("tit-q")){$("tit-q").value=[txt("nom"),txt("ville")].filter(Boolean).join(" ");titChercher()}}
   function titValide(){return !!(txt("af-tit-nom")&&sirenOk(txt("af-tit-siren"))&&txt("af-tit-adresse")&&txt("af-tit-gerant")&&telOk(txt("af-tit-tel"))&&C_EMAIL(txt("af-tit-email"))&&$("af-tit-atteste").checked)}
   const C_EMAIL=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(e||"").trim());
