@@ -1324,6 +1324,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     if(b&&!isEquipe(tplKey())&&!b.querySelector("img")){b.textContent=nomA}
     if(logoURL&&b){const img=doc.createElement("img");img.src=logoURL;img.alt="Logo";img.style.cssText="height:1.9em;width:auto;max-width:150px;object-fit:contain;vertical-align:middle;margin-right:.5em;display:inline-block";b.prepend(img)}
     if(!isEquipe(tplKey()))renameH1(doc,nomA);
+    vitrineSansManquants(doc);
     /* Audit d'Aymeric (13 Nov. 2026) : les prix de l'exemple ne restent jamais. Vos prix, s'il y en a, arrivent par « Vos tarifs ». */
     sansPrix(doc);
     sansInventions(doc);
@@ -1332,6 +1333,22 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
     boutonsDuSite(doc);
     retouchesSurLeSite(doc);
     aCompleterNoter(doc);
+  }
+  /* HOO-192 : modèle « vitrine » (proposé en premier pour « Autre métier »). Ce que le client n'a pas donné n'apparaît pas :
+     « Pas d'horaires » retire le bloc Horaires ; sans adresse, ni vue Street View, ni Itinéraire, ni bloc Adresse ;
+     sans téléphone, ni bouton Appeler, ni « Contact » ; s'il a rempli au moins un service, les cartes vides sont masquées (comme HOO-191). */
+  function vitrineSansManquants(doc){
+    if(tplKey()!=="vitrine")return;
+    const sansH=afVal("horaires")==="none",sansA=!txt("adresse"),sansT=!txt("tel");
+    if(sansH){const ul=doc.querySelector("ul.horaires");if(ul)ul.parentElement.remove()}
+    if(sansA){const sv=doc.querySelector(".sv");if(sv)sv.remove();
+      doc.querySelectorAll("a").forEach(a=>{if(/itinéraire/i.test(a.textContent))a.remove()});
+      const ad=[...doc.querySelectorAll("#s6 h2")].find(h=>/^\s*adresse\s*$/i.test(h.textContent));if(ad)ad.parentElement.remove()}
+    if(sansT){doc.querySelectorAll("a").forEach(a=>{if(/^\s*appeler\b/i.test(a.textContent))a.remove()});
+      const ct=[...doc.querySelectorAll("#s6 h2")].find(h=>/^\s*contact\s*$/i.test(h.textContent));if(ct)ct.remove()}
+    /* « Horaires, adresse et téléphone : tout est sur cette page. » ne reste que si tout y est */
+    if(sansH||sansA||sansT)doc.querySelectorAll("p").forEach(p=>{if(/tout est sur cette page/.test(p.textContent))p.textContent=p.textContent.replace(/\s*Horaires, adresse et téléphone : tout est sur cette page\./,"")});
+    const u=userSv();if(u.some(Boolean))doc.querySelectorAll(".carte-s3").forEach((c,i)=>{if(!u[i]){c.style.display="none";c.setAttribute("data-hood-masque","")}});
   }
   /* ---- Rien d'inventé sur le site d'un client (audit d'Aymeric, 13 Nov. 2026 ; décision d'Octave, 17 Nov. 2026) ----
      Les notes Google, le nombre d'avis, les témoignages, les horaires, le téléphone et l'année de l'exemple
