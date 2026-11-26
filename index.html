@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f8f9fc" />
   <meta name="description" content="HOOD crée le site internet de votre commerce ou de votre activité. Découvrez une maquette gratuite, puis mettez votre site en ligne en toute simplicité. Une seule offre : 290 €, puis 10 €/mois." />
-  <title>HOOD. — Vous existez. Ça devrait se savoir.</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="HOOD"><meta property="og:title" content="HOOD. Vous existez. Ça devrait se savoir."><meta property="og:description" content="Le site internet de votre commerce : voyez-le gratuitement, puis 290 € une fois et 10 € par mois."><meta property="og:url" content="https://hood-web.com/"><meta property="og:image" content="https://hood-web.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="fr_FR"><meta name="twitter:card" content="summary_large_image">
+  <title>HOOD. — Vous existez. Ça devrait se savoir.</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="HOOD"><meta property="og:title" content="HOOD. Vous existez. Ça devrait se savoir."><meta property="og:description" content="Le site internet de votre commerce : voyez-le gratuitement, puis 290 € une fois et 10 € par mois."><meta property="og:url" content="https://hood-web.com/"><meta property="og:image" content="https://hood-web.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="fr_FR"><meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" as="image" href="/img/hero/boucher.webp" imagesrcset="/img/hero/boucher-960.webp 960w, /img/hero/boucher.webp 1672w" imagesizes="100vw">
 <script>if(/\.html$/.test(location.pathname))history.replaceState(null,"",location.pathname.replace(/(index)?\.html$/,"")+location.search+location.hash)</script>
 <script src="suivi-tests.js?v=20261125a"></script>
 </head>
@@ -28,25 +29,26 @@
   </header>
 
   <main>
-    <section class="hero container">
-      <div class="hero-copy">
-        <span class="eyebrow"><span class="dot"></span> LES SITES WEB DES GENS D'ICI</span>
-        <h1>Vous existez.<br><span>Ça devrait</span><br>se savoir<span class="blue-period">.</span></h1>
-        <div class="hero-offer"><strong>On crée votre site internet professionnel.</strong><span>Pour votre commerce ou votre activité. Vous découvrez une maquette gratuite, on s’occupe du reste.</span></div><p class="hero-price">Un vrai site pour <strong>290 €</strong>, premier mois compris, puis <strong>10 €/mois</strong> pour l’hébergement, le nom de domaine et la sécurité.</p>
-        <div class="hero-actions"><a class="button button-blue button-lg" href="/maquette">Montrez-moi mon site</a><a class="text-link" href="#comment">Comment ça marche <span>↓</span></a></div>
-        <div class="hero-reassurance"><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Maquette gratuite</span><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Prix transparents</span><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Zéro prise de tête</span></div>
-      </div>
-      <div class="hero-art" aria-label="Illustration d'un site web pour un commerce local">
-        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
-        <div class="floating-card floating-top"><span class="round-icon">⌁</span><div><b>Vous voilà sur la carte.</b><small>Un site que vos clients peuvent trouver.</small></div></div>
-        <div class="site-demo">
-          <div class="demo-header"><div class="demo-brand"><span class="demo-flower">✳</span> atelier flora</div><span>Accueil &nbsp; Nos bouquets &nbsp; Contact</span><span class="demo-menu">☰</span></div>
-          <div class="demo-photo"><div class="sun-circle"></div><div class="vase"><div class="stems"><i></i><i></i><i></i><i></i><i></i></div><div class="blooms"><b>✿</b><b>✿</b><b>✿</b><b>✿</b><b>✿</b></div></div><span class="photo-caption">FLEURISTE À LYON DEPUIS 2018</span></div>
-          <div class="demo-body"><div><h3>Des fleurs, beaucoup d'amour.</h3><p>Bouquets de saison, créations sur mesure et sourires à emporter.</p></div><div class="demo-actions"><span>Nous appeler ↗</span><span>Itinéraire ↗</span></div></div>
+    <section class="hero hero-photo" aria-labelledby="hero-titre">
+      <ul class="hero-slides" aria-hidden="true">
+        <li class="is-active"><img src="/img/hero/boucher.webp" srcset="/img/hero/boucher-960.webp 960w, /img/hero/boucher.webp 1672w" sizes="100vw" alt="" style="object-position:50% 40%" fetchpriority="high" decoding="async"></li>
+        <li><img src="/img/hero/fleuriste.webp" srcset="/img/hero/fleuriste-960.webp 960w, /img/hero/fleuriste.webp 1672w" sizes="100vw" alt="" style="object-position:52% 40%" loading="lazy" decoding="async"></li>
+        <li><img src="/img/hero/plombier.webp" srcset="/img/hero/plombier-960.webp 960w, /img/hero/plombier.webp 1672w" sizes="100vw" alt="" style="object-position:42% 45%" loading="lazy" decoding="async"></li>
+        <li><img src="/img/hero/coiffeur.webp" srcset="/img/hero/coiffeur-960.webp 960w, /img/hero/coiffeur.webp 1672w" sizes="100vw" alt="" style="object-position:40% 40%" loading="lazy" decoding="async"></li>
+        <li><img src="/img/hero/garagiste.webp" srcset="/img/hero/garagiste-960.webp 960w, /img/hero/garagiste.webp 1672w" sizes="100vw" alt="" style="object-position:55% 40%" loading="lazy" decoding="async"></li>
+        <li><img src="/img/hero/peintre.webp" srcset="/img/hero/peintre-960.webp 960w, /img/hero/peintre.webp 1672w" sizes="100vw" alt="" style="object-position:45% 40%" loading="lazy" decoding="async"></li>
+      </ul>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="dot"></span> LES SITES WEB DES GENS D'ICI</span>
+          <h1 id="hero-titre">Vous avez mieux à faire qu’un site internet.<br><span class="hero-punch">Nous, non<span class="blue-period">.</span></span></h1>
+          <div class="hero-offer"><strong>On crée votre site internet professionnel.</strong><span>Pour votre commerce ou votre activité. Vous découvrez une maquette gratuite, on s’occupe du reste.</span></div><p class="hero-price">Un vrai site pour <strong>290&nbsp;€</strong>, premier mois compris, puis <strong>10&nbsp;€/mois</strong> pour l’hébergement, le nom de domaine et la sécurité.</p>
+          <div class="hero-actions"><a class="button button-blue button-lg" href="/maquette">Montrez-moi mon site</a><a class="text-link" href="#comment">Comment ça marche <span>↓</span></a></div>
+          <div class="hero-reassurance"><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Maquette gratuite</span><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Prix transparents</span><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg> Zéro prise de tête</span></div>
         </div>
-        <div class="floating-card floating-bottom"><div class="blue-circle">↗</div><div><b>Un vrai site. À vous.</b><small>Pas juste une page sur une plateforme.</small></div></div>
-        <div class="hand-note">Votre savoir-faire<br>mérite d'être vu. <span>↗</span></div>
       </div>
+      <div class="hero-controls container"><div class="hero-dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i><i></i><i></i></div><button class="hero-pause" type="button" aria-label="Mettre en pause le défilement des photos" aria-pressed="false"><span aria-hidden="true">❚❚</span></button></div>
     </section>
 
     <div class="trust-strip"><div class="container strip-inner"><span>POUR CEUX QUI FONT VIVRE NOS VILLES</span><div>BOULANGERIES <i>✳</i> ARTISANS <i>✳</i> RESTAURANTS <i>✳</i> SALONS <i>✳</i> COMMERÇANTS</div></div></div>
