@@ -12,7 +12,7 @@
    Utilisation dans les pages : window.HOOD_SUIVI("nom_evenement", {propriétés}). */
 (function () {
   "use strict";
-  var CLE = "";                                  /* clé du projet PostHog (phc_…), à renseigner */
+  var CLE = "phc_uGaP6jghmPfqUbtLoU5PZB7LjHYYm55fXsw7tk3Rm5Le";                                  /* clé du projet PostHog (phc_…), à renseigner */
   var HOTE = "https://eu.i.posthog.com";         /* serveurs PostHog en Europe (Francfort) */
   var SCRIPT = "https://eu-assets.i.posthog.com/static/array.full.js";
   var MEMO = "hood_test", DUREE = 7 * 24 * 3600 * 1000;
