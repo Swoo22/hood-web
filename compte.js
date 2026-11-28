@@ -201,6 +201,16 @@ window.HOOD_COMPTE = { url: "https://zkufkvquoityqhucgshb.supabase.co", cle: "sb
     return r.data;
   };
 
+  /* HOO-212 : lien de parrainage du client connecté. La base ne le donne qu'à un compte qui a au moins
+     un site payé ; sinon (ou si la fonction n'existe pas encore) : null, et rien n'est affiché. */
+  C.monParrainage = async function () {
+    const sb = await charger(); if (!sb) return null;
+    if (!(await C.session())) return null;
+    const r = await sb.rpc("hood_mon_parrainage", {});
+    if (r.error || !r.data || !/^[A-Z0-9]{3,20}$/.test(r.data.code || "")) return null;
+    return { code: r.data.code };
+  };
+
   /* Lien magique pour un client qui revient (pas de nouveau compte ici). */
   C.recevoirLien = async function (email) {
     const sb = await charger(); if (!sb) return false;

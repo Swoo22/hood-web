@@ -24,6 +24,7 @@ h2{font-size:20px;letter-spacing:-.3px;margin:0 0 10px}
 .card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 20px}
 .small{font-size:14px;color:var(--muted)}
 label{display:block;font-weight:600;margin:0 0 6px}
+.parrain{display:flex;gap:8px;align-items:center;margin-top:6px}.parrain input{flex:1;min-width:0;font:inherit;font-size:14px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}.parrain .btn{margin-top:0}
 input[type=email]{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
 .btn{display:inline-block;font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 18px;background:var(--accent);color:#fff;text-decoration:none;cursor:pointer;margin-top:12px}
 .link{background:none;border:0;padding:0;font:inherit;color:var(--accent);cursor:pointer;text-decoration:underline}
@@ -37,6 +38,7 @@ a{color:var(--accent)}
 </style>
 <script>if(/\.html$/.test(location.pathname))history.replaceState(null,"",location.pathname.replace(/(index)?\.html$/,"")+location.search+location.hash)</script>
 <script src="suivi-tests.js?v=20261125a"></script>
+<script src="/parrain.js?v=20261128a"></script>
 </head>
 <body>
 <div class="wrap">
@@ -69,6 +71,13 @@ a{color:var(--accent)}
       <h2>Mon site</h2>
       <div id="projet"></div>
     </section>
+    <section class="card" id="parrainage" hidden>
+      <h2>Recommandez HOOD</h2>
+      <p>Recommandez HOOD à un commerçant : 58 € pour vous dès qu'il a payé son site.</p>
+      <label for="lien-parrain" class="small">Votre lien personnel</label>
+      <div class="parrain"><input type="text" id="lien-parrain" readonly><button class="btn" type="button" id="copier-parrain">Copier</button></div>
+      <p class="small" id="parrain-msg" role="status"></p>
+    </section>
     <section class="card">
       <h2>Mes factures</h2>
       <div id="factures"></div>
@@ -91,7 +100,7 @@ a{color:var(--accent)}
   </div>
 </div>
 
-<script src="compte.js?v=20261125b"></script>
+<script src="compte.js?v=20261128a"></script>
 <script>
 (function(){
   const C=window.HOOD_COMPTE,$=id=>document.getElementById(id);
@@ -138,7 +147,18 @@ a{color:var(--accent)}
     $("factures").innerHTML=f.length?'<ul class="f">'+f.map(x=>`<li><span>${esc(x.libelle)}<br><span class="small">N° ${esc(x.numero)}, ${esc(jour(x.date))}</span></span><span><b>${esc(euros(x.montant_centimes))}</b> · <a href="${esc(x.lien)}" target="_blank" rel="noopener">Voir la facture</a></span></li>`).join("")+"</ul>"
       :'<p class="small">Aucune facture pour l\'instant. Elle apparaît ici quelques minutes après votre paiement ; le reçu Stripe arrive aussi par e-mail.</p>';
     vue("espace");
+    parrainage();
   }
+
+  /* HOO-212 : bloc parrainage, seulement pour un client qui a payé (la base décide). */
+  async function parrainage(){
+    let p=null;try{p=C.monParrainage?await C.monParrainage():null}catch(e){}
+    if(!p){$("parrainage").hidden=true;return}
+    $("lien-parrain").value="https://hood-web.com/maquette?ref="+p.code;$("parrainage").hidden=false;
+  }
+  $("copier-parrain").addEventListener("click",async()=>{const i=$("lien-parrain");
+    try{await navigator.clipboard.writeText(i.value);$("parrain-msg").textContent="Lien copié."}
+    catch(e){i.select();$("parrain-msg").textContent="Sélectionnez le lien et copiez-le."}});
 
   async function demarrer(){
     if(!C||!C.actif){vue("bientot");return}
