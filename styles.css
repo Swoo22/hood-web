@@ -71,3 +71,17 @@
 .hero-controls{bottom:22px}
 }
 @media(prefers-reduced-motion:reduce){.hero-slides li{transition:none}.hero-slides img,.hero-slides li.is-active img{transition:none;transform:none}}
+/* HOO-213 — Titres en Fraunces (hébergée sur le site, licence OFL dans /fonts), plus d'Inter 900 resserrée. */
+@font-face{font-family:'Fraunces';src:url('/fonts/fraunces.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+/* !important : les anciennes règles de titres sont dispersées et plus précises ; ce bloc les remplace toutes d'un coup. */
+h1,h2,h3,.step-number,.price strong,.support-price strong,.mod-price strong,.hero-offer strong{font-family:'Fraunces',Georgia,serif!important;font-weight:600!important;letter-spacing:-0.01em!important}
+h1,h2{line-height:1.1!important}
+/* HOO-213 — Section « Pourquoi HOOD » : trois points simples, sans fausses interfaces ni emojis. */
+.benefit-list{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+.benefit-item{border-top:1px solid #ccd1da;padding-top:26px}
+.benefit-item svg{width:30px;height:30px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.benefit-item h3{font-size:23px;margin:18px 0 10px}
+.benefit-item p{font-size:14px;line-height:1.7;color:#5f6570;margin:0}
+.trust-strip .strip-inner i{color:var(--blue)}
+@media(max-width:760px){.benefit-list{grid-template-columns:1fr;gap:28px;margin-top:36px}}
+.step-number{font-size:56px!important}
