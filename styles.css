@@ -85,3 +85,5 @@ h1,h2{line-height:1.1!important}
 .trust-strip .strip-inner i{color:var(--blue)}
 @media(max-width:760px){.benefit-list{grid-template-columns:1fr;gap:28px;margin-top:36px}}
 .step-number{font-size:56px!important}
+/* HOO-203 (28 nov. 2026) : lien « Espace client » visible sur ordinateur et sur téléphone */
+.nav-right{display:flex;align-items:center;gap:22px}.nav-account{font-size:13px;font-weight:700;color:var(--black);border-bottom:1px solid #c9ced8;padding-bottom:2px;white-space:nowrap}.nav-account:hover{color:var(--blue);border-color:var(--blue)}@media(max-width:760px){.nav-right{gap:6px;margin-left:auto}.nav-account{font-size:12px}}
