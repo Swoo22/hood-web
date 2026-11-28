@@ -1619,7 +1619,9 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
   };
   const famKey=()=>{const m=metier();return m&&TON[m.f]?m.f:"autre"};
   /* Choix du métier choisi ; à défaut, ceux de sa famille. */
-  const afm=()=>{const m=metier();return (m&&AFM[m.id])||{v:VALS[famKey()],t:TON[famKey()],p:null}};
+  /* HOO-205 (28 nov. 2026, décision d'Octave validée par Steve) : avec « Autre métier », les exemples de ton reprennent le métier saisi. */
+  const tonAutre=a=>{const mt=/^[A-ZÀ-Ý]{2}/.test(a)?a:a.charAt(0).toLowerCase()+a.slice(1);return ["Bienvenue chez {nom} : "+mt+" à {ville}",cap(mt)+" à {ville}, un travail sérieux et fiable",cap(mt)+" : l'exigence, au service de vos clients"]};
+  const afm=()=>{const m=metier();if(m&&AFM[m.id])return AFM[m.id];const a=m&&m.id==="autre"?txt("metierAutre"):"";return {v:VALS[famKey()],t:a?tonAutre(a):TON[famKey()],p:null}};
   const NV=10;
   /* Comme le prototype : chaque question suit l'option cochée au début (tarifs, zone, marques, À propos, formulaire de contact). */
   const opt=k=>!!($("o-"+k)&&$("o-"+k).checked);
