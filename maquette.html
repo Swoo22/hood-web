@@ -758,6 +758,7 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
 
   const COMMON_INC=[["apropos","Page À propos","Votre histoire, votre équipe",0],["tarifs","Vos tarifs affichés","Affichés sur le site, sans paiement en ligne",0],["contact","Formulaire de contact","Vos clients vous écrivent depuis le site",0]];
   const COMMON_DEV=[["avissite","Vos avis Google affichés sur le site","Vos derniers avis, mis à jour automatiquement"],["insta","Votre Instagram sur le site","Vos dernières publications, mises à jour automatiquement"]];
+  const METIERS_MARQUES=["garage","carrosserie","cordonnerie","fleuriste","librairie","jeux"];
   const FAM={
     bouche:{lab:"Restauration et commerces de bouche",
       inc:[["commandes","Commandes par téléphone","",1],["occasions","Vos occasions","Fêtes, anniversaires, événements",0],["galerie","Photos de vos produits","",0]],
@@ -902,7 +903,10 @@ const TPL={"vitrine": "<!doctype html><html lang=\"fr\"><head><meta charset=\"ut
         <span class="thumb-w"><iframe class="thumb" src="modeles/${encodeURIComponent(k)}" loading="lazy" tabindex="-1" aria-hidden="true" title=""></iframe></span>
         <span class="tx"><b>${esc(tplName(k))}</b><small>Exemple : ${esc(e.c)}</small></span></span></label>`}).join("");
     const ck=(o,dev)=>`<label class="ck"><input type="checkbox" name="opt" id="o-${o[0]}" value="${o[0]}" data-lab="${esc(o[1])}"${!dev&&o[3]?" checked":""}><span>${o[1]}${o[2]?`<small>${o[2]}</small>`:""}</span></label>`;
-    $("opts-inc").innerHTML=[...f.inc,...COMMON_INC].map(o=>ck(o,false)).join("");
+    /* HOO-204 (décision de Steve, 28 nov. 2026) : l'option « marques » n'est proposée qu'aux métiers qui vendent ou entretiennent des marques
+       (et à « Autre métier », qu'on ne connaît pas). Les prestations restent proposées à tous. */
+    const avecMarques=key==="autre"||METIERS_MARQUES.includes(key);
+    $("opts-inc").innerHTML=[...f.inc.filter(o=>o[0]!=="marques"||avecMarques),...COMMON_INC].map(o=>ck(o,false)).join("");
     $("opts-dev").innerHTML=[...f.dev,...COMMON_DEV.filter(o=>!(f.noavis&&o[0]==="avissite"))].map(o=>ck(o,true)).join("");
   }
 
